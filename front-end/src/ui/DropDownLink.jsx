@@ -1,23 +1,16 @@
 import { Link } from "react-router-dom";
-
+const styledDropDownLink =
+  "flex items-center justify-between rounded px-1.5 py-1.5 hover:bg-zinc-200  hover:text-blue-600";
 function DropDownLink({ children, handleClick, to, type }) {
-  console.log(type);
   if (type === "button")
     return (
-      <button
-        className="py-1.5 px-1.5 rounded hover:bg-zinc-200 flex items-center justify-between"
-        to={to}
-      >
+      <button className={styledDropDownLink} to={to}>
         {children}
       </button>
     );
   else
     return (
-      <Link
-        onClick={handleClick}
-        className="py-1.5 px-1.5 rounded hover:bg-zinc-200 flex items-center justify-between"
-        to={to}
-      >
+      <Link onClick={handleClick} className={styledDropDownLink} to={to}>
         {children}
       </Link>
     );

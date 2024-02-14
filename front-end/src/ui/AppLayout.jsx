@@ -4,7 +4,7 @@ function AppLayout() {
   return (
     <>
       <Navbar />
-      <main>{<Outlet />}</main>
+      <main className="min-h-[80dvh]">{<Outlet />}</main>
     </>
   );
 }
