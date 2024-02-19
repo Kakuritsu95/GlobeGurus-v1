@@ -1,4 +1,4 @@
-export const mockData = [
+export const nearbyMockData = [
   {
     name: "Palea Polis",
     coords: [41.1421994, 24.8869147],

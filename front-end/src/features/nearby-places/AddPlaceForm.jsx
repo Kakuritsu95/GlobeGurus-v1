@@ -1,4 +1,4 @@
-function CreateGuideForm() {
+function AddPlaceForm() {
   return (
     <form className="rounded bg-zinc-100 px-9 py-9 shadow-md">
       <h3 className=" border-b pb-4 text-lg font-semibold text-zinc-900 dark:text-white">
@@ -58,4 +58,4 @@ function CreateGuideForm() {
   );
 }
 
-export default CreateGuideForm;
+export default AddPlaceForm;
