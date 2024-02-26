@@ -46,11 +46,11 @@ function Layout({ children }) {
         ))}
       </div>
       {children}
-      <div className="my-5 flex justify-between">
+      <div className="mx-2 my-5 flex justify-between md:mx-0">
         <button
           disabled={openTab === 0}
           onClick={prevTab}
-          className={`cursor-pointer rounded-full border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 ${openTab === 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`text w-20 cursor-pointer rounded-full border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 md:px-3 md:py-1.5 ${openTab === 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
           Previous
         </button>
@@ -58,7 +58,7 @@ function Layout({ children }) {
         <button
           disabled={numTabs === openTab + 1}
           onClick={nextTab}
-          className={`cursor-pointer rounded-full border border-gray-200 bg-white px-6 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 ${numTabs === openTab + 1 ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`w-20 cursor-pointer rounded-full border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 md:px-3 md:py-1.5 ${numTabs === openTab + 1 ? "cursor-not-allowed" : "cursor-pointer"} `}
         >
           Next
         </button>

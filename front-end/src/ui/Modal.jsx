@@ -34,11 +34,11 @@ function Window({ children }) {
       <div className="absolute right-0 top-0 z-50 h-dvh w-dvw justify-center bg-gray-800/90">
         <div
           ref={ref}
-          className="relative mx-auto mt-20 w-3/4 md:w-2/4 lg:w-5/12"
+          className="relative mx-auto mt-12 w-11/12 md:w-2/4 lg:w-5/12"
         >
           {children}
           <button
-            className="absolute right-2 top-2 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-800 "
+            className="absolute right-2 top-3 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-300 hover:text-zinc-800 md:p-1.5 "
             onClick={closeModal}
           >
             <GrClose />

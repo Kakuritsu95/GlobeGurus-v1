@@ -13,7 +13,7 @@ export const nearbyMockData = [
     types: ["bar", "point_of_interest", "establishment"],
     address: "Ευριπίδη Χασιρτζόγλου 7, Xanthi",
     imageUrl:
-      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=ATplDJa_wTP22Dae9PYJamKbTwJF7A7fp9yhWc9XFd_nN5jK2pwaNxQJTf8nnD9AWtVR9IPQHF4pFpibSDo6AVs50p9ZLZXd1hjLCEJEVka2NofnyHUYe2DY1kyo472a021qgMxi9N2IeZabP5H2p4nbGk7BM42XfAa-LWeFAgMia1FOYa_p&key=AIzaSyBfGcF3AaY_wV4MtnMsnDqqVUFU9mC6uys",
+      "https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=ATplDJa_wTP22Dae9PYJamKbTwJF7A7fp9yhWc9XFd_nN5jK2pwaNxQJTf8nnD9AWtVR9IPQHF4pFpibSDo6AVs50p9ZLZXd1hjLCEJEVka2NofnyHUYe2DY1kyo472a021qgMxi9N2IeZabP5H2p4nbGk7BM42XfAa-LWeFAgMia1FOYa_p&key=AIzaSyBfGcF3AaY_wV4MtnMsnDqqVUFU9mC6uys",
   },
   {
     name: "MANARA",

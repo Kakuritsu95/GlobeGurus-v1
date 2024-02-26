@@ -1,6 +1,6 @@
 import Spinner from "../../ui/Spinner";
 import GuideOverview from "./GuideOverview";
-import { useNearbyPlaces } from "../nearby-places/NearbyPlacesProvider";
+import { useNearbyPlaces } from "../places/NearbyPlacesProvider";
 function GuideWindow() {
   const { status } = useNearbyPlaces();
   return (

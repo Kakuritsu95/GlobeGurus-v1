@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useRef } from "react";
 const NearbyPlacesContext = createContext();
 const initialState = {
   nearbyPlaces: [],
@@ -11,6 +11,8 @@ function placesReducer(state, action) {
       return { ...state, nearbyPlaces: action.payload };
     case "nearbyPlaces/select":
       return { ...state, selectedPlace: action.payload };
+    case "nearbyPlaces/deselect":
+      return { ...state, selectedPlace: {} };
     case "nearbyPlaces/loading":
       return { ...state, status: "loading" };
     case "nearbyPlaces/idle":
@@ -23,26 +25,32 @@ function placesReducer(state, action) {
   }
 }
 function NearbyPlacesProvider({ children }) {
+  const clickedCoords = useRef({ coords: "" });
+
   function updateNearbyPlaces(places) {
     dispatch({ type: "nearbyPlaces/update", payload: places });
   }
   function selectNearbyPlace(place) {
     dispatch({ type: "nearbyPlaces/select", payload: place });
   }
+  function deselectNearbyPlace() {
+    dispatch({ type: "nearbyPlaces/deselect" });
+  }
   const [{ nearbyPlaces, selectedPlace, status }, dispatch] = useReducer(
     placesReducer,
     initialState,
   );
-  console.log(nearbyPlaces);
 
   return (
     <NearbyPlacesContext.Provider
       value={{
+        clickedCoords,
         nearbyPlaces,
         selectedPlace,
         status,
         updateNearbyPlaces,
         selectNearbyPlace,
+        deselectNearbyPlace,
         dispatch,
       }}
     >

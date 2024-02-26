@@ -1,17 +1,23 @@
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { useModalContext } from "../../ui/Modal";
-import { useNearbyPlaces } from "../nearby-places/NearbyPlacesProvider";
+import { useNearbyPlaces } from "../places/NearbyPlacesProvider";
 import fakeService from "../../services/fakeService";
+
 function GetClickCoords() {
   const { openModal } = useModalContext();
-  const { updateNearbyPlaces, dispatch } = useNearbyPlaces();
+  const { updateNearbyPlaces, clickedCoords, dispatch } = useNearbyPlaces();
+
   useMapEvents({
     click: async (e) => {
-      dispatch({ type: "nearbyPlaces/loading" });
-      const data = await fakeService(true);
-      openModal();
-      updateNearbyPlaces(data);
-      dispatch({ type: "nearbyPlaces/idle" });
+      try {
+        clickedCoords.current.coords = [e.latlng.lat, e.latlng.lng];
+        console.log(clickedCoords);
+        dispatch({ type: "nearbyPlaces/loading" });
+        const data = await fakeService(true);
+        openModal();
+        updateNearbyPlaces(data);
+        dispatch({ type: "nearbyPlaces/idle" });
+      } catch {}
     },
   });
 }

@@ -2,8 +2,8 @@ import Map from "../features/guides/Map";
 import GuideWindow from "../features/guides/GuideWindow";
 import Modal from "../ui/Modal";
 import Tab from "../ui/Tab";
-import NearbyPlaces from "../features/nearby-places/NearbyPlaces";
-import AddPlaceForm from "../features/nearby-places/AddPlaceForm";
+import NearbyPlaces from "../features/places/NearbyPlaces";
+import AddPlaceForm from "../features/places/AddPlaceForm";
 
 function EditGuide() {
   return (
@@ -15,8 +15,8 @@ function EditGuide() {
           <Tab>
             <Tab.Layout>
               <Tab.Content>
-                <NearbyPlaces />
                 <AddPlaceForm />
+                <NearbyPlaces />
               </Tab.Content>
             </Tab.Layout>
           </Tab>

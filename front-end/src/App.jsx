@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EditGuide from "./pages/EditGuide";
 import AppLayout from "./ui/AppLayout";
-import NearbyPlacesProvider from "./features/nearby-places/NearbyPlacesProvider";
+import NearbyPlacesProvider from "./features/places/NearbyPlacesProvider";
+import UserGuides from "./pages/UserGuides";
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,7 +17,7 @@ function App() {
               </NearbyPlacesProvider>
             }
           ></Route>
-          <Route path="/guides" element={<div>guides</div>}></Route>
+          <Route path="/guides" element={<UserGuides />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
