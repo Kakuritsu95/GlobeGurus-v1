@@ -1,6 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 const { getGuideById } = require("../middlewares/guideMiddlewares");
-const userAuth = require("../middlewares/userAuthorizationMiddleware");
+const { authorizeUser } = require("../middlewares/userAuthMiddlewares");
 const {
   createGuide,
   getAllGuides,
@@ -8,8 +9,11 @@ const {
 } = require("../controllers/guideControllers");
 
 const guidesRouter = express.Router();
-
-guidesRouter.route("/").get(userAuth, getAllGuides).post(createGuide);
+const upload = multer();
+guidesRouter
+  .route("/")
+  .get(authorizeUser, getAllGuides)
+  .post(upload.single("guideImage"), createGuide);
 
 guidesRouter
   .route("/:id")

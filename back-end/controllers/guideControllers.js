@@ -1,8 +1,11 @@
 const Guide = require("../schemas/guideSchema");
+const uploadImage = require("../helpers/uploadImage");
 async function createGuide(req, res) {
   try {
     const guide = req.body;
-    const newGuide = new Guide(guide);
+    const imageFile = req.file;
+    const imageUrl = await uploadImage("guideImages", imageFile);
+    const newGuide = new Guide({ ...guide, imageUrl });
     const savedGuide = await newGuide.save();
     if (!savedGuide)
       return res.status(500).json({
@@ -10,7 +13,7 @@ async function createGuide(req, res) {
           "Something went wrong the guide wasn't submitted to the database",
       });
 
-    res.json(newGuide);
+    res.json(savedGuide);
   } catch (err) {
     res.json({ message: err.message });
   }

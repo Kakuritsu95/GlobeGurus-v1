@@ -12,7 +12,7 @@ const userSchema = Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", function (next) {
   const hashedPassword = bcrypt.hashSync(this.password, 10);
   if (!hashedPassword) throw new Error("Could not create user");
   this.password = hashedPassword;

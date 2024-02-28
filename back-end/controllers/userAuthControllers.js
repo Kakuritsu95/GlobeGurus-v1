@@ -8,8 +8,10 @@ async function signupController(req, res) {
     const newUser = new User(user);
     const savedUser = await newUser.save();
     if (!savedUser) res.status(403).json("Couldnt create account");
-    res.json(savedUser);
-  } catch (err) {}
+    res.status(201).json({ message: "Account successefully created!" });
+  } catch (err) {
+    res.send(err);
+  }
 }
 
 function loginController(req, res) {
@@ -19,7 +21,7 @@ function loginController(req, res) {
     JSON.stringify(userData),
     process.env.SECRET_ACCESS_TOKEN
   );
-  res.cookie("authToken", accessToken).json({ message: accessToken });
+  res.cookie("authToken", accessToken).json({ userData });
 }
 
 module.exports = { signupController, loginController };
