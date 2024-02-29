@@ -1,5 +1,5 @@
 import { useState } from "react";
-import placeTags from "../../../data/placeTags";
+import placeTags from "../../../constants/placeTags";
 import { RiArrowDropDownLine } from "react-icons/ri";
 function DisplayAddPlaceType({ register }) {
   const [isOpen, setIsOpen] = useState();

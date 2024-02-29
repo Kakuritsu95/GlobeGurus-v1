@@ -11,15 +11,22 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-const guidesRouter = require("./routes/guidesRouter");
+const router = require("./routes/guidesRouter");
+
 const nearbyPlacesRouter = require("./routes/nearbyPlacesRouter");
+
 const usersAuthRouter = require("./routes/usersAuthRouter");
+
 app.use(express.json());
+
 app.use(cookieParser());
+
 app.use(cors({ origin: "http://localhost:5173" }));
 
-app.use("/guides", guidesRouter);
+app.use("/guides", router);
+
 app.use("/nearby-places", nearbyPlacesRouter);
+
 app.use("/auth", usersAuthRouter);
 
 app.listen(process.env.PORT, () => {

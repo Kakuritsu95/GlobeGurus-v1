@@ -3,6 +3,7 @@ import EditGuide from "./pages/EditGuide";
 import AppLayout from "./ui/AppLayout";
 import NearbyPlacesProvider from "./features/places/NearbyPlacesProvider";
 import UserGuides from "./pages/UserGuides";
+import { APP_ROUTES } from "../constants/apiRoutes";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
               </NearbyPlacesProvider>
             }
           ></Route>
-          <Route path="/guides" element={<UserGuides />}></Route>
+          <Route path={APP_ROUTES.GUIDES_PAGE} element={<UserGuides />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
