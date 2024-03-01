@@ -7,6 +7,7 @@ async function getGuideById(req, res, next) {
     if (!guide) {
       return res.status(404).json({ error: "Guide not found" });
     }
+
     req.guide = guide;
     next();
   } catch (err) {

@@ -6,17 +6,20 @@ const { authorizeUser } = require("../middlewares/userAuthMiddlewares");
 
 const {
   createGuide,
-  getAllGuides,
+  getUserGuides,
   updateGuide,
+  deleteGuide,
 } = require("../controllers/guideControllers");
 
-router.get("/", authorizeUser, getAllGuides);
+router.get("/", authorizeUser, getUserGuides);
 
 router.get("/:id", getGuideById, async (req, res) => {
   res.json(req.guide);
 });
-router.post("/", upload.single("guideImage"), createGuide);
+router.post("/", authorizeUser, upload.single("guideImage"), createGuide);
 
 router.patch("/:id", getGuideById, updateGuide);
+
+router.delete("/:id", getGuideById, deleteGuide);
 
 module.exports = router;

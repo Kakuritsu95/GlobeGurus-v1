@@ -9,6 +9,7 @@ const guide = new Schema(
     imageUrl: String,
     thumbsUp: [{ type: Schema.Types.ObjectId, ref: "User" }],
     places: [placeSchema],
+    description: { type: String, required: true },
     comments: [
       {
         commenter: { type: Schema.Types.ObjectId, ref: "User" },
