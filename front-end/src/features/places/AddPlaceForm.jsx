@@ -12,7 +12,17 @@ function AddPlaceForm() {
   });
 
   function onSubmit(data) {
-    console.log({ ...data, coords: clickedCoords.current.coords });
+    const formData = new FormData();
+
+    for (const prop in data) {
+      formData.append(prop, data[prop]);
+    }
+    fetch("http://localhost:7000/try", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   }
   return (
     <form
@@ -22,7 +32,7 @@ function AddPlaceForm() {
       <h3 className="border-b pb-4 text-lg font-semibold text-zinc-900">
         {`Add ${selectedPlace.name ? selectedPlace.name : "place"}`}
       </h3>
-      <DisplayAddPlaceType types={selectedPlace.types} register={register} />
+      <DisplayAddPlaceType register={register} />
       <div>
         <label
           htmlFor="name"

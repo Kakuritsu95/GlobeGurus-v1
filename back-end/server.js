@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config(".env");
 const { v2: cloudinary } = require("cloudinary");
+const upload = require("multer")();
 const app = express();
 connectMongo(process.env.MONGOURI);
 cloudinary.config({
@@ -28,6 +29,12 @@ app.use("/guides", router);
 app.use("/nearby-places", nearbyPlacesRouter);
 
 app.use("/auth", usersAuthRouter);
+
+app.post("/try", (req, res) => {
+  console.log(req.body);
+
+  res.json({ data: req.body });
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`server listening to port ${process.env.PORT}`);

@@ -14,4 +14,16 @@ function uploadImage(foldername, imageFile) {
   });
 }
 
-module.exports = uploadImage;
+async function deleteImage(folderName, url) {
+  const publicId = url.split("/").at(-1).split(".").at(0);
+
+  try {
+    console.log(
+      `${folderName}/${publicId}` === "guideImages/slx6sblifzx5nnpgqmuj"
+    );
+    await cloudinary.uploader.destroy(`${folderName}/${publicId}`);
+  } catch (err) {
+    throw err;
+  }
+}
+module.exports = { uploadImage, deleteImage };

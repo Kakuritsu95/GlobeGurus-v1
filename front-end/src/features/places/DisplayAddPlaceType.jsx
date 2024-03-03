@@ -15,7 +15,7 @@ function DisplayAddPlaceType({ register }) {
       </button>
 
       {isOpen && (
-        <ul className="grid grid-cols-2 gap-x-5 gap-y-1.5 lg:grid-cols-3 lg:gap-x-10  2xl:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-x-5 gap-y-1.5 lg:grid-cols-3 lg:gap-x-20  ">
           {placeTags.map((tag, i) => (
             <li
               key={i}

@@ -1,5 +1,5 @@
 const Guide = require("../schemas/guideSchema");
-const uploadImage = require("../helpers/uploadImage");
+const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 async function createGuide(req, res) {
   const user = req.user;
   try {
@@ -22,9 +22,13 @@ async function createGuide(req, res) {
 async function updateGuide(req, res) {
   try {
     const guide = req.guide;
+    const newImage = req.file;
 
-    guide.set(req.body);
-
+    if (req.file) {
+      deleteImage("guideImages", guide.imageUrl);
+      const newImageUrl = await uploadImage("guideImages", newImage);
+      guide.set({ ...req.body, imageUrl: newImageUrl });
+    } else guide.set(req.body);
     const updatedGuide = await guide.save();
     if (!updatedGuide)
       return res.status(500).json({ message: "Could not update guide" });
@@ -38,18 +42,20 @@ async function updateGuide(req, res) {
 async function deleteGuide(req, res) {
   try {
     const guideId = req.guide._id;
+
     const deletedGuide = await Guide.findByIdAndDelete(guideId);
     if (!deletedGuide)
       res.status(500).json({ message: "Guide couldnt be deleted" });
 
-    res.json("guide deleted");
-  } catch (error) {}
+    await deleteImage("guideImages", req.guide.imageUrl);
+    res.json({ message: "Guide Deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 }
 
 async function getUserGuides(req, res) {
   const user = req.user;
-  console.log(user);
-
   try {
     const userGuides = await Guide.find({ owner: user._id });
 

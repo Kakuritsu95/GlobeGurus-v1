@@ -33,7 +33,7 @@ async function getNearbyPlaces(req, res) {
         console.log(currentPlace.photos);
 
         const imageUrl = currentPlace?.photos
-          ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${currentPlace?.photos[0]?.photo_reference}&key=${process.env.GMAPSKEY}`
+          ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=${currentPlace?.photos[0]?.photo_reference}&key=${process.env.GMAPSKEY}`
           : "";
 
         return [...nearbyPlaces, { name, coords, types, address, imageUrl }];
