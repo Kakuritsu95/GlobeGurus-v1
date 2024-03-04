@@ -67,4 +67,21 @@ async function getUserGuides(req, res) {
   }
 }
 
-module.exports = { createGuide, updateGuide, getUserGuides, deleteGuide };
+async function getAllGuides(req, res) {
+  const { page, perPage } = req.query;
+  // console.log(page, perPage);
+  const allGuides = await Guide.aggregatePagination(+page, +perPage).exec();
+  if (!allGuides)
+    res
+      .status(500)
+      .json({ message: "Could not load guides, please try again later!" });
+  res.json(allGuides);
+}
+
+module.exports = {
+  createGuide,
+  updateGuide,
+  getUserGuides,
+  deleteGuide,
+  getAllGuides,
+};

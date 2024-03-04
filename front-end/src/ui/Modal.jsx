@@ -38,7 +38,7 @@ function Window({ children }) {
         >
           {children}
           <button
-            className="absolute right-2 top-3 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-300 hover:text-zinc-800 md:p-1.5 "
+            className="absolute right-2 top-3 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-800 active:bg-zinc-600 md:p-1 "
             onClick={closeModal}
           >
             <GrClose />

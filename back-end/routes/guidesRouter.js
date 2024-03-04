@@ -12,6 +12,7 @@ const {
   getUserGuides,
   updateGuide,
   deleteGuide,
+  getAllGuides,
 } = require("../controllers/guideControllers");
 const {
   addPlace,
@@ -20,9 +21,12 @@ const {
 } = require("../controllers/placeControllers");
 router.get("/", authorizeUser, getUserGuides);
 
+router.get("/all", getAllGuides);
+
 router.get("/:guideId", getGuideById, async (req, res) => {
   res.json(req.guide);
 });
+
 router.post("/", authorizeUser, upload.single("guideImage"), createGuide);
 
 router.patch(
@@ -34,7 +38,13 @@ router.patch(
   updateGuide
 );
 
-router.delete("/:guideId", getGuideById, deleteGuide);
+router.delete(
+  "/:guideId",
+  authorizeUser,
+  getGuideById,
+  protectGuide,
+  deleteGuide
+);
 
 router.put(
   "/:guideId/place/",

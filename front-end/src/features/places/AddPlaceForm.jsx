@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import Button from "../../ui/Button";
 import DisplayAddPlaceType from "./DisplayAddPlaceType";
 import { useNearbyPlaces } from "./NearbyPlacesProvider";
 function AddPlaceForm() {
@@ -97,12 +98,7 @@ function AddPlaceForm() {
           {...register("description")}
         />
       </div>
-      <button
-        type="submit"
-        className="w-full rounded bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:w-auto md:text-base"
-      >
-        Submit
-      </button>
+      <Button>Submit</Button>
     </form>
   );
 }

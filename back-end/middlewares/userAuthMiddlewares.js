@@ -13,7 +13,7 @@ async function authenticateUser(req, res, next) {
     req.user = user;
     next();
   } catch (err) {
-    res.status(500).json({ message: "Wrong user credentials" });
+    res.status(500).json({ message: err });
   }
 }
 
@@ -30,4 +30,5 @@ async function authorizeUser(req, res, next) {
     });
   }
 }
+
 module.exports = { authenticateUser, authorizeUser };

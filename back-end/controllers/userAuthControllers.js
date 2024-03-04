@@ -24,4 +24,14 @@ function loginController(req, res) {
   res.cookie("authToken", accessToken).json({ userData });
 }
 
-module.exports = { signupController, loginController };
+function verifyUserToken(req, res) {
+  const requestToken = req.cookies.authToken;
+  if (requestToken) {
+    const loggedUser = jwt.verify(
+      requestToken,
+      process.env.SECRET_ACCESS_TOKEN
+    );
+    if (loggedUser) return res.json(loggedUser);
+  }
+}
+module.exports = { signupController, loginController, verifyUserToken };

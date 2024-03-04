@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useContext, createContext, useState } from "react";
 import { GoDotFill } from "react-icons/go";
+import Button from "./Button";
+
 const TabContext = createContext();
 function Tab({ children }) {
   const [openTab, setOpenTab] = useState(0);
@@ -47,21 +49,13 @@ function Layout({ children }) {
       </div>
       {children}
       <div className="mx-2 my-5 flex justify-between md:mx-0">
-        <button
-          disabled={openTab === 0}
-          onClick={prevTab}
-          className={`text w-20 cursor-pointer rounded-full border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 md:px-3 md:py-1.5 ${openTab === 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
-        >
+        <Button type="default" onClick={prevTab}>
           Previous
-        </button>
+        </Button>
 
-        <button
-          disabled={numTabs === openTab + 1}
-          onClick={nextTab}
-          className={`w-20 cursor-pointer rounded-full border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-1 focus:ring-gray-100 md:px-3 md:py-1.5 ${numTabs === openTab + 1 ? "cursor-not-allowed" : "cursor-pointer"} `}
-        >
+        <Button type="default" onClick={nextTab}>
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

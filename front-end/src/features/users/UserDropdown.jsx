@@ -15,10 +15,11 @@ function UserDropdown({ screen }) {
     largeScreen: "hidden md:flex",
   };
   return (
-    <div className={`relative ${mediaType[screen]}`}>
+    // <div className={`relative`}>
+    <>
       <button
         onClick={toggleDropdown}
-        className="relative w-10 rounded-full  hover:bg-blue-200 "
+        className="relative w-10 rounded-full hover:bg-blue-200  "
       >
         <img
           src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png"
@@ -52,7 +53,8 @@ function UserDropdown({ screen }) {
           </DropDownLink>
         </ul>
       </div>
-    </div>
+    </>
+    // </div>
   );
 }
 

@@ -20,4 +20,8 @@ const guide = new Schema(
   },
   { timestamps: true }
 );
+
+guide.statics.aggregatePagination = function (skip, limit) {
+  return this.aggregate([{ $skip: (skip - 1) * limit }, { $limit: limit }]);
+};
 module.exports = model("Guide", guide);
