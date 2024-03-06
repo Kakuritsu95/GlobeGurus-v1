@@ -1,74 +1,69 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
-
+import FormInputField from "../../ui/FormInputField";
+import { useForm } from "react-hook-form";
+import { signup } from "../../services/userServices";
+import Message from "../../ui/Message";
 function SignupForm() {
+  const [response, setResponse] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid, isSubmitted },
+  } = useForm();
+
+  async function onSubmit(data) {
+    const response = await signup(data);
+    setResponse(response);
+  }
+
   return (
-    <form className="w-full space-y-6 text-sm md:text-base">
-      <div>
-        <label
-          htmlFor="userName"
-          className="mb-2 block  font-medium text-zinc-200"
-        >
-          User name
-        </label>
-        <input
-          type="text"
-          id="userName"
-          className=" block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5  text-zinc-800 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="email" className="mb-2 block font-medium text-zinc-200">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          className=" block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5  text-zinc-800 shadow-sm focus:border-blue-500 focus:ring-blue-500 md:text-base"
-          required
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="password"
-          className="mb-2 block  font-medium text-zinc-200"
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5  text-zinc-800 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      <div className="flex items-start">
-        <div className="flex h-5 items-center">
-          <input
-            id="terms"
-            type="checkbox"
-            value=""
-            className="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300"
-            required
-          />
-        </div>
-        <label
-          htmlFor="terms"
-          className="ms-2  font-medium text-zinc-200 dark:text-gray-300"
-        >
-          I agree with the{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline dark:text-blue-500"
-          >
-            terms and conditions
-          </a>
-        </label>
-      </div>
-      <Button>Register new account</Button>
+    <form
+      className="w-full space-y-6 text-sm md:text-base"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      {response.message && (
+        <Message isSuccess={response.isSuccess}>{response.message}</Message>
+      )}
+      <FormInputField
+        labelName="username"
+        register={register}
+        error={errors?.username}
+        disabled={isSubmitting}
+        validation={{
+          required: { value: true, message: `username is required` },
+        }}
+      />
+      <FormInputField
+        labelName="email"
+        register={register}
+        error={errors?.email}
+        disabled={isSubmitting}
+        validation={{
+          required: { value: true, message: `Email is required` },
+          pattern: {
+            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+            message: "Invalid email format",
+          },
+        }}
+      />
+      <FormInputField
+        labelName="password"
+        register={register}
+        error={errors?.password}
+        disabled={isSubmitting}
+        validation={{
+          required: { value: true, message: `Password is required` },
+          minLength: {
+            value: 5,
+            message: "Password must contain more than 5 characters",
+          },
+        }}
+      />
+      <Button disabled={isSubmitting || (!isValid && isSubmitted)}>
+        Register new account
+      </Button>
       <div className="my-3 font-light text-zinc-300 md:my-5">
         <span> Already have an account? </span>
         <Link

@@ -8,8 +8,8 @@ import AddPlaceForm from "../features/places/AddPlaceForm";
 function EditGuide() {
   return (
     <div className="grid h-dvh grid-cols-5 grid-rows-3">
+      <GuideWindow />
       <Modal>
-        <GuideWindow />
         <Map />
         <Modal.Window>
           <Tab>

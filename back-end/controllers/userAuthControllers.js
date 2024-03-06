@@ -4,10 +4,12 @@ async function signupController(req, res) {
   try {
     const user = req.body;
     const existingUser = await User.findOne({ email: user.email });
-    if (existingUser) return res.status(409).json("Email already in use");
+    if (existingUser)
+      return res.status(409).json({ message: "Email already in use" });
     const newUser = new User(user);
     const savedUser = await newUser.save();
-    if (!savedUser) res.status(403).json("Couldnt create account");
+
+    if (!savedUser) return res.status(403).json("Couldnt create account");
     res.status(201).json({ message: "Account successefully created!" });
   } catch (err) {
     res.send(err);
@@ -21,11 +23,12 @@ function loginController(req, res) {
     JSON.stringify(userData),
     process.env.SECRET_ACCESS_TOKEN
   );
-  res.cookie("authToken", accessToken).json({ userData });
+  res.cookie("authToken", accessToken).json(userData);
 }
 
 function verifyUserToken(req, res) {
   const requestToken = req.cookies.authToken;
+
   if (requestToken) {
     const loggedUser = jwt.verify(
       requestToken,

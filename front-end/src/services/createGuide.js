@@ -1,3 +1,4 @@
+import axios from "axios";
 export default async function createGuide(data) {
   const { territory, title, description, guideImage } = data;
   const formData = new FormData();
@@ -7,10 +8,6 @@ export default async function createGuide(data) {
   formData.append("title", title);
   formData.append("description", description);
 
-  const req = await fetch("http://localhost:7000/guides", {
-    method: "POST",
-    body: formData,
-  });
-  const res = await req.json();
-  console.log(res);
+  const response = await axios.post("http://localhost:7000/guides", formData);
+  console.log(response);
 }

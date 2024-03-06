@@ -4,7 +4,7 @@ const styledDropDownLink =
 function DropDownLink({ children, handleClick, to, type }) {
   if (type === "button")
     return (
-      <button className={styledDropDownLink} to={to}>
+      <button onClick={handleClick} className={styledDropDownLink} to={to}>
         {children}
       </button>
     );

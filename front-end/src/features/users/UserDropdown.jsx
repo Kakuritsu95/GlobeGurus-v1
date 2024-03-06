@@ -1,22 +1,25 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "./userSlice";
+import useDetectClick from "../../hooks/useDetectClick";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FiMap } from "react-icons/fi";
 import { FaBookBookmark } from "react-icons/fa6";
 import { RiProfileFill } from "react-icons/ri";
 import { GiExitDoor } from "react-icons/gi";
 import DropDownLink from "../../ui/DropDownLink";
-function UserDropdown({ screen }) {
+function UserDropdown() {
   const [isDrowndownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
+  const ref = useDetectClick(() => setIsDropdownOpen(false));
+
   function toggleDropdown() {
     setIsDropdownOpen((isOpen) => !isOpen);
   }
-  const mediaType = {
-    smallScreen: "flex md:hidden",
-    largeScreen: "hidden md:flex",
-  };
+
   return (
-    // <div className={`relative`}>
-    <>
+    // <div ref={ref}>
+    <div ref={ref} className="flex">
       <button
         onClick={toggleDropdown}
         className="relative w-10 rounded-full hover:bg-blue-200  "
@@ -47,14 +50,18 @@ function UserDropdown({ screen }) {
             <span>Profile</span>
             <RiProfileFill />
           </DropDownLink>
-          <DropDownLink type="button">
+          <DropDownLink
+            handleClick={() => {
+              dispatch(logoutUser());
+            }}
+            type="button"
+          >
             <span>Logout</span>
             <GiExitDoor />
           </DropDownLink>
         </ul>
       </div>
-    </>
-    // </div>
+    </div>
   );
 }
 

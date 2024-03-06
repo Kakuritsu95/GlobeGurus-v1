@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "./Logo";
 import NavLinkItem from "./NavLinkItem";
@@ -7,6 +8,7 @@ import Button from "./Button";
 import { Link } from "react-router-dom";
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const user = useSelector((store) => store.user);
   function handleToggleDropdown() {
     setOpen((prevState) => !prevState);
   }
@@ -16,7 +18,7 @@ function Navbar() {
         <Logo />
         <div className="inline-flex items-center space-x-5">
           <div className="relative flex md:hidden">
-            {/* <UserDropdown /> */}
+            {user.id && <UserDropdown />}
           </div>
 
           <button
@@ -31,31 +33,42 @@ function Navbar() {
             !open && "hidden"
           } w-full  items-center md:flex md:w-auto`}
         >
-          <div className="flex space-x-6">
+          <div className="flex  space-x-6">
             <ul className="mt-4 flex w-full flex-col items-center rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row  md:space-x-8 md:border-0 md:bg-white md:p-0">
               <NavLinkItem to="/">Home</NavLinkItem>
               <NavLinkItem to="/explore">Explore</NavLinkItem>
-              <div className="mt-6 flex w-full flex-col space-y-3 px-3 md:hidden">
-                <Button type="brand" to="/login">
-                  Login
-                </Button>
-
-                <span className="text-center font-light">
-                  dont have an account yet?{" "}
-                  <Link
-                    to="/signup"
-                    className="font-semibold underline hover:text-blue-800"
+              {!user.id && (
+                <div className="mt-6 flex w-full flex-col space-y-3 px-3 md:hidden">
+                  <Button
+                    type="brand"
+                    to="/login"
+                    handleClick={handleToggleDropdown}
                   >
-                    Sign-up
-                  </Link>
-                </span>
-              </div>
+                    Login
+                  </Button>
+
+                  <span className="text-center font-light">
+                    dont have an account yet?{" "}
+                    <Link
+                      to="/signup"
+                      className="font-semibold underline hover:text-blue-800"
+                    >
+                      Sign-up
+                    </Link>
+                  </span>
+                </div>
+              )}
             </ul>
             <div className="relative hidden md:flex">
-              {/* <UserDropdown /> */}
-              <Button to="signup" type="brand">
-                Sign in
-              </Button>
+              {user.id ? (
+                <UserDropdown />
+              ) : (
+                <div>
+                  <Button to="login" type="brand">
+                    Sign in
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

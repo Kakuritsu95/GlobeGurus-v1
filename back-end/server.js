@@ -4,7 +4,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config(".env");
 const { v2: cloudinary } = require("cloudinary");
-const upload = require("multer")();
 const app = express();
 connectMongo(process.env.MONGOURI);
 cloudinary.config({
@@ -22,7 +21,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use("/guides", router);
 

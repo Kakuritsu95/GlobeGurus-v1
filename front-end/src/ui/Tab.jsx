@@ -7,12 +7,13 @@ const TabContext = createContext();
 function Tab({ children }) {
   const [openTab, setOpenTab] = useState(0);
   const [numTabs, setNumTabs] = useState(0);
-
+  console.log(openTab, numTabs);
   function nextTab() {
-    if (openTab === numTabs) return;
+    if (openTab + 1 === numTabs) return;
     setOpenTab((tab) => tab + 1);
   }
   function prevTab() {
+    if (openTab == 0) return;
     setOpenTab((tab) => tab - 1);
   }
   function setTab(index) {
@@ -49,11 +50,11 @@ function Layout({ children }) {
       </div>
       {children}
       <div className="mx-2 my-5 flex justify-between md:mx-0">
-        <Button type="default" onClick={prevTab}>
+        <Button type="default" handleClick={prevTab}>
           Previous
         </Button>
 
-        <Button type="default" onClick={nextTab}>
+        <Button type="default" handleClick={nextTab}>
           Next
         </Button>
       </div>

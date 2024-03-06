@@ -4,8 +4,8 @@ import { RxDotsVertical } from "react-icons/rx";
 function GuideOverview() {
   const { title, description, teritory, imgUrl } = mockDataGuide;
   return (
-    <div className="max-h-70 col-span-3 overflow-auto px-5 pt-6 shadow md:col-span-1  md:row-span-full md:row-start-1 md:px-10 md:pt-10 ">
-      <div className="relative flex items-center space-x-4 ">
+    <div className=" col-span-3 mx-auto overflow-auto  px-5 pt-6 sm:col-span-2  xl:col-span-1 xl:row-span-full xl:row-start-1 xl:px-10 xl:pt-10">
+      <div className="relative flex items-center space-x-4">
         <img src={imgUrl} className="h-20 w-20 rounded-full" />
         <div>
           <h4 className="text-base font-normal underline">{teritory}</h4>

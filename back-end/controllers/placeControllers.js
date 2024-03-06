@@ -1,10 +1,6 @@
 const { uploadImage } = require("../helpers/handleImageBuckets");
 
 async function addPlace(req, res) {
-  if (req.user._id !== req.guide.owner.toString())
-    res.status(500).json({
-      message: "Authorization failed has not guide authorization access",
-    });
   try {
     const guide = req.guide;
     const place = req.body;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Button({ children, type, disabled, onClick, to }) {
+function Button({ children, type, disabled, handleClick, to }) {
   const types = {
     default:
       "bg-slate-700 px-3 py-2 rounded-full md:px-4 md:pr-5 hover:bg-slate-600 text-sm w-22 md:text-base w-24 focus:bg-slate-500",
@@ -16,14 +16,15 @@ function Button({ children, type, disabled, onClick, to }) {
         className={`text-center font-medium text-white ${types[type]}`}
         to={to}
         disabled={disabled}
+        onClick={handleClick}
       >
         {children}
       </Link>
     ) : (
       <button
         type="submit"
-        className={`text-center font-medium text-white ${types[type]}`}
-        onClick={onClick}
+        className={`text-center font-medium text-white ${disabled && "cursor-not-allowed bg-zinc-400 text-gray-800 hover:bg-zinc-400"} ${types[type]}`}
+        onClick={handleClick}
         disabled={disabled}
       >
         {children}

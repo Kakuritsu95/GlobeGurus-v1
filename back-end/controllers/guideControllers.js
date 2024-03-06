@@ -2,11 +2,12 @@ const Guide = require("../schemas/guideSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 async function createGuide(req, res) {
   const user = req.user;
+  console.log(req.user);
   try {
     const guide = req.body;
     const imageFile = req.file;
     const imageUrl = await uploadImage("guideImages", imageFile);
-    const newGuide = new Guide({ ...guide, imageUrl, owner: user._id });
+    const newGuide = new Guide({ ...guide, imageUrl, owner: user.id });
     const savedGuide = await newGuide.save();
     if (!savedGuide)
       return res.status(500).json({

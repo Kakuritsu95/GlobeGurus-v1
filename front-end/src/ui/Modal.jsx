@@ -31,7 +31,7 @@ function Window({ children }) {
   return (
     isOpen &&
     createPortal(
-      <div className="absolute right-0 top-0 z-50 h-dvh w-dvw justify-center bg-gray-800/90">
+      <div className="absolute right-0 top-0 z-40 h-dvh w-dvw justify-center bg-gray-800/90">
         <div
           ref={ref}
           className="relative mx-auto mt-12 w-11/12 md:w-2/4 lg:w-5/12"

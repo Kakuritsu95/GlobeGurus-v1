@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { useModalContext } from "../../ui/Modal";
 import { useNearbyPlaces } from "../places/NearbyPlacesProvider";
 import fakeService from "../../services/fakeService";
-import { API_ROUTES } from "../../../constants/apiRoutes";
+import { API_ROUTES } from "../../../constants/ROUTES";
 function GetClickCoords() {
   const { openModal } = useModalContext();
   const { updateNearbyPlaces, clickedCoords, dispatch } = useNearbyPlaces();
@@ -33,7 +33,7 @@ function Map() {
       center={[41.136351, 24.887598]}
       zoom={12}
       zoomControl={false}
-      className="z-10 col-span-2 h-full cursor-default md:col-span-2 md:row-span-full "
+      className="z-10 col-span-2 h-full cursor-default sm:col-span-3 xl:col-span-2 xl:row-span-full "
     >
       <TileLayer url="https://tile.jawg.io/jawg-streets/{z}/{x}/{y}.png?access-token=MmCClUoEjeyPsaUgFn4YQoWGwRRqo6JclxsJ0fZRkH3JeMmfgDWvR2P6EcmIl9s1" />
       <GetClickCoords />

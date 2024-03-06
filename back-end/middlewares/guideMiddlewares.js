@@ -15,11 +15,15 @@ async function getGuideById(req, res, next) {
 }
 
 function protectGuide(req, res, next) {
-  if (req.user._id !== req.guide.owner.toString())
-    res.status(500).json({
-      message: "Authorization failed has not guide authorization access",
-    });
-  next();
+  try {
+    if (req.user.id !== req.guide.owner.toString())
+      return res.status(500).json({
+        message: "Authorization failed, user has no permission to modify guide",
+      });
+    next();
+  } catch (err) {
+    res.json({ message: err.message });
+  }
 }
 
 module.exports = { getGuideById, protectGuide };
