@@ -7,7 +7,7 @@ const TabContext = createContext();
 function Tab({ children }) {
   const [openTab, setOpenTab] = useState(0);
   const [numTabs, setNumTabs] = useState(0);
-  console.log(openTab, numTabs);
+ 
   function nextTab() {
     if (openTab + 1 === numTabs) return;
     setOpenTab((tab) => tab + 1);

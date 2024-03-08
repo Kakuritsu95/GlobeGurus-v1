@@ -11,13 +11,16 @@ function AddPlaceForm() {
   } = useForm({
     defaultValues: selectedPlace,
   });
-
+ console.log(selectedPlace.coords || clickedCoords.current.coords)
   function onSubmit(data) {
     const formData = new FormData();
+    data.coords = selectedPlace?.coords || clickedCoords.current.coords
 
     for (const prop in data) {
       formData.append(prop, data[prop]);
     }
+    
+
     fetch("http://localhost:7000/try", {
       method: "POST",
       body: formData,

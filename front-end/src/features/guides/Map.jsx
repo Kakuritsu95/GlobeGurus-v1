@@ -11,7 +11,7 @@ function GetClickCoords() {
     click: async (e) => {
       try {
         clickedCoords.current.coords = [e.latlng.lat, e.latlng.lng];
-        console.log(clickedCoords);
+       
         dispatch({ type: "nearbyPlaces/loading" });
         //REAL SERVICE
         // const res = await fetch(
@@ -20,9 +20,9 @@ function GetClickCoords() {
         // const data = await res.json();
         //FAKE SERVICE
         const data = await fakeService(true);
+        dispatch({ type: "nearbyPlaces/idle" });
         openModal();
         updateNearbyPlaces(data);
-        dispatch({ type: "nearbyPlaces/idle" });
       } catch {}
     },
   });

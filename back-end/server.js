@@ -1,16 +1,14 @@
 const express = require("express");
 const connectMongo = require("./config/connectMongo");
+const configureCloudinary = require("./config/configureCloudinary")
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config(".env");
-const { v2: cloudinary } = require("cloudinary");
+
 const app = express();
 connectMongo(process.env.MONGOURI);
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+configureCloudinary()
+
 const router = require("./routes/guidesRouter");
 
 const nearbyPlacesRouter = require("./routes/nearbyPlacesRouter");
