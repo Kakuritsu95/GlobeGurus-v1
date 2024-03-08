@@ -1,6 +1,6 @@
 function FormInputField({ labelName, validation, register, error, disabled }) {
   const labelNameCapital = labelName[0].toUpperCase() + labelName.slice(1);
-  console.log(validation);
+ 
   return (
     <div>
       <label

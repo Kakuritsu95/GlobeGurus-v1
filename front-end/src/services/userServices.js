@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_ROUTES } from "../../constants/Routes";
+import { API_ROUTES } from "../../constants/ROUTES";
 export async function signup(data) {
   try {
     const response = await axios.post(API_ROUTES.SIGNUP, data);
@@ -10,6 +10,7 @@ export async function signup(data) {
 }
 
 export async function login(data) {
+
   try {
     const userData = await axios.post(API_ROUTES.LOGIN, data);
 

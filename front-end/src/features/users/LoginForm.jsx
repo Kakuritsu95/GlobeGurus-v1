@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";
 import Message from "../../ui/Message";
-function SignupForm() {
+function LoginForm() {
   const [errorMessage, setErrorMessage] = useState();
   const dispatch = useDispatch();
   const {
@@ -18,8 +18,8 @@ function SignupForm() {
   } = useForm();
 
   async function onSubmit(data) {
+   
     const { userData, errorMessage } = await login(data);
-
     if (errorMessage) {
       return setErrorMessage(errorMessage);
     }
@@ -31,7 +31,7 @@ function SignupForm() {
 
   if (isSubmitSuccessful && !errorMessage)
     return <Navigate to="/" replace={true} />;
-  console.log(isValid);
+ 
   return (
     <form
       className="w-full space-y-6 text-sm md:text-base"
@@ -78,4 +78,4 @@ function SignupForm() {
   );
 }
 
-export default SignupForm;
+export default LoginForm;
