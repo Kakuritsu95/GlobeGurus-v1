@@ -1,4 +1,4 @@
-import Map from "../features/guides/Map";
+import Map from "../features/map/Map";
 import GuideWindow from "../features/guides/GuideWindow";
 import Modal from "../ui/Modal";
 import Tab from "../ui/Tab";

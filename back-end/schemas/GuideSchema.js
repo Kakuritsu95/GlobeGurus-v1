@@ -7,16 +7,16 @@ const guide = new Schema(
     territory: { type: String, required: true },
     title: { type: String, required: true },
     imageUrl: String,
-    thumbsUp: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    thumbsUp: [{ type: Schema.Types.ObjectId, ref: "user" }],
     places: [placeSchema],
     description: { type: String, required: true },
     comments: [
       {
-        commenter: { type: Schema.Types.ObjectId, ref: "User" },
+        commenter: { type: Schema.Types.ObjectId, ref: "user" },
         comment: String,
       },
     ],
-    owner: { type: Schema.Types.ObjectId, ref: "User" },
+    owner: { type: Schema.Types.ObjectId, ref: "user" },
   },
   { timestamps: true }
 );

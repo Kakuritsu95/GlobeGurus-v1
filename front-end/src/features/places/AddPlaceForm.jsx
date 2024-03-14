@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
-import Button from "../../ui/Button";
-import DisplayAddPlaceType from "./DisplayAddPlaceType";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { placeService } from "../../services/services";
 import { useNearbyPlaces } from "./NearbyPlacesProvider";
+import { appendFormData } from "../../helpers/appendFormData";
+import Button from "../../ui/Button";
+import FormInputField from "../../ui/FormInputField";
+import DisplayAddPlaceType from "./DisplayAddPlaceType";
 function AddPlaceForm() {
   const { selectedPlace, clickedCoords } = useNearbyPlaces();
+  const { guideId } = useParams();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -11,80 +18,70 @@ function AddPlaceForm() {
   } = useForm({
     defaultValues: selectedPlace,
   });
- console.log(selectedPlace.coords || clickedCoords.current.coords)
+
+  const { mutate: addPlace } = useMutation({
+    mutationFn: placeService.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["guide"] });
+    },
+  });
   function onSubmit(data) {
-    const formData = new FormData();
-    data.coords = selectedPlace?.coords || clickedCoords.current.coords
-
-    for (const prop in data) {
-      formData.append(prop, data[prop]);
-    }
-    
-
-    fetch("http://localhost:7000/try", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    data.coords = selectedPlace?.coords || clickedCoords.current.coords;
+    data.placeImage = data.placeImage[0];
+    const formData = appendFormData(data);
+    addPlace({ guideId, formData });
   }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-5 rounded bg-zinc-100 p-5 shadow-md md:p-9 "
     >
       <h3 className="border-b pb-4 text-lg font-semibold text-zinc-900">
-        {`Add ${selectedPlace.name ? selectedPlace.name : "place"}`}
+        {`Add ${selectedPlace?.name ? selectedPlace.name : "place"}`}
       </h3>
       <DisplayAddPlaceType register={register} />
-      <div>
-        <label
-          htmlFor="name"
-          className="mb-2 block text-sm font-medium text-gray-900 md:text-base"
-        >
-          Place name
-        </label>
-        <span className="font-thin text-red-400">{errors?.name?.message}</span>
-        <input
-          type="text"
-          id="name"
-          className="w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base"
-          {...register("name", { required: "name is required" })}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="address"
-          className="mb-2 block text-sm font-medium text-gray-900 md:text-base"
-        >
-          Place address
-        </label>
-        <span className="font-thin text-red-400">
-          {errors?.address?.message}
-        </span>
-        <input
-          type="text"
-          id="address"
-          className="w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base"
-          placeholder="Guide's title..."
-          {...register("address", { required: "address is required" })}
-        />
-      </div>
+      <FormInputField
+        labelName="name"
+        labelColor="text-zinc-800"
+        register={register}
+        validationRules={{
+          required: { value: true, message: "place name is required" },
+        }}
+        error={errors?.name}
+      />
+      <FormInputField
+        labelName="address"
+        labelColor="text-zinc-800"
+        register={register}
+        validationRules={{
+          required: { value: true, message: "place address is required" },
+        }}
+        error={errors?.address}
+      />
+
       <div>
         <label
           className="mb-2 block text-sm font-medium text-gray-900 sm:text-base "
-          htmlFor="imageFile"
+          htmlFor="placeImage"
         >
           Image file
         </label>
+        {errors?.imageFile && (
+          <span className="mb-2 block text-sm font-thin text-red-500">
+            {errors?.imageFile.message}
+          </span>
+        )}
         <input
           className="w-full cursor-pointer rounded border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
-          id="imageFile"
+          id="placeImage"
           type="file"
-          {...register("imageFile")}
+          {...register("placeImage", {
+            required: { value: true, message: "please upload a place image" },
+          })}
         />
         <div className="mt-1 text-sm text-gray-500">
-          {`Upload a picture of ${selectedPlace.length > 0 ? selectedPlace.name : "the place"} for your guide to help other users`}
+          {`Upload a picture of ${selectedPlace?.name ? selectedPlace.name : "the place"} for your guide, to help other users`}
         </div>
       </div>
       <div className=" space-y-2">

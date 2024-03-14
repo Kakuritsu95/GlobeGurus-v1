@@ -1,15 +1,29 @@
 import { useForm } from "react-hook-form";
-import createGuide from "../../services/createGuide";
+import { useNavigate } from "react-router-dom";
+import { guideService } from "../../services/services";
+import { APP_ROUTES } from "../../../constants/ROUTES";
 import Button from "../../ui/Button";
+
+import { useMutation } from "@tanstack/react-query";
+import { appendFormData } from "../../helpers/appendFormData";
 function CreateGuideForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { mutate: createGuide, isPending: isCreating } = useMutation({
+    mutationFn: guideService.create,
+    onSuccess: (guideId) => navigate(`/${APP_ROUTES.GUIDE_EDIT}/${guideId}`),
+  });
+
   function onSubmit(data) {
-    createGuide(data);
+    data.guideImage = data.guideImage[0];
+    const formData = appendFormData(data);
+    createGuide(formData);
   }
+
   return (
     <form
       className="rounded bg-zinc-100 px-9 py-9 shadow-md"
@@ -28,7 +42,7 @@ function CreateGuideForm() {
         <input
           type="text"
           id="territory"
-          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base dark:border-gray-600 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base"
           placeholder="E.g Paris"
           {...register("territory")}
         />
@@ -43,7 +57,7 @@ function CreateGuideForm() {
         <input
           type="text"
           id="title"
-          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base dark:border-gray-600 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base "
           placeholder="Guide's title..."
           {...register("title")}
         />
@@ -72,12 +86,12 @@ function CreateGuideForm() {
         <textarea
           id="description"
           rows="3"
-          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base dark:border-gray-600 dark:bg-gray-700 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 md:text-base "
           placeholder="Guide summary..."
           {...register("description")}
         />
       </div>
-      <Button>Submit</Button>
+      <Button disabled={isCreating}>Submit</Button>
     </form>
   );
 }

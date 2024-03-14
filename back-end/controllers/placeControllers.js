@@ -8,7 +8,7 @@ async function addPlace(req, res) {
     const imageUrl = await uploadImage("placesImage", imageFile);
     guide.places.push({ ...place, imageUrl });
     const updatedGuide = await guide.save();
-    res.json(updatedGuide);
+    return res.json(updatedGuide);
   } catch (err) {
     res.json(err.message);
   }

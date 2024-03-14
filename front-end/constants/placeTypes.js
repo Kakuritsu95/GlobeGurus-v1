@@ -1,4 +1,4 @@
-const placeTags = [
+const placeTypes = [
   "amusement park",
   "aquarium",
   "art gallery",
@@ -30,4 +30,4 @@ const placeTags = [
   "zoo",
 ];
 
-export default placeTags;
+export default placeTypes;

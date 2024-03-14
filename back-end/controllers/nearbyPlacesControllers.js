@@ -30,7 +30,6 @@ async function getNearbyPlaces(req, res) {
         } = currentPlace;
 
         const coords = [lat, lng];
-        console.log(currentPlace.photos);
 
         const imageUrl = currentPlace?.photos
           ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=${currentPlace?.photos[0]?.photo_reference}&key=${process.env.GMAPSKEY}`

@@ -8,15 +8,18 @@ export const API_ROUTES = {
   GUIDES: `${SERVER_URI}/guides`,
   ALL_GUIDES: `${SERVER_URI}/guides/all`,
   NEARBY_PLACES: `${SERVER_URI}/nearby-places`,
-  ADD_PLACE: (guideId)=> `${SERVER_URI}/${guideId}/place`,
-  UPDATE_PLACE: (guideId , placeId)=> `${SERVER_URI}/${guideId}/place${placeId}`,
-  DELETE_PLACE:(guideId , placeId)=> `${SERVER_URI}/${guideId}/place${placeId}`,
+  ADD_PLACE: (guideId) => `${SERVER_URI}/guides/${guideId}/place`,
+  UPDATE_PLACE: (guideId, placeId) =>
+    `${SERVER_URI}/${guideId}/place${placeId}`,
+  DELETE_PLACE: (guideId, placeId) =>
+    `${SERVER_URI}/${guideId}/place${placeId}`,
 };
 
 //APP ROUTES
 
 export const APP_ROUTES = {
   GUIDES_PAGE: "guides",
+  GUIDE_EDIT: "guides/edit",
   SIGN_UP: "signup",
   LOGIN: "login",
 };

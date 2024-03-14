@@ -1,11 +1,17 @@
-function FormInputField({ labelName, validation, register, error, disabled }) {
+function FormInputField({
+  labelName,
+  labelColor = "text-zinc-200",
+  validationRules,
+  register,
+  error,
+}) {
   const labelNameCapital = labelName[0].toUpperCase() + labelName.slice(1);
- 
+
   return (
     <div>
       <label
         htmlFor={labelName}
-        className="mb-2 block  font-medium text-zinc-200"
+        className={`mb-2 block font-medium ${labelColor}`}
       >
         {labelNameCapital}
       </label>
@@ -16,10 +22,9 @@ function FormInputField({ labelName, validation, register, error, disabled }) {
       )}
       <input
         id={labelName}
-        disabled={disabled}
-        className={`block w-full rounded-lg border  border-gray-300 ${disabled ? "bg-gray-300" : "bg-gray-50"} p-2.5  text-zinc-800 shadow-sm focus:border-blue-500 focus:ring-blue-500`}
+        className={`block w-full rounded-lg border  border-gray-300 p-2.5  text-zinc-800 shadow-sm focus:border-blue-500 focus:ring-blue-500`}
         {...register(labelName, {
-          ...validation,
+          ...validationRules,
         })}
       />
     </div>

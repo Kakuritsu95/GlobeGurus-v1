@@ -10,9 +10,10 @@ export async function signup(data) {
 }
 
 export async function login(data) {
-
   try {
-    const userData = await axios.post(API_ROUTES.LOGIN, data);
+    const userData = await axios.post(API_ROUTES.LOGIN, data, {
+      withCredentials: true,
+    });
 
     return { isSuccess: true, userData: userData.data };
   } catch (err) {
@@ -29,8 +30,9 @@ export async function verifyUser() {
         withCredentials: true,
       },
     );
+
     return userData.data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import placeTags from "../../../constants/placeTags";
+import placeTypes from "../../../constants/placeTypes";
 import { RiArrowDropDownLine } from "react-icons/ri";
 function DisplayAddPlaceType({ register }) {
   const [isOpen, setIsOpen] = useState();
@@ -16,7 +16,7 @@ function DisplayAddPlaceType({ register }) {
 
       {isOpen && (
         <ul className="grid grid-cols-2 gap-x-5 gap-y-1.5 lg:grid-cols-3 lg:gap-x-20  ">
-          {placeTags.map((tag, i) => (
+          {placeTypes.map((tag, i) => (
             <li
               key={i}
               className="font-gray flex  justify-between space-x-1 text-sm"

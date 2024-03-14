@@ -31,7 +31,7 @@ function SignupForm() {
         register={register}
         error={errors?.username}
         disabled={isSubmitting}
-        validation={{
+        validationRules={{
           required: { value: true, message: `username is required` },
         }}
       />
@@ -40,7 +40,7 @@ function SignupForm() {
         register={register}
         error={errors?.email}
         disabled={isSubmitting}
-        validation={{
+        validationRules={{
           required: { value: true, message: `Email is required` },
           pattern: {
             value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -53,7 +53,7 @@ function SignupForm() {
         register={register}
         error={errors?.password}
         disabled={isSubmitting}
-        validation={{
+        validationRules={{
           required: { value: true, message: `Password is required` },
           minLength: {
             value: 5,

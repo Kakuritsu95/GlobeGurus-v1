@@ -1,12 +1,13 @@
 import Spinner from "../../ui/Spinner";
-import GuideOverview from "./GuideOverview";
 import { useNearbyPlaces } from "../places/NearbyPlacesProvider";
+import GuideOverview from "./GuideOverview";
+import PlacesList from "../places/PlacesList";
 function GuideWindow() {
   const { status } = useNearbyPlaces();
   return (
     <>
       <GuideOverview />
-      <div className="col-span-full row-span-full row-start-2 bg-slate-500 xl:col-span-3 xl:row-start-1"></div>
+      <PlacesList />
       {status === "loading" && <Spinner />}
     </>
   );

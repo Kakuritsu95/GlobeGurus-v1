@@ -7,7 +7,7 @@ function Logo() {
         className="h-8"
         alt="GlobalGurus Logo"
       />
-      <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+      <span className="self-center whitespace-nowrap text-2xl font-semibold ">
         Global Gurus
       </span>
     </Link>

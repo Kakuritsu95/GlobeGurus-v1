@@ -23,18 +23,26 @@ function loginController(req, res) {
     JSON.stringify(userData),
     process.env.SECRET_ACCESS_TOKEN
   );
+
   res.cookie("authToken", accessToken).json(userData);
 }
 
 function verifyUserToken(req, res) {
   const requestToken = req.cookies.authToken;
+  try {
+    if (!requestToken)
+      return res.status(401).json({ message: "Unauthorized, please login" });
+    if (requestToken) {
+      const loggedUser = jwt.verify(
+        requestToken,
+        process.env.SECRET_ACCESS_TOKEN
+      );
 
-  if (requestToken) {
-    const loggedUser = jwt.verify(
-      requestToken,
-      process.env.SECRET_ACCESS_TOKEN
-    );
-    if (loggedUser) return res.json(loggedUser);
+      if (!loggedUser) return res.json({ message: "User is not logged in" });
+      return res.json(loggedUser);
+    }
+  } catch (err) {
+    return res.json({ message: "User is not logged in" });
   }
 }
 module.exports = { signupController, loginController, verifyUserToken };

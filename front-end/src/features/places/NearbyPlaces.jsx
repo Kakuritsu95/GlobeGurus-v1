@@ -13,17 +13,15 @@ function NearbyPlaces() {
         {nearbyPlaces.map((place) => (
           <li
             key={place.coords[0]}
-            className={`rounded border border-gray-200 bg-white p-2 2xl:flex dark:border-gray-700 dark:bg-gray-800 ${place === selectedPlace ? "bg-sky-200" : "bg-white"} shadow-lg xl:h-64 xl:space-x-5`}
+            className={`rounded border border-gray-200 bg-white p-2 xl:flex ${place === selectedPlace ? "bg-sky-200" : "bg-white"} shadow-lg xl:h-64 xl:space-x-5`}
           >
             <img className="max-w-full rounded" src={place.imageUrl} alt="" />
             <div className="flex-col justify-between md:flex 2xl:mt-1 2xl:px-5 ">
               <div className="2xl:space-y-8">
-                <h5 className="my-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 className="my-2 text-xl font-bold tracking-tight text-gray-900">
                   {place.name}
                 </h5>
-                <p className="mb-3  text-gray-700 dark:text-gray-400">
-                  {place.address}
-                </p>
+                <p className="mb-3  text-gray-700">{place.address}</p>
               </div>
               <button
                 onClick={() =>

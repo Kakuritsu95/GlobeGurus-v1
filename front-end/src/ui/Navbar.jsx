@@ -12,8 +12,9 @@ function Navbar() {
   function handleToggleDropdown() {
     setOpen((prevState) => !prevState);
   }
+
   return (
-    <nav className="sticky top-0 z-50 border-gray-200 bg-white shadow dark:bg-gray-900">
+    <nav className="sticky top-0 z-50 border-gray-200 bg-white shadow">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <Logo />
         <div className="inline-flex items-center space-x-5">
@@ -23,7 +24,7 @@ function Navbar() {
 
           <button
             onClick={handleToggleDropdown}
-            className="h-10 w-10 rounded text-gray-500 focus:ring-2 focus:ring-zinc-200 md:hidden dark:text-zinc-600"
+            className="h-10 w-10 rounded text-gray-500 focus:ring-2 focus:ring-zinc-200 md:hidden"
           >
             <RxHamburgerMenu className="mx-auto h-6 w-6 "></RxHamburgerMenu>
           </button>

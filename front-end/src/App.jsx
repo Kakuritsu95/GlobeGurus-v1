@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route
-              path="/"
+              path={`${APP_ROUTES.GUIDE_EDIT}/:guideId`}
               element={
                 <NearbyPlacesProvider>
                   <EditGuide>main</EditGuide>

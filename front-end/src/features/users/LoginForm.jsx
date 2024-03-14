@@ -18,7 +18,6 @@ function LoginForm() {
   } = useForm();
 
   async function onSubmit(data) {
-   
     const { userData, errorMessage } = await login(data);
     if (errorMessage) {
       return setErrorMessage(errorMessage);
@@ -31,7 +30,7 @@ function LoginForm() {
 
   if (isSubmitSuccessful && !errorMessage)
     return <Navigate to="/" replace={true} />;
- 
+
   return (
     <form
       className="w-full space-y-6 text-sm md:text-base"
@@ -42,8 +41,7 @@ function LoginForm() {
         labelName="email"
         register={register}
         error={errors?.email}
-        disabled={isSubmitting}
-        validation={{
+        validationRules={{
           required: { value: true, message: `Email is required` },
           pattern: {
             value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
@@ -55,8 +53,7 @@ function LoginForm() {
         labelName="password"
         register={register}
         error={errors?.password}
-        disabled={isSubmitting}
-        validation={{
+        validationRules={{
           required: { value: true, message: `Password is required` },
           minLength: {
             value: 5,

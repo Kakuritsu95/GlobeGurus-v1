@@ -6,19 +6,19 @@ function AccordionText({ children, wordsQuantity = 10 }) {
   const contractedText =
     children.split(" ").slice(0, wordsQuantity).join(" ") + "...";
   return (
-    <div className="max-w-64">
+    <>
       {
-        <p className="mr-2 inline text-sm md:text-base ">
+        <p className="mr-2 inline text-wrap text-sm sm:text-base">
           {isExpanded ? children : contractedText}
         </p>
       }
-      <span
+      <button
         onClick={() => setIsExpanded((isExpanded) => !isExpanded)}
-        className="font-semibold text-blue-500 underline"
+        className="text-sm font-semibold text-blue-500 underline sm:text-base"
       >
         {isExpanded ? "show less" : "Read more"}
-      </span>
-    </div>
+      </button>
+    </>
   );
 }
 

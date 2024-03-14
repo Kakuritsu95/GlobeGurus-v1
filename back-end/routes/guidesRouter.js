@@ -1,10 +1,12 @@
 const express = require("express");
 const upload = require("multer")();
 const router = express.Router();
+
 const {
   getGuideById,
   protectGuide,
 } = require("../middlewares/guideMiddlewares");
+
 const { authorizeUser } = require("../middlewares/userAuthMiddlewares");
 
 const {
@@ -14,11 +16,13 @@ const {
   deleteGuide,
   getAllGuides,
 } = require("../controllers/guideControllers");
+
 const {
   addPlace,
   updatePlace,
   deletePlace,
 } = require("../controllers/placeControllers");
+
 router.get("/", authorizeUser, getUserGuides);
 
 router.get("/all", getAllGuides);

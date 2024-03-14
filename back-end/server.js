@@ -1,13 +1,13 @@
 const express = require("express");
 const connectMongo = require("./config/connectMongo");
-const configureCloudinary = require("./config/configureCloudinary")
+const configureCloudinary = require("./config/configureCloudinary");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config(".env");
 
 const app = express();
 connectMongo(process.env.MONGOURI);
-configureCloudinary()
+configureCloudinary();
 
 const router = require("./routes/guidesRouter");
 
@@ -28,8 +28,6 @@ app.use("/nearby-places", nearbyPlacesRouter);
 app.use("/auth", usersAuthRouter);
 
 app.post("/try", (req, res) => {
-  console.log(req.body);
-
   res.json({ data: req.body });
 });
 

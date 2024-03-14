@@ -2,12 +2,13 @@ const Guide = require("../schemas/guideSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 async function createGuide(req, res) {
   const user = req.user;
-  console.log(req.user);
+
   try {
     const guide = req.body;
     const imageFile = req.file;
     const imageUrl = await uploadImage("guideImages", imageFile);
     const newGuide = new Guide({ ...guide, imageUrl, owner: user.id });
+
     const savedGuide = await newGuide.save();
     if (!savedGuide)
       return res.status(500).json({
@@ -15,7 +16,7 @@ async function createGuide(req, res) {
           "Something went wrong the guide wasn't submitted to the database",
       });
 
-    res.json(savedGuide);
+    res.json(savedGuide._id.toString());
   } catch (err) {
     res.json({ message: err.message });
   }
@@ -70,7 +71,7 @@ async function getUserGuides(req, res) {
 
 async function getAllGuides(req, res) {
   const { page, perPage } = req.query;
-  // console.log(page, perPage);
+
   const allGuides = await Guide.aggregatePagination(+page, +perPage).exec();
   if (!allGuides)
     res
