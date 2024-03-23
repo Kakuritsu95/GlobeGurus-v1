@@ -29,7 +29,7 @@ function Map({ showMap }) {
           guide.places.map((place, index) => (
             <CustomMarker key={index} index={index} position={place.coords}>
               <span>{place.name}</span>
-              <img className="w-" src={place.imageUrl} />
+              <img className="min-w-32" src={place.imageUrl} />
             </CustomMarker>
           ))}
       </MapContainer>

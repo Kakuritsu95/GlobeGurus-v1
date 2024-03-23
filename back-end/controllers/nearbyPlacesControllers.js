@@ -3,7 +3,7 @@ async function getNearbyPlaces(req, res) {
 
   try {
     const resp = await fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=10&key=${process.env.GMAPSKEY}`
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=50&key=${process.env.GMAPSKEY}`
     );
     const nearbyPlaces = await resp.json();
     if (!nearbyPlaces)

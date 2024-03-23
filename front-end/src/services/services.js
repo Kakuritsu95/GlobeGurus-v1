@@ -56,3 +56,8 @@ export const placeService = {
   delete: async ({ guideId, placeId }) =>
     apiCalls.deleteRequest(API_ROUTES.DELETE_PLACE(guideId, placeId)),
 };
+
+export const nearbyPlacesService = {
+  get: async (lat, lng) =>
+    apiCalls.getRequest(`${API_ROUTES.NEARBY_PLACES}?lat=${lat}&lng=${lng}`),
+};
