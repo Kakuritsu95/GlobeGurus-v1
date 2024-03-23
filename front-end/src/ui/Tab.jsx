@@ -7,7 +7,7 @@ const TabContext = createContext();
 function Tab({ children }) {
   const [openTab, setOpenTab] = useState(0);
   const [numTabs, setNumTabs] = useState(0);
- 
+
   function nextTab() {
     if (openTab + 1 === numTabs) return;
     setOpenTab((tab) => tab + 1);
@@ -28,7 +28,7 @@ function Tab({ children }) {
   );
 }
 function Content({ children }) {
-  const { openTab, nextTab, prevTab, setNumTabs } = useContext(TabContext);
+  const { openTab, setNumTabs } = useContext(TabContext);
   useEffect(() => {
     setNumTabs(children.length);
   }, [children.length]);

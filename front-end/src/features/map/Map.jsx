@@ -1,30 +1,39 @@
 import { MapContainer, TileLayer } from "react-leaflet";
+import { useSelector } from "react-redux";
+import useGuide from "../../hooks/useGuide";
+import { getUserId } from "../../redux/slices/userSlice";
 import CustomMarker from "./CustomMarker";
 import MapEventClick from "./MapEventClick";
+import MoveMap from "./MoveMap";
 
-function Map() {
+function Map({ showMap }) {
+  const { data } = useGuide();
+  const guide = data || {};
+  const userId = useSelector(getUserId);
+  const isEditSession = userId === guide?.owner?._id;
+  console.log(guide);
   return (
-    <MapContainer
-      center={[41.136351, 24.887598]}
-      zoom={12}
-      zoomControl={false}
-      className="z-10 col-span-3  cursor-default sm:col-span-2  xl:col-span-2 xl:row-span-full "
+    <div
+      className={`${showMap ? "grid translate-y-0 scale-100 opacity-100" : "-translate-y-full scale-0 opacity-0"} z-10 col-span-5  transition-all duration-500 lg:col-span-3 lg:grid lg:translate-y-0 lg:scale-100 lg:opacity-100 xl:col-span-3 xl:row-span-full`}
     >
-      <TileLayer url="https://tile.jawg.io/jawg-streets/{z}/{x}/{y}.png?access-token=MmCClUoEjeyPsaUgFn4YQoWGwRRqo6JclxsJ0fZRkH3JeMmfgDWvR2P6EcmIl9s1" />
-      <MapEventClick />
-      <CustomMarker position={[41.136351, 24.887598]} index={1}>
-        <div>1</div>
-      </CustomMarker>
-      <CustomMarker position={[41.1436351, 24.887598]} index={2}>
-        <div>1</div>
-      </CustomMarker>
-      <CustomMarker position={[41.1446351, 24.884598]} index={3}>
-        <div>1</div>
-      </CustomMarker>
-      <CustomMarker position={[41.1445351, 24.884498]} index={4}>
-        <div>1</div>
-      </CustomMarker>
-    </MapContainer>
+      <MapContainer
+        center={[41.13488, 24.888]}
+        zoom={14}
+        zoomControl={false}
+        className="cursor-default"
+      >
+        <TileLayer url="https://tile.jawg.io/jawg-streets/{z}/{x}/{y}.png?access-token=MmCClUoEjeyPsaUgFn4YQoWGwRRqo6JclxsJ0fZRkH3JeMmfgDWvR2P6EcmIl9s1" />
+        {isEditSession && <MapEventClick />}
+        <MoveMap />
+        {guide?.places?.length > 0 &&
+          guide.places.map((place, index) => (
+            <CustomMarker key={index} index={index} position={place.coords}>
+              <span>{place.name}</span>
+              <img className="w-" src={place.imageUrl} />
+            </CustomMarker>
+          ))}
+      </MapContainer>
+    </div>
   );
 }
 

@@ -1,28 +1,26 @@
-import Map from "../features/map/Map";
+import NearbyPlacesProvider from "../features/places/NearbyPlacesProvider";
 import GuideWindow from "../features/guides/GuideWindow";
 import Modal from "../ui/Modal";
 import Tab from "../ui/Tab";
 import NearbyPlaces from "../features/places/NearbyPlaces";
-import AddPlaceForm from "../features/places/AddPlaceForm";
-
+import PlaceAddEditForm from "../features/places/PlaceAddEditForm";
 function EditGuide() {
   return (
-    <div className="grid h-dvh grid-cols-5 grid-rows-3">
-      <GuideWindow />
-      <Modal>
-        <Map />
-        <Modal.Window>
+    <Modal>
+      <NearbyPlacesProvider>
+        <GuideWindow />
+        <Modal.Window adjustPosition="-top-12" name="place tab">
           <Tab>
             <Tab.Layout>
               <Tab.Content>
-                <AddPlaceForm />
+                <PlaceAddEditForm />
                 <NearbyPlaces />
               </Tab.Content>
             </Tab.Layout>
           </Tab>
         </Modal.Window>
-      </Modal>
-    </div>
+      </NearbyPlacesProvider>
+    </Modal>
   );
 }
 

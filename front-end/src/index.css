@@ -7,3 +7,22 @@
   margin: 0;
   padding: 0;
 }
+
+@media screen and (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #d7d5d5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(136, 151, 160);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

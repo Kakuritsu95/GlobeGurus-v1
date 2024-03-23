@@ -23,7 +23,7 @@ const {
   deletePlace,
 } = require("../controllers/placeControllers");
 
-router.get("/", authorizeUser, getUserGuides);
+router.get("/user/:userId", getUserGuides);
 
 router.get("/all", getAllGuides);
 

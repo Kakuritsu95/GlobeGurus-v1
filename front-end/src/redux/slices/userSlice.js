@@ -24,6 +24,8 @@ export const userSlice = createSlice({
   },
 });
 
+export const getUserId = (store) => store.user.id;
+
 export const { initializeUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

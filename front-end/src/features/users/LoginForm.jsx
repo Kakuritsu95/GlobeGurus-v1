@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { login } from "../../services/userServices";
-import { initializeUser } from "./userSlice";
+import { initializeUser } from "../../redux/slices/userSlice";
 import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";

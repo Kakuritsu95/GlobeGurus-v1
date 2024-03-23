@@ -1,36 +1,50 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useModalContext } from "../../ui/Modal";
 import { guideService } from "../../services/services";
+import { appendFormData } from "../../helpers/appendFormData";
 import { APP_ROUTES } from "../../../constants/ROUTES";
 import Button from "../../ui/Button";
-
-import { useMutation } from "@tanstack/react-query";
-import { appendFormData } from "../../helpers/appendFormData";
-function CreateGuideForm() {
+function GuideAddEditForm({ guideToEdit }) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { closeModal } = useModalContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const { mutate: createGuide, isPending: isCreating } = useMutation({
-    mutationFn: guideService.create,
-    onSuccess: (guideId) => navigate(`/${APP_ROUTES.GUIDE_EDIT}/${guideId}`),
+  } = useForm({ defaultValues: guideToEdit });
+  const { mutate: createEditGuide, isPending: isLoading } = useMutation({
+    mutationFn: guideToEdit ? guideService.patch : guideService.create,
+    onSuccess: guideToEdit
+      ? () => {
+          queryClient.invalidateQueries({ queryKey: ["guide"] });
+          closeModal();
+        }
+      : (guideId) => {
+          navigate(`/${APP_ROUTES.GUIDE_EDIT}/${guideId}`);
+          closeModal();
+        },
   });
 
   function onSubmit(data) {
     data.guideImage = data.guideImage[0];
     const formData = appendFormData(data);
-    createGuide(formData);
+    const guideId = guideToEdit?.guideId;
+
+    createEditGuide({ formData, guideId });
   }
 
   return (
     <form
-      className="rounded bg-zinc-100 px-9 py-9 shadow-md"
+      className="rounded bg-zinc-100 px-9 py-9 text-start shadow-md xl:w-[700px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h3 className=" border-b pb-4 text-lg font-semibold text-zinc-900">
-        Create New Guide
+        {guideToEdit
+          ? `Edit Guide: ${guideToEdit.territory} `
+          : "Create New Guide"}
       </h3>
       <div className="my-5">
         <label
@@ -91,9 +105,9 @@ function CreateGuideForm() {
           {...register("description")}
         />
       </div>
-      <Button disabled={isCreating}>Submit</Button>
+      <Button disabled={isLoading}>Submit</Button>
     </form>
   );
 }
 
-export default CreateGuideForm;
+export default GuideAddEditForm;

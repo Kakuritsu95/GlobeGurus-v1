@@ -1,30 +1,26 @@
+import { useSelector } from "react-redux";
+import { getUserId } from "../../redux/slices/userSlice";
+
 import useGuide from "../../hooks/useGuide";
+import PlaceItem from "./PlaceItem";
+
 function PlacesList() {
   const { data } = useGuide();
-  const places = data?.places || [];
-  console.log(places);
+  const guide = data || {};
+  const places = guide?.places || [];
+  const userId = useSelector(getUserId);
+  const isEditSession = userId === guide?.owner?._id;
+
   return (
-    <div className="col-span-full row-span-full row-start-2 overflow-auto bg-slate-500 xl:col-span-3 xl:row-start-1">
-      <ul className="mx-auto w-full">
-        {places.map((place) => (
-          <li
-            className="mx-auto inline-block w-full text-center"
+    <div className="col-span-full row-span-full row-start-2 overflow-auto p-1 shadow-inner-lg sm:mt-0 xl:col-span-3 xl:row-start-1 xl:p-3 2xl:col-span-2">
+      <ul className="space-y-5">
+        {places.map((place, i) => (
+          <PlaceItem
             key={place._id}
-          >
-            <h4>{place.name}</h4>
-            <span>{place.address}</span>
-            <ul>
-              {place.types.map((type, i) => (
-                <li key={i}>{type}</li>
-              ))}
-            </ul>
-            <img
-              className="mx-auto w-12 rounded-full"
-              src={place.imageUrl}
-              alt="place image"
-            />
-            <p>{place.description}</p>
-          </li>
+            place={place}
+            index={i}
+            isEditSession={isEditSession}
+          />
         ))}
       </ul>
     </div>

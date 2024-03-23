@@ -21,12 +21,15 @@ function DisplayAddPlaceType({ register }) {
               key={i}
               className="font-gray flex  justify-between space-x-1 text-sm"
             >
-              <label htmlFor={tag}>{tag}</label>
+              <label htmlFor={tag} className="cursor-pointer">
+                {tag}
+              </label>
               <input
                 type="checkbox"
                 id={tag}
                 name={tag}
                 value={tag}
+                className="cursor-pointer"
                 {...register("types")}
               />
             </li>

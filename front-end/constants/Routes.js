@@ -10,9 +10,9 @@ export const API_ROUTES = {
   NEARBY_PLACES: `${SERVER_URI}/nearby-places`,
   ADD_PLACE: (guideId) => `${SERVER_URI}/guides/${guideId}/place`,
   UPDATE_PLACE: (guideId, placeId) =>
-    `${SERVER_URI}/${guideId}/place${placeId}`,
+    `${SERVER_URI}/guides/${guideId}/place/${placeId}`,
   DELETE_PLACE: (guideId, placeId) =>
-    `${SERVER_URI}/${guideId}/place${placeId}`,
+    `${SERVER_URI}/guides/${guideId}/place/${placeId}`,
 };
 
 //APP ROUTES

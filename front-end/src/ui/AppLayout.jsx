@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { verifyUser } from "../services/userServices";
 import { useDispatch } from "react-redux";
-import { initializeUser } from "../features/users/userSlice";
+import { initializeUser } from "../redux/slices/userSlice";
 import { useSelector } from "react-redux";
 import Spinner from "./Spinner";
 import Navbar from "./Navbar";
@@ -19,13 +19,13 @@ function AppLayout() {
   }, [user, dispatch]);
 
   return (
-    <>
+    <div className="flex h-dvh flex-col">
       <Navbar />
       {isLoading && <Spinner />}
-      <main id="main" className="relative min-h-[80dvh]">
+      <main id="main" className="relative">
         {<Outlet />}
       </main>
-    </>
+    </div>
   );
 }
 

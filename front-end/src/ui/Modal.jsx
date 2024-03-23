@@ -4,53 +4,55 @@ import useDetectClick from "../hooks/useDetectClick";
 import { GrClose } from "react-icons/gr";
 const ModalContext = createContext();
 function Modal({ children }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openName, setOpenName] = useState("");
 
-  function openModal() {
-    setIsOpen(true);
+  function openModal(openName) {
+    setOpenName(openName);
   }
   function closeModal() {
-    setIsOpen(false);
+    setOpenName("");
   }
   return (
-    <ModalContext.Provider value={{ isOpen, openModal, closeModal, setIsOpen }}>
+    <ModalContext.Provider
+      value={{ openName, setOpenName, openModal, closeModal }}
+    >
       {children}
     </ModalContext.Provider>
   );
 }
 
-function Open({ children }) {
+function Open({ children, opens: opensWindowName }) {
   const { openModal } = useContext(ModalContext);
-  return cloneElement(children, { onClick: openModal });
+  return cloneElement(children, { onClick: () => openModal(opensWindowName) });
 }
-function Window({ children }) {
-  const { isOpen, closeModal } = useContext(ModalContext);
-
+function Close({ children }) {
+  const { closeModal } = useContext(ModalContext);
+  return cloneElement(children, { onClick: closeModal });
+}
+function Window({ children, name, adjustPosition = "" }) {
+  const { openName, closeModal } = useContext(ModalContext);
+  // w-10/12 md:w-9/12 lg:w-7/12 xl:w-5/12
   const ref = useDetectClick(closeModal);
+  if (openName !== name) return null;
+  return createPortal(
+    <div className="absolute right-0 top-0 z-40 flex h-dvh w-full items-center justify-center bg-gray-800/90 text-center">
+      <div ref={ref} className={`relative ${adjustPosition} w-11/12 sm:w-auto`}>
+        {children}
 
-  return (
-    isOpen &&
-    createPortal(
-      <div className="absolute right-0 top-0 z-40 h-dvh w-full justify-center bg-gray-800/90">
-        <div
-          ref={ref}
-          className="relative mx-auto mt-6 w-11/12 md:w-2/4 lg:w-5/12"
+        <button
+          className="absolute right-2 top-3 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-300 hover:text-zinc-800 active:bg-zinc-400 md:p-1 "
+          onClick={closeModal}
         >
-          {children}
-          <button
-            className="absolute right-2 top-3 rounded-full p-0.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-800 active:bg-zinc-600 md:p-1 "
-            onClick={closeModal}
-          >
-            <GrClose />
-          </button>
-        </div>
-      </div>,
-      document.getElementById("main"),
-    )
+          <GrClose />
+        </button>
+      </div>
+    </div>,
+    document.getElementById("main"),
   );
 }
 
 Modal.Open = Open;
+Modal.Close = Close;
 Modal.Window = Window;
 
 export function useModalContext() {

@@ -3,7 +3,6 @@ const NearbyPlacesContext = createContext();
 const initialState = {
   nearbyPlaces: [],
   selectedPlace: {},
-  status: "idle",
 };
 function placesReducer(state, action) {
   switch (action.type) {
@@ -36,7 +35,7 @@ function NearbyPlacesProvider({ children }) {
   function deselectNearbyPlace() {
     dispatch({ type: "nearbyPlaces/deselect" });
   }
-  const [{ nearbyPlaces, selectedPlace, status }, dispatch] = useReducer(
+  const [{ nearbyPlaces, selectedPlace }, dispatch] = useReducer(
     placesReducer,
     initialState,
   );
@@ -47,11 +46,9 @@ function NearbyPlacesProvider({ children }) {
         clickedCoords,
         nearbyPlaces,
         selectedPlace,
-        status,
         updateNearbyPlaces,
         selectNearbyPlace,
         deselectNearbyPlace,
-        dispatch,
       }}
     >
       {children}

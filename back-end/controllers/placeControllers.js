@@ -1,12 +1,15 @@
-const { uploadImage } = require("../helpers/handleImageBuckets");
+const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 
 async function addPlace(req, res) {
   try {
     const guide = req.guide;
-    const place = req.body;
+    req.body.types = req.body.types.split(",");
+    const newPlace = req.body;
+    newPlace.coords = newPlace.coords.split(",");
     const imageFile = req.file;
-    const imageUrl = await uploadImage("placesImage", imageFile);
-    guide.places.push({ ...place, imageUrl });
+    const imageUrl = await uploadImage("placeImages", imageFile);
+    guide.places.push({ ...newPlace, imageUrl });
+    console.log(newPlace);
     const updatedGuide = await guide.save();
     return res.json(updatedGuide);
   } catch (err) {
@@ -17,11 +20,18 @@ async function addPlace(req, res) {
 async function updatePlace(req, res) {
   try {
     const guide = req.guide;
+
+    req.body.types = req.body.types.split(",");
     const { placeId } = req.params;
-    const updatedPlace = guide.places
-      .find((el) => el._id == placeId)
-      .set(req.body);
-    if (!updatedPlace)
+    const placeToUpdate = guide.places.find((el) => el._id == placeId);
+    console.log(placeToUpdate);
+    if (req.file) {
+      deleteImage("placeImages", placeToUpdate.imageUrl);
+      const newImageUrl = await uploadImage("placeImages", req.file);
+      console.log(newImageUrl);
+      placeToUpdate.set({ ...req.body, imageUrl: newImageUrl });
+    } else placeToUpdate.set(req.body);
+    if (!placeToUpdate)
       res.status(500).json({ message: "ERROR: place not found!" });
     const updatedGuide = await guide.save();
     res.json(updatedGuide);
@@ -35,8 +45,10 @@ async function deletePlace(req, res) {
     const guide = req.guide;
     const { placeId } = req.params;
     const index = guide.places.findIndex((place) => place.id == placeId);
-    guide.places.splice(index, 1);
+
+    const imageToDelete = guide.places.splice(index, 1)[0].imageUrl;
     const updatedGuide = await guide.save();
+    deleteImage("placeImages", imageToDelete);
     res.json(updatedGuide);
   } catch (err) {
     res.json({ message: err });

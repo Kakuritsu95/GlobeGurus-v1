@@ -32,5 +32,5 @@ app.post("/try", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`server listening to port ${process.env.PORT}`);
+  `server listening to port ${process.env.PORT}`;
 });

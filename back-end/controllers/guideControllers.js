@@ -57,9 +57,10 @@ async function deleteGuide(req, res) {
 }
 
 async function getUserGuides(req, res) {
-  const user = req.user;
+  const userId = req.params.userId;
+  console.log(userId);
   try {
-    const userGuides = await Guide.find({ owner: user._id });
+    const userGuides = await Guide.find({ owner: userId });
 
     if (!userGuides)
       return res.status(404).json({ message: "Could not find guides" });

@@ -4,38 +4,44 @@ import { useParams } from "react-router-dom";
 import { placeService } from "../../services/services";
 import { useNearbyPlaces } from "./NearbyPlacesProvider";
 import { appendFormData } from "../../helpers/appendFormData";
+import { useModalContext } from "../../ui/Modal";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";
 import DisplayAddPlaceType from "./DisplayAddPlaceType";
-function AddPlaceForm() {
+
+function PlaceAddEditForm({ placeToEdit }) {
   const { selectedPlace, clickedCoords } = useNearbyPlaces();
   const { guideId } = useParams();
   const queryClient = useQueryClient();
+  const { closeModal } = useModalContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: selectedPlace,
+    defaultValues: placeToEdit || selectedPlace,
   });
 
-  const { mutate: addPlace } = useMutation({
-    mutationFn: placeService.create,
+  const { mutate: addEditPlace, isPending: isLoading } = useMutation({
+    mutationFn: placeToEdit ? placeService.patch : placeService.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["guide"] });
+      closeModal();
     },
   });
   function onSubmit(data) {
-    data.coords = selectedPlace?.coords || clickedCoords.current.coords;
+    data.coords =
+      data?.coords || selectedPlace?.coords || clickedCoords.current.coords;
     data.placeImage = data.placeImage[0];
+
     const formData = appendFormData(data);
-    addPlace({ guideId, formData });
+    addEditPlace({ guideId, placeId: data._id, formData });
   }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5 rounded bg-zinc-100 p-5 shadow-md md:p-9 "
+      className="space-y-5 rounded bg-zinc-100 p-5 text-start shadow-md  md:p-12 xl:w-[700px]"
     >
       <h3 className="border-b pb-4 text-lg font-semibold text-zinc-900">
         {`Add ${selectedPlace?.name ? selectedPlace.name : "place"}`}
@@ -77,7 +83,10 @@ function AddPlaceForm() {
           id="placeImage"
           type="file"
           {...register("placeImage", {
-            required: { value: true, message: "please upload a place image" },
+            required: {
+              value: placeToEdit ? false : true,
+              message: "please upload a place image",
+            },
           })}
         />
         <div className="mt-1 text-sm text-gray-500">
@@ -98,9 +107,10 @@ function AddPlaceForm() {
           {...register("description")}
         />
       </div>
-      <Button>Submit</Button>
+
+      <Button disabled={isLoading}>Submit</Button>
     </form>
   );
 }
 
-export default AddPlaceForm;
+export default PlaceAddEditForm;

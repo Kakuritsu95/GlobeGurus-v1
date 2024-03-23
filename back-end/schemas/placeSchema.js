@@ -8,7 +8,7 @@ const placeSchema = new Schema({
   address: { type: String, required: true },
   description: String,
   types: [String],
-  coords: [{ type: [String], required: true }],
+  coords: { type: [Number], required: true },
 });
 
 module.exports = placeSchema;

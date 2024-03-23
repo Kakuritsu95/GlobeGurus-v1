@@ -18,7 +18,7 @@ function CustomMarker({ position, index, onClick, children }) {
   return (
     <Marker
       position={position}
-      icon={customMarkerIcon(index)}
+      icon={customMarkerIcon(index + 1)}
       onClick={onClick}
     >
       {children && <Popup>{children}</Popup>}
