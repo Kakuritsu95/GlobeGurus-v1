@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function AccordionText({ children, wordsQuantity = 10 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const numberOfWords = children.split(" ").length;
 
   const contractedText =
     children.split(" ").slice(0, wordsQuantity).join(" ") + "...";
@@ -16,7 +17,8 @@ function AccordionText({ children, wordsQuantity = 10 }) {
         onClick={() => setIsExpanded((isExpanded) => !isExpanded)}
         className="text-sm font-semibold text-blue-500 underline sm:text-base"
       >
-        {isExpanded ? "show less" : "Read more"}
+        {numberOfWords > wordsQuantity &&
+          (isExpanded ? "show less" : "Read more")}
       </button>
     </>
   );

@@ -11,7 +11,6 @@ function MapEventClick() {
       try {
         clickedCoords.current.coords = [e.latlng.lat, e.latlng.lng];
         const data = await nearbyPlacesService.get(e.latlng.lat, e.latlng.lng);
-        console.log(5);
 
         // const res = await fetch(
         //   `${API_ROUTES.NEARBY_PLACES}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`,

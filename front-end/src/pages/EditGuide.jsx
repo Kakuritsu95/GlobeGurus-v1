@@ -13,8 +13,8 @@ function EditGuide() {
           <Tab>
             <Tab.Layout>
               <Tab.Content>
-                <NearbyPlaces />
                 <PlaceAddEditForm />
+                <NearbyPlaces />
               </Tab.Content>
             </Tab.Layout>
           </Tab>

@@ -9,16 +9,22 @@ import Dropdown from "../../ui/Dropdown";
 import Modal from "../../ui/Modal";
 import PlaceAddEditForm from "./PlaceAddEditForm";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useParams } from "react-router-dom";
 
 function PlaceItem({ place, index, isEditSession }) {
   const dispatch = useDispatch();
+  const { guideId } = useParams();
   return (
     <li
       className="relative flex cursor-pointer flex-col-reverse rounded border-2 p-5 sm:flex-row"
       key={place._id}
       onClick={() => dispatch(setMapCenter(place.coords))}
     >
-      <img className="rounded sm:w-1/3" src={place.imageUrl} alt="place" />
+      <img
+        className="rounded sm:h-64 sm:w-96"
+        src={place.imageUrl}
+        alt="place"
+      />
       <div className="w-full space-y-5 sm:ml-10">
         <div className="flex justify-between">
           <div className="space-y-2">
@@ -40,7 +46,7 @@ function PlaceItem({ place, index, isEditSession }) {
           {place.types.map((type, i) => (
             <span
               key={i}
-              className="me-2 rounded-full bg-gray-200 px-2.5 py-1 text-xs font-medium text-gray-800 dark:bg-gray-700"
+              className="me-2 rounded-full bg-gray-200 px-2.5 py-1 text-xs font-medium text-gray-800"
             >
               {type}
             </span>
@@ -78,7 +84,11 @@ function PlaceItem({ place, index, isEditSession }) {
             <PlaceAddEditForm placeToEdit={place} />
           </Modal.Window>
           <Modal.Window adjustPosition="-top-44" name="delete">
-            <ConfirmDelete placeId={place._id} name={place.name} />
+            <ConfirmDelete
+              placeId={place._id}
+              guideId={guideId}
+              name={place.name}
+            />
           </Modal.Window>
         </Modal>
       )}

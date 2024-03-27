@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function DropdownItem({ children, handleClick, to, type }) {
-  console.log(to);
   if (type === "button")
     return (
       <li>

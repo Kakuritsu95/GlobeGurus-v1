@@ -73,7 +73,7 @@ function GuideOverview({ showMap }) {
                     />
                   </Modal.Window>
                   <Modal.Window adjustPosition="-top-44" name="delete">
-                    <ConfirmDelete />
+                    <ConfirmDelete name={title} guideId={guide._id} />
                   </Modal.Window>
                 </Modal>
               )}

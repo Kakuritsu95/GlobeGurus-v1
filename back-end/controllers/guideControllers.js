@@ -58,9 +58,12 @@ async function deleteGuide(req, res) {
 
 async function getUserGuides(req, res) {
   const userId = req.params.userId;
-  console.log(userId);
+
   try {
-    const userGuides = await Guide.find({ owner: userId });
+    const userGuides = await Guide.find({ owner: userId }).populate({
+      path: "owner",
+      select: "username avatarUrl",
+    });
 
     if (!userGuides)
       return res.status(404).json({ message: "Could not find guides" });

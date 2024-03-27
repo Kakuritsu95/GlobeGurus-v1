@@ -1,20 +1,15 @@
-import GuideAddEditForm from "../features/guides/GuideAddEditForm";
-import Modal from "../ui/Modal";
-
+import UserGuidesWindow from "../features/guides/UserGuidesWindow";
+import useUserGuides from "../hooks/useUserGuides";
 function UserGuides() {
-  return (
-    <div>
-      <Modal>
-        <h3>You dont have any guides yet!</h3>
-        <Modal.Open opens="form">
-          <button className="bg-blue-200 p-2">Create Guide</button>
-        </Modal.Open>
-        <Modal.Window adjustPosition="-top-12" name="form">
-          <GuideAddEditForm />
-        </Modal.Window>
-      </Modal>
-    </div>
-  );
+  const { userGuides } = useUserGuides();
+  if (userGuides)
+    return (
+      <div className="h-full bg-slate-500 ">
+        <div className="mx-auto h-full overflow-y-scroll bg-zinc-50 p-5 shadow-lg md:w-2/3 2xl:w-1/3">
+          <UserGuidesWindow userGuides={userGuides} />
+        </div>
+      </div>
+    );
 }
 
 export default UserGuides;

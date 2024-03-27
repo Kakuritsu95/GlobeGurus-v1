@@ -3,13 +3,13 @@ const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 async function addPlace(req, res) {
   try {
     const guide = req.guide;
-    req.body.types = req.body.types.split(",");
+    if (req.body.types) req.body.types = req.body.types.split(",");
     const newPlace = req.body;
     newPlace.coords = newPlace.coords.split(",");
     const imageFile = req.file;
     const imageUrl = await uploadImage("placeImages", imageFile);
     guide.places.push({ ...newPlace, imageUrl });
-    console.log(newPlace);
+
     const updatedGuide = await guide.save();
     return res.json(updatedGuide);
   } catch (err) {
@@ -21,14 +21,15 @@ async function updatePlace(req, res) {
   try {
     const guide = req.guide;
 
-    req.body.types = req.body.types.split(",");
     const { placeId } = req.params;
     const placeToUpdate = guide.places.find((el) => el._id == placeId);
-    console.log(placeToUpdate);
+    if (req.body.types) req.body.types = req.body.types.split(",");
+    req.body.coords = req.body.coords.split(",");
+
     if (req.file) {
       deleteImage("placeImages", placeToUpdate.imageUrl);
       const newImageUrl = await uploadImage("placeImages", req.file);
-      console.log(newImageUrl);
+
       placeToUpdate.set({ ...req.body, imageUrl: newImageUrl });
     } else placeToUpdate.set(req.body);
     if (!placeToUpdate)

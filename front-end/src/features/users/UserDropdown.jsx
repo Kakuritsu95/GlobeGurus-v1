@@ -7,7 +7,7 @@ import { RiProfileFill } from "react-icons/ri";
 import { GiExitDoor } from "react-icons/gi";
 import DropdownItem from "../../ui/DropdownItem";
 import Dropdown from "../../ui/Dropdown";
-function UserDropdown() {
+function UserDropdown({ userId }) {
   const dispatch = useDispatch();
 
   return (
@@ -26,7 +26,7 @@ function UserDropdown() {
       </Dropdown.Toggle>
 
       <Dropdown.List>
-        <DropdownItem type="link" to="/guides">
+        <DropdownItem type="link" to={`/guides/${userId}`}>
           <span>My Guides</span>
           <FiMap />
         </DropdownItem>

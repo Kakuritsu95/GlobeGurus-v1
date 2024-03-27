@@ -41,11 +41,14 @@ export const apiCalls = {
 export const guideService = {
   get: async (guideId) =>
     apiCalls.getRequest(`${API_ROUTES.GUIDES}/${guideId}`),
+  getUserGuides: async (userId) =>
+    apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
   create: async ({ formData }) =>
     await apiCalls.postRequest(API_ROUTES.GUIDES, formData),
   patch: async ({ formData, guideId }) =>
     await apiCalls.patchRequest(`${API_ROUTES.GUIDES}/${guideId}`, formData),
-  delete: async (guideId) => await apiCalls.deleteRequest(guideId),
+  delete: async ({ guideId }) =>
+    await apiCalls.deleteRequest(`${API_ROUTES.GUIDES}/${guideId}`),
 };
 
 export const placeService = {

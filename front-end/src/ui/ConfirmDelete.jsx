@@ -3,19 +3,25 @@ import { guideService, placeService } from "../services/services";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Button from "./Button";
 import Modal from "./Modal";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUserId } from "../redux/slices/userSlice";
 
-function ConfirmDelete({ name, placeId }) {
+function ConfirmDelete({ name, placeId, guideId }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const userId = useSelector(getUserId);
   const { mutate: deleteHandler, isPending: isDeleting } = useMutation({
     mutationFn: placeId ? placeService.delete : guideService.delete,
     onSuccess: placeId
       ? () => queryClient.invalidateQueries({ queryKey: ["guide"] })
-      : () => navigate("/"),
+      : () => {
+          queryClient.invalidateQueries({ queryKey: ["userGuides"] });
+          navigate(`/guides/${userId}`);
+        },
   });
-  const { guideId } = useParams();
 
+ 
   return (
     <div className="rounded-lg bg-white p-4 text-center align-middle shadow sm:p-12 ">
       <RiDeleteBin6Line size={50} className="mx-auto mb-3.5  text-gray-600" />

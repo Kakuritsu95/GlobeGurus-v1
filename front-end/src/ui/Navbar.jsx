@@ -19,7 +19,7 @@ function Navbar() {
         <Logo />
         <div className="inline-flex items-center space-x-5">
           <div className="relative flex md:hidden">
-            {user.id && <UserDropdown />}
+            {user.id && <UserDropdown userId={user.id} />}
           </div>
 
           <button
@@ -62,7 +62,7 @@ function Navbar() {
             </ul>
             <div className="relative hidden md:flex">
               {user.id ? (
-                <UserDropdown />
+                <UserDropdown userId={user.id} />
               ) : (
                 <div>
                   <Button to="login" type="brand">
