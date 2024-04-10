@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";
 import { useForm } from "react-hook-form";
-import { signup } from "../../services/userServices";
+import { userService } from "../../services/services";
 import Message from "../../ui/Message";
 function SignupForm() {
-  const [response, setResponse] = useState({});
+  const [response, setResponse] = useState();
   const {
     register,
     handleSubmit,
@@ -14,8 +14,12 @@ function SignupForm() {
   } = useForm();
 
   async function onSubmit(data) {
-    const response = await signup(data);
-    setResponse(response);
+    try {
+      const response = await userService.signup(data);
+      setResponse({ isSuccess: true, message: response.message });
+    } catch (error) {
+      setResponse({ isSuccess: false, message: error.response.data.message });
+    }
   }
 
   return (
@@ -23,7 +27,7 @@ function SignupForm() {
       className="w-full space-y-6 text-sm md:text-base"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {response.message && (
+      {response?.message && (
         <Message isSuccess={response.isSuccess}>{response.message}</Message>
       )}
       <FormInputField

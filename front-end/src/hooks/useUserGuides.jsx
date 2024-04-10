@@ -6,7 +6,7 @@ function useUserGuides() {
   const { userId } = useParams();
 
   const { data: userGuides } = useQuery({
-    queryKey: ["userGuides"],
+    queryKey: ["guides"],
     queryFn: () => guideService.getUserGuides(userId),
   });
 

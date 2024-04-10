@@ -13,7 +13,7 @@ const router = require("./routes/guidesRouter");
 
 const nearbyPlacesRouter = require("./routes/nearbyPlacesRouter");
 
-const usersAuthRouter = require("./routes/usersAuthRouter");
+const usersRouter = require("./routes/usersRouter");
 
 app.use(express.json());
 
@@ -25,7 +25,7 @@ app.use("/guides", router);
 
 app.use("/nearby-places", nearbyPlacesRouter);
 
-app.use("/auth", usersAuthRouter);
+app.use("/auth", usersRouter);
 
 app.post("/try", (req, res) => {
   res.json({ data: req.body });

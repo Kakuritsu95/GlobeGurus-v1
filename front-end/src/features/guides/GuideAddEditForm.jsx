@@ -16,7 +16,7 @@ function GuideAddEditForm({ guideToEdit }) {
     formState: { errors },
   } = useForm({ defaultValues: guideToEdit });
   const { mutate: createEditGuide, isPending: isLoading } = useMutation({
-    mutationFn: guideToEdit ? guideService.patch : guideService.create,
+    mutationFn: guideToEdit ? guideService.patch : guideService.post,
     onSuccess: guideToEdit
       ? () => {
           queryClient.invalidateQueries({ queryKey: ["guide"] });

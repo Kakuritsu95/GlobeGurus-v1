@@ -15,6 +15,7 @@ const {
   updateGuide,
   deleteGuide,
   getAllGuides,
+  toggleLike,
 } = require("../controllers/guideControllers");
 
 const {
@@ -22,6 +23,8 @@ const {
   updatePlace,
   deletePlace,
 } = require("../controllers/placeControllers");
+
+const { toggleBookmark } = require("../controllers/userControllers");
 
 router.get("/user/:userId", getUserGuides);
 
@@ -73,4 +76,6 @@ router.delete(
   protectGuide,
   deletePlace
 );
+router.put("/like/:guideId", authorizeUser, getGuideById, toggleLike);
+router.put("/bookmark/:guideId", authorizeUser, getGuideById, toggleBookmark);
 module.exports = router;

@@ -8,14 +8,15 @@ async function authenticateUser(req, res, next) {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "Email not found" });
     const isAuthenticated = await bcrypt.compare(password, user.password);
+
     if (!isAuthenticated)
       return res.status(401).json({ message: "Wrong user credentials" });
-    req.user = {
-      username: user.username,
-      email: user.email,
-      avatar: user.avatarUrl,
-      id: user._id,
-    };
+
+    const { _id, password: pass, ...userDetails } = user.toObject();
+    userDetails.id = _id;
+
+    req.user = userDetails;
+
     next();
   } catch (err) {
     res.status(500).json({ message: err.message });

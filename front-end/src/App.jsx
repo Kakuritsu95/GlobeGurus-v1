@@ -26,8 +26,12 @@ function App() {
             <Route path="/" />
             <Route
               path={`${APP_ROUTES.GUIDE_EDIT}/:guideId`}
-              element={<EditGuide />}
-            ></Route>
+              element={<EditGuide isEditSession={true} />}
+            />
+            <Route
+              path={`${APP_ROUTES.GUIDE_VIEW}/:guideId`}
+              element={<EditGuide isEditSession={true} />}
+            />
             <Route path={APP_ROUTES.GUIDES_PAGE} element={<UserGuides />} />
             <Route path={APP_ROUTES.SIGN_UP} element={<Signup />} />
             <Route path={APP_ROUTES.LOGIN} element={<Login />} />

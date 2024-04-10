@@ -5,6 +5,7 @@ const initialState = {
   name: "",
   avatar: "",
   id: "",
+  bookmarks: [],
 };
 
 export const userSlice = createSlice({
@@ -12,15 +13,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     initializeUser: (state, action) => {
-      const { username, email, avatar, id } = action.payload;
+      const { username, email, avatarUrl, id } = action.payload;
       state.name = username;
       state.email = email;
-      state.avatar = avatar;
+      state.avatar = avatarUrl;
       state.id = id;
     },
-    logoutUser: (state, action) => {
-      return initialState;
-    },
+    logoutUser: () => initialState,
   },
 });
 

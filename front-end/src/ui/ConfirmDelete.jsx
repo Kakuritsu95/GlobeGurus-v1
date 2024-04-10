@@ -16,12 +16,11 @@ function ConfirmDelete({ name, placeId, guideId }) {
     onSuccess: placeId
       ? () => queryClient.invalidateQueries({ queryKey: ["guide"] })
       : () => {
-          queryClient.invalidateQueries({ queryKey: ["userGuides"] });
+          queryClient.invalidateQueries({ queryKey: ["guides"] });
           navigate(`/guides/${userId}`);
         },
   });
 
- 
   return (
     <div className="rounded-lg bg-white p-4 text-center align-middle shadow sm:p-12 ">
       <RiDeleteBin6Line size={50} className="mx-auto mb-3.5  text-gray-600" />

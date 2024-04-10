@@ -8,6 +8,21 @@ export default {
       },
       boxShadow: {
         "inner-lg": "0px 0px 10px 2px rgba(0,0,0,0.06) inset",
+        "inner-2xl": "-10px 44px 25px -1px rgba(0,0,0,0.27) inset",
+      },
+      keyframes: {
+        like: {
+          "0%,50%": { transform: "rotate(-30deg) scale(1.5)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+        bookmark: {
+          "0%, 50%": { transform: "scale(1.5)" },
+          "100%": { transform: "scale(1.0)" },
+        },
+      },
+      animation: {
+        like: "like 0.3s",
+        bookmark: "bookmark 0.3s",
       },
     },
   },

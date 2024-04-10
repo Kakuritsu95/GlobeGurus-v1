@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mapCenter: [41.13488, 24.888],
+  switcher: false,
+  showMapOnSmallScreens: false,
 };
 
 export const mapSlice = createSlice({
@@ -11,9 +13,14 @@ export const mapSlice = createSlice({
     setMapCenter: (state, action) => {
       state.mapCenter = action.payload;
     },
+    triggerMapMove: (state) => {
+      state.switcher = !state.switcher;
+    },
+    toggleShowMap: (state) => {
+      state.showMapOnSmallScreens = !state.showMapOnSmallScreens;
+    },
   },
 });
 
-export const getMapCenter = (store) => store.map.mapCenter;
-export const { setMapCenter } = mapSlice.actions;
+export const { setMapCenter, triggerMapMove, toggleShowMap } = mapSlice.actions;
 export default mapSlice.reducer;

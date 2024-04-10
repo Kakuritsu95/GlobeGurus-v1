@@ -25,30 +25,38 @@ function GuideOverview() {
       <div
         className={`col-span-full xl:pt-3 ${showMapOnSmallScreens ? "hidden" : "grid"} overflow-auto  sm:overflow-hidden lg:col-span-2 lg:grid xl:col-span-1 xl:row-span-full xl:row-start-1`}
       >
-        <div className="relative flex flex-col px-5 py-3 text-sm sm:mt-3 sm:h-full sm:space-y-5 sm:py-5 md:text-base lg:px-7 xl:py-1">
-          <div className="mx-auto gap-5 sm:mx-0 sm:flex sm:items-center xl:flex-col xl:items-start">
-            <div className="sm:order-2 sm:w-1/2 xl:w-full">
-              <h2 className="text-lg font-bold sm:text-lg md:text-xl 2xl:text-xl">
-                {title}
-              </h2>
+        <div className="grid grid-cols-3 grid-rows-3 gap-4 overflow-y-scroll p-4">
+          <div
+            className="relative col-span-2 row-span-2 bg-cover bg-center sm:col-span-1 sm:col-start-1 sm:row-span-3 md:col-span-2 md:col-start-1"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          >
+            <ImageTitleLayout className="absolute right-0 top-0 h-full  shadow-inner-2xl">
+              {territory}
+            </ImageTitleLayout>
+          </div>
 
-              <Link className="underline">{`by ${guide.owner.username}`}</Link>
-              <div>
-                <span className="font-thin">{`Locations: ${data.places.length}`}</span>
-              </div>
-            </div>
-            <div className="relative max-w-72 sm:w-full lg:max-w-full xl:order-2">
-              <img src={imageUrl} className="rounded-l" />
-              <ImageTitleLayout className="absolute right-0 top-0 h-full w-full shadow-inner-2xl">
-                {territory}
-              </ImageTitleLayout>
+          <div className="">
+            <h2 className="text-lg font-bold sm:text-lg md:text-xl 2xl:text-xl">
+              {title}
+            </h2>
+
+            <Link className="underline">{`by ${guide.owner.username}`}</Link>
+            <div>
+              <span className="font-thin">{`Locations: ${data.places.length}`}</span>
             </div>
           </div>
-          <div className="mt-2 text-center sm:text-start">
+
+          <div className="sm col-span-3 row-start-3 sm:col-span-2 sm:col-start-2 sm:row-span-2">
             <div className="font-semibold sm:text-base">About </div>
             <AccordionText>{description}</AccordionText>
           </div>
         </div>
+        {/* <div className="relative max-w-72 sm:w-full lg:max-w-full xl:order-2">
+              <img src={imageUrl} className="rounded-l" />
+              <ImageTitleLayout className="absolute right-0 top-0 h-full w-full shadow-inner-2xl">
+                {territory}
+              </ImageTitleLayout>
+            </div> */}
 
         {isEditSession && (
           <Modal>

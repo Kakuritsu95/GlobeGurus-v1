@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { setMapCenter } from "../../redux/slices/mapSlice";
+import { setMapCenter, triggerMapMove } from "../../redux/slices/mapSlice";
+
 import DropdownItem from "../../ui/DropdownItem";
 import { RxDotsVertical } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
@@ -18,14 +19,17 @@ function PlaceItem({ place, index, isEditSession }) {
     <li
       className="relative flex cursor-pointer flex-col-reverse rounded border-2 p-5 sm:flex-row"
       key={place._id}
-      onClick={() => dispatch(setMapCenter(place.coords))}
+      onClick={() => {
+        dispatch(setMapCenter(place.coords));
+        dispatch(triggerMapMove());
+      }}
     >
-      <img
-        className="rounded sm:h-64 sm:w-96"
-        src={place.imageUrl}
-        alt="place"
+      <div
+        className="h-80 rounded bg-cover bg-center bg-no-repeat sm:w-2/5"
+        style={{ backgroundImage: `url(${place.imageUrl})` }}
       />
-      <div className="w-full space-y-5 sm:ml-10">
+
+      <div className="space-y-5 sm:ml-10 sm:w-3/5">
         <div className="flex justify-between">
           <div className="space-y-2">
             <h3 className="inline text-xl font-bold text-blue-600">
@@ -80,7 +84,7 @@ function PlaceItem({ place, index, isEditSession }) {
               </Modal.Open>
             </Dropdown.List>
           </Dropdown>
-          <Modal.Window adjustPosition="-top-16" name="edit">
+          <Modal.Window adjustPosition="-top-12" name="edit">
             <PlaceAddEditForm placeToEdit={place} />
           </Modal.Window>
           <Modal.Window adjustPosition="-top-44" name="delete">

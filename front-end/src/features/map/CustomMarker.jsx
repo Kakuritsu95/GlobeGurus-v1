@@ -5,7 +5,7 @@ const customMarkerIcon = (index) =>
   L.divIcon({
     html: `
     <div style="position:relative">
-    <span style="position:absolute; left:28%; top:-0.1rem; color:#1985a1; z-index:20; font-size:1.3rem;">${index}</span>
+    <span style="position:absolute; left:29%; top:-0.1rem; color:#1985a1; z-index:20; font-size:1.3rem;">${index}</span>
     <img src=/icons/marker.png alt="marker" style="width:40px; position:absolute">
     </div>
     `,

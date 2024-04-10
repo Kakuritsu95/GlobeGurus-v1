@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
-import { login } from "../../services/userServices";
 import { initializeUser } from "../../redux/slices/userSlice";
 import { Link } from "react-router-dom";
+import { userService } from "../../services/services";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";
 import Message from "../../ui/Message";
@@ -18,13 +18,18 @@ function LoginForm() {
   } = useForm();
 
   async function onSubmit(data) {
-    const { userData, errorMessage } = await login(data);
-    if (errorMessage) {
-      return setErrorMessage(errorMessage);
-    }
-    if (userData) {
-      setErrorMessage("");
-      dispatch(initializeUser(userData));
+    try {
+      const userData = await userService.login(data);
+
+      if (errorMessage) {
+        setErrorMessage(errorMessage);
+      }
+      if (userData) {
+        setErrorMessage("");
+        dispatch(initializeUser(userData));
+      }
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
     }
   }
 

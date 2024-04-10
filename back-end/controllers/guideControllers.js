@@ -84,10 +84,28 @@ async function getAllGuides(req, res) {
   res.json(allGuides);
 }
 
+async function toggleLike(req, res) {
+  try {
+    const { user, guide } = req;
+    const alreadyLiked = guide.likes.includes(user.id);
+    if (alreadyLiked) {
+      idIndex = guide.likes.findIndex((id) => id.toString() == user.id);
+      guide.likes.splice(idIndex, 1);
+    } else guide.likes.push(user.id);
+    await guide.save();
+    res.status(200).end();
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error, could not add like on guide" });
+  }
+}
+
 module.exports = {
   createGuide,
   updateGuide,
   getUserGuides,
   deleteGuide,
   getAllGuides,
+  toggleLike,
 };

@@ -7,7 +7,7 @@ const guide = new Schema(
     territory: { type: String, required: true },
     title: { type: String, required: true },
     imageUrl: String,
-    thumbsUp: [{ type: Schema.Types.ObjectId, ref: "user" }],
+    likes: [{ type: Schema.Types.ObjectId, ref: "user" }],
     places: [placeSchema],
     description: { type: String, required: true },
     comments: [
@@ -24,7 +24,7 @@ const guide = new Schema(
 guide.statics.aggregatePagination = function (skip, limit) {
   return this.aggregate([
     { $skip: (skip - 1) * limit },
-    { $limit: limit },
+    { $limit: limit + 1 },
     {
       $lookup: {
         from: "users",

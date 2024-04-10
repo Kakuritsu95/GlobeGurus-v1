@@ -23,7 +23,7 @@ function PlaceAddEditForm({ placeToEdit }) {
   });
 
   const { mutate: addEditPlace, isPending: isLoading } = useMutation({
-    mutationFn: placeToEdit ? placeService.patch : placeService.create,
+    mutationFn: placeToEdit ? placeService.patch : placeService.post,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["guide"] });
       closeModal();

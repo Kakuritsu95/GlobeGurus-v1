@@ -5,7 +5,13 @@ import { API_ROUTES } from "../../constants/Routes";
 
 axios.interceptors.request.use(
   function (config) {
-    store.dispatch(setLoading());
+    if (
+      !config.url.includes("like") &&
+      !config.url.includes("comment") &&
+      !config.url.includes("bookmark")
+    )
+      store.dispatch(setLoading());
+
     config.withCredentials = true;
     return config;
   },
@@ -38,21 +44,32 @@ export const apiCalls = {
     await axios.delete(url, body).then((res) => res.data),
 };
 
+export const userService = {
+  signup: async (data) => apiCalls.postRequest(API_ROUTES.SIGNUP, data),
+  login: async (data) => apiCalls.postRequest(API_ROUTES.LOGIN, data),
+  verifyUser: async () => apiCalls.postRequest(API_ROUTES.VERIFY_TOKEN),
+  toggleBookmark: async (guideId) =>
+    await apiCalls.putRequest(API_ROUTES.TOGGLE_BOOKMARK(guideId)),
+  getUserBookmarks: async () => apiCalls.getRequest(API_ROUTES.USER_BOOKMARKS),
+};
+
 export const guideService = {
   get: async (guideId) =>
     apiCalls.getRequest(`${API_ROUTES.GUIDES}/${guideId}`),
   getUserGuides: async (userId) =>
     apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
-  create: async ({ formData }) =>
+  post: async ({ formData }) =>
     await apiCalls.postRequest(API_ROUTES.GUIDES, formData),
   patch: async ({ formData, guideId }) =>
     await apiCalls.patchRequest(`${API_ROUTES.GUIDES}/${guideId}`, formData),
   delete: async ({ guideId }) =>
     await apiCalls.deleteRequest(`${API_ROUTES.GUIDES}/${guideId}`),
+  toggleLike: async (guideId) =>
+    await apiCalls.putRequest(API_ROUTES.TOGGLE_LIKE(guideId)),
 };
 
 export const placeService = {
-  create: async ({ guideId, formData }) =>
+  post: async ({ guideId, formData }) =>
     apiCalls.putRequest(API_ROUTES.ADD_PLACE(guideId), formData),
   patch: async ({ guideId, placeId, formData }) =>
     apiCalls.patchRequest(API_ROUTES.UPDATE_PLACE(guideId, placeId), formData),

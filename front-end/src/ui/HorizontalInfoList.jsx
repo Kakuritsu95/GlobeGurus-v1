@@ -1,8 +1,8 @@
 function HorizontalInfoList({ children }) {
   return (
-    <ul className="flex space-x-1 text-xs text-gray-700">
+    <ul className="flex space-x-1 text-sm text-gray-700 md:text-base">
       {children.map((info, i) => (
-        <li>{`${info}${children.length - 1 === i ? "" : " |"} `}</li>
+        <li key={i}>{`${info}${children.length - 1 === i ? "" : " |"} `}</li>
       ))}
     </ul>
   );
