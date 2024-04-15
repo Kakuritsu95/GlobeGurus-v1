@@ -15,8 +15,9 @@ export const API_ROUTES = {
     `${SERVER_URI}/guides/${guideId}/place/${placeId}`,
   DELETE_PLACE: (guideId, placeId) =>
     `${SERVER_URI}/guides/${guideId}/place/${placeId}`,
-  TOGGLE_LIKE: (guideId) => `${SERVER_URI}/guides/like/${guideId}`,
-  TOGGLE_BOOKMARK: (guideId) => `${SERVER_URI}/guides/bookmark/${guideId}`,
+  TOGGLE_LIKE: (guideId) => `${SERVER_URI}/guides/${guideId}/like`,
+  TOGGLE_BOOKMARK: (guideId) => `${SERVER_URI}/guides/${guideId}/bookmark`,
+  COMMENT: (guideId) => `${SERVER_URI}/guides/${guideId}/comment`,
 };
 
 //APP ROUTES

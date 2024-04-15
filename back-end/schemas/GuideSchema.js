@@ -51,4 +51,5 @@ guide.statics.aggregatePagination = function (skip, limit) {
     },
   ]);
 };
+
 module.exports = model("Guide", guide);

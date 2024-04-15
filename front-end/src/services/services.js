@@ -60,12 +60,14 @@ export const guideService = {
     apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
   post: async ({ formData }) =>
     await apiCalls.postRequest(API_ROUTES.GUIDES, formData),
-  patch: async ({ formData, guideId }) =>
+  patch: async ({ guideId, formData }) =>
     await apiCalls.patchRequest(`${API_ROUTES.GUIDES}/${guideId}`, formData),
   delete: async ({ guideId }) =>
     await apiCalls.deleteRequest(`${API_ROUTES.GUIDES}/${guideId}`),
   toggleLike: async (guideId) =>
     await apiCalls.putRequest(API_ROUTES.TOGGLE_LIKE(guideId)),
+  addComment: async ({ guideId, commentData }) =>
+    apiCalls.putRequest(API_ROUTES.COMMENT(guideId), commentData),
 };
 
 export const placeService = {

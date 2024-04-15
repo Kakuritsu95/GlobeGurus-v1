@@ -3,11 +3,18 @@ async function getGuideById(req, res, next) {
   const { guideId } = req.params;
 
   try {
-    const guide = await Guide.findById(guideId).populate({
-      path: "owner",
-      select: "username",
-    });
-
+    const guide = await Guide.findById(guideId)
+      .populate({
+        path: "owner",
+        select: "username",
+      })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "commenter",
+          select: "avatarUrl",
+        },
+      });
     if (!guide) {
       return res.status(404).json({ error: "Guide not found" });
     }
@@ -15,7 +22,8 @@ async function getGuideById(req, res, next) {
 
     next();
   } catch (err) {
-    next(err);
+    console.log(err);
+    res.status(500);
   }
 }
 

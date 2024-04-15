@@ -16,6 +16,7 @@ const {
   deleteGuide,
   getAllGuides,
   toggleLike,
+  addComment,
 } = require("../controllers/guideControllers");
 
 const {
@@ -76,6 +77,7 @@ router.delete(
   protectGuide,
   deletePlace
 );
-router.put("/like/:guideId", authorizeUser, getGuideById, toggleLike);
-router.put("/bookmark/:guideId", authorizeUser, getGuideById, toggleBookmark);
+router.put("/:guideId/like", authorizeUser, getGuideById, toggleLike);
+router.put("/:guideId/bookmark", authorizeUser, getGuideById, toggleBookmark);
+router.put("/:guideId/comment", authorizeUser, getGuideById, addComment);
 module.exports = router;

@@ -36,7 +36,10 @@ function Window({ children, name, adjustPosition = "" }) {
   if (openName !== name) return null;
   return createPortal(
     <div className="absolute right-0 top-0 z-40 flex h-dvh w-full items-center justify-center bg-gray-800/90 text-center">
-      <div ref={ref} className={`relative ${adjustPosition} w-11/12 sm:w-auto`}>
+      <div
+        ref={ref}
+        className={`relative ${adjustPosition} w-11/12  sm:w-auto`}
+      >
         {children}
 
         <button

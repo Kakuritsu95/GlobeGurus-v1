@@ -3,6 +3,7 @@ const connectMongo = require("./config/connectMongo");
 const configureCloudinary = require("./config/configureCloudinary");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 require("dotenv").config(".env");
 
 const app = express();
@@ -16,6 +17,8 @@ const nearbyPlacesRouter = require("./routes/nearbyPlacesRouter");
 const usersRouter = require("./routes/usersRouter");
 
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 

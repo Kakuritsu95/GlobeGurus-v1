@@ -23,7 +23,7 @@ function GuideOverview() {
   if (guide.title)
     return (
       <div
-        className={`col-span-full xl:pt-3 ${showMapOnSmallScreens ? "hidden" : "grid"} overflow-auto  sm:overflow-hidden lg:col-span-2 lg:grid xl:col-span-1 xl:row-span-full xl:row-start-1`}
+        className={`col-span-full ${showMapOnSmallScreens ? "hidden" : "grid"} relative overflow-y-scroll lg:col-span-2 lg:grid xl:col-span-1 xl:row-span-full xl:row-start-1 xl:overflow-y-hidden`}
       >
         <div className="relative flex flex-col px-5 py-3 text-sm sm:mt-3 sm:h-full sm:space-y-5 sm:py-5 md:text-base lg:px-7 xl:py-1">
           <div className="mx-auto gap-5 sm:mx-0 sm:flex sm:items-center xl:flex-col xl:items-start">
@@ -54,7 +54,7 @@ function GuideOverview() {
           <Modal>
             <Dropdown absolute={true}>
               <Dropdown.Toggle>
-                <RxDotsVertical className="absolute right-3 top-4 text-xl md:right-3 md:top-1 md:text-2xl" />
+                <RxDotsVertical className="absolute right-3 top-4 z-50 text-xl md:right-1 md:top-3 md:text-2xl" />
               </Dropdown.Toggle>
               <Dropdown.List
                 size="small"

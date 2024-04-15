@@ -9,10 +9,7 @@ function ToggleMapButton() {
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
   return (
     <div className="absolute bottom-12 left-1/3 sm:left-1/2 lg:hidden">
-      <Button
-        className="w-30 bg-blue-400 px-5 py-3 lg:hidden"
-        handleClick={() => dispatch(toggleShowMap())}
-      >
+      <Button handleClick={() => dispatch(toggleShowMap())}>
         <div className="mx-0.5 flex items-center space-x-5">
           {!showMapOnSmallScreens ? (
             <>

@@ -60,10 +60,15 @@ async function getUserGuides(req, res) {
   const userId = req.params.userId;
 
   try {
-    const userGuides = await Guide.find({ owner: userId }).populate({
-      path: "owner",
-      select: "username avatarUrl",
-    });
+    const userGuides = await Guide.find({ owner: userId })
+      .populate({
+        path: "owner",
+        select: "username avatarUrl",
+      })
+      .populate({
+        path: "comments",
+        populate: { path: "commenter", select: "username avatarUrl" },
+      });
 
     if (!userGuides)
       return res.status(404).json({ message: "Could not find guides" });
@@ -101,6 +106,24 @@ async function toggleLike(req, res) {
   }
 }
 
+async function addComment(req, res) {
+  try {
+    const guide = req.guide;
+    const { comment, commenter } = req.body;
+    console.log(req.body);
+    guide.comments.push({ comment, commenter });
+
+    const newGuide = await guide.save();
+    if (!newGuide)
+      return res.status(500).json({ message: "Couldnt submit comment" });
+    res.end();
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error, couldnt submit comment" });
+  }
+}
+
 module.exports = {
   createGuide,
   updateGuide,
@@ -108,4 +131,5 @@ module.exports = {
   deleteGuide,
   getAllGuides,
   toggleLike,
+  addComment,
 };
