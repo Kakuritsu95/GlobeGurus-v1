@@ -14,12 +14,15 @@ import { GoComment } from "react-icons/go";
 import { useState } from "react";
 import LikeButton from "./LikeButton";
 import BookmarkButton from "./BookmarkButton";
+import { useSelector } from "react-redux";
 
 function UserGuideListItem({ guide, opensAsCommentWindow }) {
   const [localLikes, setLocalLikes] = useState(guide.likes);
+  const userId = useSelector((store) => store.user.id);
+  const isUserOwner = userId === guide.owner._id;
 
   return (
-    <li className="relative bg-neutral-100 p-2">
+    <li className="relative bg-neutral-100 p-2 sm:p-5">
       <Link to={`/${APP_ROUTES.GUIDE_VIEW}/${guide._id}`}>
         <h3 className="text-start font-semibold text-blue-500 hover:cursor-pointer hover:text-blue-700 hover:underline md:text-lg">
           {guide.title}
@@ -29,6 +32,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
         <HorizontalInfoList>
           {`${guide.places.length} Places`}
           {`${localLikes.length} Likes`}
+          {`${guide.comments.length} Comments`}
         </HorizontalInfoList>
         <HorizontalInfoList className="flex space-x-1 text-gray-700">
           {`Created ${formatDateString(guide.createdAt)} `}
@@ -37,7 +41,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
 
         <Modal>
           <div
-            className="sm:w-12/12 relative h-96 bg-cover bg-center bg-no-repeat "
+            className="sm:w-12/12 relative h-96 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${guide.imageUrl})` }}
           >
             <ImageTitleLayout>{guide.territory}</ImageTitleLayout>
@@ -57,7 +61,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
             <BookmarkButton guideId={guide._id} />
           </div>
 
-          {!opensAsCommentWindow && (
+          {!opensAsCommentWindow && isUserOwner && (
             <Dropdown absolute={true} position={"top-3 right-2"}>
               <Dropdown.Toggle>
                 <RxDotsVertical size={22} />
@@ -81,7 +85,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
           <Modal.Window adjustPosition="-top-44" name="delete">
             <ConfirmDelete name={guide.title} guideId={guide._id} />
           </Modal.Window>
-          <Modal.Window adjustPosition="-top-20" name="comment">
+          <Modal.Window adjustPosition="-top-14" name="comment">
             <CommentGuideWindow guide={guide}></CommentGuideWindow>
           </Modal.Window>
         </Modal>

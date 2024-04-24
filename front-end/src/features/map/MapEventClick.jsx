@@ -12,12 +12,13 @@ function MapEventClick() {
       try {
         clickedCoords.current.coords = [e.latlng.lat, e.latlng.lng];
         // const data = await nearbyPlacesService.get(e.latlng.lat, e.latlng.lng);
+        openModal("place tab");
 
         const data = await fakeService(true);
-        openModal("place tab");
         updateNearbyPlaces(data);
       } catch (err) {
-        console.log(err);
+        updateNearbyPlaces([]);
+        openModal("place tab");
       }
     },
   });

@@ -7,17 +7,16 @@ import { RiProfileFill } from "react-icons/ri";
 import { GiExitDoor } from "react-icons/gi";
 import DropdownItem from "../../ui/DropdownItem";
 import Dropdown from "../../ui/Dropdown";
-function UserDropdown({ userId }) {
+function UserDropdown({ userId, avatar: avatarUrl }) {
   const dispatch = useDispatch();
 
   return (
     <Dropdown>
       <Dropdown.Toggle>
         <div className="mt-1.5">
-          <img
-            src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png"
-            alt="avatar"
-            className="w-10 rounded-full hover:bg-blue-300 sm:w-14"
+          <div
+            style={{ backgroundImage: `url(${avatarUrl})` }}
+            className="h-10 w-10 rounded-full bg-cover bg-center bg-no-repeat hover:outline hover:outline-2 hover:outline-blue-300 "
           />
           <div className="absolute right-0 top-8 rounded-full bg-zinc-500 ">
             <RiArrowDropDownLine className="h-3.5 w-3.5  text-white" />
@@ -30,11 +29,11 @@ function UserDropdown({ userId }) {
           <span>My Guides</span>
           <FiMap />
         </DropdownItem>
-        <DropdownItem type="link" to="/bookmarks">
+        <DropdownItem type="link" to={`/bookmarks/${userId}`}>
           <span>Bookmarks</span>
           <FaBookBookmark />
         </DropdownItem>
-        <DropdownItem type="link" to="/profile">
+        <DropdownItem type="link" to={`/profile/${userId}`}>
           <span>Profile</span>
           <RiProfileFill />
         </DropdownItem>

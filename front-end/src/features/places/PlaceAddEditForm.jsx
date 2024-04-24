@@ -41,7 +41,7 @@ function PlaceAddEditForm({ placeToEdit }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5 rounded bg-zinc-100 p-5 text-start shadow-md  md:p-12 xl:w-[700px]"
+      className="max-h-[700px] space-y-5 overflow-y-scroll rounded bg-zinc-100 p-5 text-start  shadow-md md:p-12 xl:w-[700px]"
     >
       <h3 className="border-b pb-4 text-lg font-semibold text-zinc-900">
         {`Add ${selectedPlace?.name ? selectedPlace.name : "place"}`}
@@ -54,7 +54,7 @@ function PlaceAddEditForm({ placeToEdit }) {
         validationRules={{
           required: { value: true, message: "place name is required" },
         }}
-        error={errors?.name}
+        errorMessage={errors?.name?.message}
       />
       <FormInputField
         labelName="address"
@@ -63,7 +63,7 @@ function PlaceAddEditForm({ placeToEdit }) {
         validationRules={{
           required: { value: true, message: "place address is required" },
         }}
-        error={errors?.address}
+        errorMessage={errors?.address?.message}
       />
 
       <div>

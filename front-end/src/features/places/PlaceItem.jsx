@@ -29,7 +29,7 @@ function PlaceItem({ place, index, isEditSession }) {
         style={{ backgroundImage: `url(${place.imageUrl})` }}
       />
 
-      <div className="space-y-5 sm:ml-10 sm:w-3/5">
+      <div className="space-y-5 sm:ml-5 sm:w-3/5">
         <div className="flex justify-between">
           <div className="space-y-2">
             <h3 className="inline text-xl font-bold text-blue-600">

@@ -15,7 +15,7 @@ function UserGuidesWindow({ userGuides }) {
                 <Button>CREATE NEW GUIDE</Button>
               </div>
             </Modal.Open>
-            <Modal.Window name="edit" adjustPosition="-top-32">
+            <Modal.Window name="edit" adjustPosition="-top-24">
               <GuideAddEditForm />
             </Modal.Window>
           </Modal>

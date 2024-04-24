@@ -48,9 +48,12 @@ export const userService = {
   signup: async (data) => apiCalls.postRequest(API_ROUTES.SIGNUP, data),
   login: async (data) => apiCalls.postRequest(API_ROUTES.LOGIN, data),
   verifyUser: async () => apiCalls.postRequest(API_ROUTES.VERIFY_TOKEN),
+  getUserDetails: async () => apiCalls.getRequest(API_ROUTES.GET_USER_DETAILS),
   toggleBookmark: async (guideId) =>
     await apiCalls.putRequest(API_ROUTES.TOGGLE_BOOKMARK(guideId)),
   getUserBookmarks: async () => apiCalls.getRequest(API_ROUTES.USER_BOOKMARKS),
+  updateUserDetails: async (formData) =>
+    apiCalls.patchRequest(API_ROUTES.UPDATE_USER_DETAILS, formData),
 };
 
 export const guideService = {
@@ -58,6 +61,12 @@ export const guideService = {
     apiCalls.getRequest(`${API_ROUTES.GUIDES}/${guideId}`),
   getUserGuides: async (userId) =>
     apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
+  getPopularGuides: async (page) =>
+    await apiCalls.getRequest(API_ROUTES.ALL_GUIDES(page)),
+  getGuidesByQuery: async (query) =>
+    await apiCalls.getRequest(API_ROUTES.GUIDES_BY_QUERY(query)),
+  getNearbyGuides: async ({ lat, lng }) =>
+    await apiCalls.getRequest(API_ROUTES.NEARBY_GUIDES({ lat, lng })),
   post: async ({ formData }) =>
     await apiCalls.postRequest(API_ROUTES.GUIDES, formData),
   patch: async ({ guideId, formData }) =>
@@ -68,6 +77,13 @@ export const guideService = {
     await apiCalls.putRequest(API_ROUTES.TOGGLE_LIKE(guideId)),
   addComment: async ({ guideId, commentData }) =>
     apiCalls.putRequest(API_ROUTES.COMMENT(guideId), commentData),
+  editComment: async ({ guideId, commentId, commentData }) =>
+    apiCalls.patchRequest(
+      `${API_ROUTES.COMMENT(guideId)}/${commentId}`,
+      commentData,
+    ),
+  deleteComment: async ({ guideId, commentId }) =>
+    apiCalls.deleteRequest(`${API_ROUTES.COMMENT(guideId)}/${commentId}`),
 };
 
 export const placeService = {
@@ -82,4 +98,9 @@ export const placeService = {
 export const nearbyPlacesService = {
   get: async (lat, lng) =>
     apiCalls.getRequest(`${API_ROUTES.NEARBY_PLACES}?lat=${lat}&lng=${lng}`),
+};
+
+export const geolocationService = {
+  getTerritoryCoords: async (territoryName) =>
+    apiCalls.getRequest(`${API_ROUTES.GEOLOCATION}/${territoryName}`),
 };

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../redux/slices/userSlice";
 import Modal from "../../ui/Modal";
-import useGuide from "../../hooks/useGuide";
 import Dropdown from "../../ui/Dropdown";
 import AccordionText from "../../ui/AccordionText";
 import DropdownItem from "../../ui/DropdownItem";
@@ -12,9 +11,7 @@ import { RxDotsVertical } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import ImageTitleLayout from "../../ui/ImageTitleLayout";
-function GuideOverview() {
-  const { data } = useGuide();
-  const guide = data || {};
+function GuideOverview({ guide }) {
   const userId = useSelector(getUserId);
   const isEditSession = userId === guide?.owner?._id;
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
@@ -34,11 +31,11 @@ function GuideOverview() {
 
               <Link className="underline">{`by ${guide.owner.username}`}</Link>
               <div>
-                <span className="font-thin">{`Locations: ${data.places.length}`}</span>
+                <span className="font-thin">{`Locations: ${guide.places.length}`}</span>
               </div>
             </div>
             <div className="relative max-w-72 sm:w-full lg:max-w-full xl:order-2">
-              <img src={imageUrl} className="rounded-l" />
+              <img src={imageUrl} className="rounded-l" alt="title" />
               <ImageTitleLayout className="absolute right-0 top-0 h-full w-full shadow-inner-2xl">
                 {territory}
               </ImageTitleLayout>
@@ -54,7 +51,7 @@ function GuideOverview() {
           <Modal>
             <Dropdown absolute={true}>
               <Dropdown.Toggle>
-                <RxDotsVertical className="absolute right-3 top-4 z-50 text-xl md:right-1 md:top-3 md:text-2xl" />
+                <RxDotsVertical className="absolute right-3 top-4 z-10 text-xl md:right-3 md:top-5 md:text-2xl" />
               </Dropdown.Toggle>
               <Dropdown.List
                 size="small"

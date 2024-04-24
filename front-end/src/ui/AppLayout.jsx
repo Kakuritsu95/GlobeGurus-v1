@@ -12,7 +12,8 @@ function AppLayout() {
   const { isLoading } = useSelector((store) => store.status);
   useEffect(() => {
     async function fetchUser() {
-      const user = await userService.verifyUser();
+      const user = await userService.getUserDetails();
+
       dispatch(initializeUser(user));
     }
     fetchUser();

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 function BookmarkButton({ guideId }) {
   const [localBookmarks, setLocalBookmarks] = useState([]);
+
   useEffect(() => {
     async function getUserBookmarks() {
       const data = await userService.getUserBookmarks();

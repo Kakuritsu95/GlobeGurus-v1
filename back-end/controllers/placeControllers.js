@@ -5,6 +5,7 @@ async function addPlace(req, res) {
     const guide = req.guide;
     if (req.body.types) req.body.types = req.body.types.split(",");
     const newPlace = req.body;
+
     newPlace.coords = newPlace.coords.split(",");
     const imageFile = req.file;
     const imageUrl = await uploadImage("placeImages", imageFile);

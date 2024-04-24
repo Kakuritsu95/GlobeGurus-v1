@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const placeSchema = require("./placeSchema");
 const { Schema, model } = mongoose;
 
-const guide = new Schema(
+const guideSchema = new Schema(
   {
     territory: { type: String, required: true },
     title: { type: String, required: true },
@@ -10,6 +10,13 @@ const guide = new Schema(
     likes: [{ type: Schema.Types.ObjectId, ref: "user" }],
     places: [placeSchema],
     description: { type: String, required: true },
+    territoryCoords: {
+      type: { type: String, enum: ["Point"], required: true },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
     comments: [
       {
         commenter: { type: Schema.Types.ObjectId, ref: "user" },
@@ -21,10 +28,13 @@ const guide = new Schema(
   { timestamps: true }
 );
 
-guide.statics.aggregatePagination = function (skip, limit) {
+guideSchema.index({ territoryCoords: "2dsphere" });
+
+guideSchema.statics.aggregateMostLiked = function (skip, limit) {
   return this.aggregate([
-    { $skip: (skip - 1) * limit },
-    { $limit: limit + 1 },
+    {
+      $addFields: { numberOfLikes: { $size: "$likes" } },
+    },
     {
       $lookup: {
         from: "users",
@@ -34,22 +44,51 @@ guide.statics.aggregatePagination = function (skip, limit) {
       },
     },
     {
-      $unwind: "$owner",
+      $project: {
+        "owner.password": 0,
+        "owner.bookmarks": 0,
+        "owner.email": 0,
+        "owner.__v": 0,
+      },
+    },
+    { $skip: (skip - 1) * parseInt(limit) },
+    { $limit: parseInt(limit) },
+    { $sort: { numberOfLikes: -1 } },
+  ]);
+};
+guideSchema.statics.aggregateNearestGuides = function (lat, lng, skip, limit) {
+  return this.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [parseFloat(lat), parseFloat(lng)],
+        },
+        distanceField: "distance",
+        spherical: true,
+        key: "territoryCoords",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+      },
     },
     {
       $project: {
-        territory: 1,
-        title: 1,
-        imageUrl: 1,
-        thumbsUp: 1,
-        places: 1,
-        description: 1,
-        comments: 1,
-        "owner._id": 1,
-        "owner.username": 1,
+        "owner.password": 0,
+        "owner.bookmarks": 0,
+        "owner.email": 0,
+        "owner.__v": 0,
       },
     },
+    { $skip: (skip - 1) * parseInt(limit) },
+    { $limit: parseInt(limit) },
+    { $sort: { distance: 1 } },
   ]);
 };
 
-module.exports = model("Guide", guide);
+module.exports = model("Guide", guideSchema);

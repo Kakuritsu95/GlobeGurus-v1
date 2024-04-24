@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  mapCenter: [41.13488, 24.888],
+  mapCenter: [],
   switcher: false,
   showMapOnSmallScreens: false,
 };

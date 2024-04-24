@@ -28,3 +28,7 @@
     background: rgb(104, 99, 164);
   }
 }
+
+#avatarImage {
+  display: none;
+}

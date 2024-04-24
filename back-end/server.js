@@ -10,11 +10,13 @@ const app = express();
 connectMongo(process.env.MONGOURI);
 configureCloudinary();
 
-const router = require("./routes/guidesRouter");
+const guidesRouter = require("./routes/guidesRouter");
 
 const nearbyPlacesRouter = require("./routes/nearbyPlacesRouter");
 
 const usersRouter = require("./routes/usersRouter");
+
+const geolocationRouter = require("./routes/geolocationRouter");
 
 app.use(express.json());
 
@@ -24,11 +26,13 @@ app.use(cookieParser());
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-app.use("/guides", router);
+app.use("/guides", guidesRouter);
 
 app.use("/nearby-places", nearbyPlacesRouter);
 
 app.use("/auth", usersRouter);
+
+app.use("/geolocation", geolocationRouter);
 
 app.post("/try", (req, res) => {
   res.json({ data: req.body });

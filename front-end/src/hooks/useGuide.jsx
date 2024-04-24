@@ -4,12 +4,16 @@ import { guideService } from "../services/services";
 
 function useGuide() {
   const { guideId } = useParams();
-  const { data, error, isFetching } = useQuery({
+  const {
+    data: guide,
+    error,
+    isFetching,
+  } = useQuery({
     queryKey: ["guide"],
     queryFn: () => guideService.get(guideId),
   });
 
-  return { data, error, isFetching };
+  return { guide, error, isFetching };
 }
 
 export default useGuide;

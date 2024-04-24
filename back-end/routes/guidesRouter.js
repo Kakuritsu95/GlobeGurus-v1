@@ -15,8 +15,12 @@ const {
   updateGuide,
   deleteGuide,
   getAllGuides,
+  getGuidesByQuery,
+  getNearbyGuides,
   toggleLike,
   addComment,
+  editComment,
+  deleteComment,
 } = require("../controllers/guideControllers");
 
 const {
@@ -27,9 +31,13 @@ const {
 
 const { toggleBookmark } = require("../controllers/userControllers");
 
-router.get("/user/:userId", getUserGuides);
+router.get("/popular", getAllGuides);
 
-router.get("/all", getAllGuides);
+router.get("/nearby", getNearbyGuides);
+
+router.get("/search", getGuidesByQuery);
+
+router.get("/user/:userId", getUserGuides);
 
 router.get("/:guideId", getGuideById, async (req, res) => {
   res.json(req.guide);
@@ -80,4 +88,17 @@ router.delete(
 router.put("/:guideId/like", authorizeUser, getGuideById, toggleLike);
 router.put("/:guideId/bookmark", authorizeUser, getGuideById, toggleBookmark);
 router.put("/:guideId/comment", authorizeUser, getGuideById, addComment);
+router.patch(
+  "/:guideId/comment/:commentId",
+  authorizeUser,
+  getGuideById,
+  editComment
+);
+router.delete(
+  "/:guideId/comment/:commentId",
+
+  authorizeUser,
+  getGuideById,
+  deleteComment
+);
 module.exports = router;

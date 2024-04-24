@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../schemas/usersSchema");
+const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
+const { checkEmailFormat } = require("../helpers/checkEmailFormat");
 async function signup(req, res) {
   try {
     const user = req.body;
@@ -50,6 +52,22 @@ async function verifyUser(req, res, next, useAsMiddleware = false) {
     return res.json({ message: "User is not logged in" });
   }
 }
+
+async function getUserDetails(req, res) {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select("-password").lean();
+    const { _id, ...formattedUser } = user;
+    formattedUser.id = _id;
+    res.status(200).json(formattedUser);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error cannot get user details" });
+  }
+}
+
 async function sendUserBookmarks(req, res) {
   try {
     const userBookmarks = await User.findById(req.userId).select(
@@ -82,10 +100,47 @@ async function toggleBookmark(req, res) {
     });
   }
 }
+
+async function updateUserDetails(req, res) {
+  const { username, email } = req.body;
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if (req.file) {
+      const imageFile = req.file;
+      const oldAvatarUrl = user.avatarUrl;
+      const newAvatarUrl = await uploadImage("avatars", imageFile);
+      await deleteImage("avatars", oldAvatarUrl);
+      user.set({ avatarUrl: newAvatarUrl });
+      const updatedUser = await user.save();
+      if (!updatedUser)
+        return res
+          .status(500)
+          .json({ message: "Could not update user avatar" });
+      return res.json(newAvatarUrl);
+    }
+    if (username) user.username = username;
+    if (email) {
+      if (!checkEmailFormat(email))
+        return res.status(400).json({ message: "Invalid email format" });
+      user.email = email;
+    }
+
+    const updatedUser = await user.save();
+    if (!updatedUser)
+      return res.status(500).json({ message: "Could not update user details" });
+    res.json(updatedUser);
+  } catch (err) {
+    console.log(err);
+  }
+}
 module.exports = {
   signup,
   login,
   verifyUser,
+  getUserDetails,
   toggleBookmark,
   sendUserBookmarks,
+  updateUserDetails,
 };
