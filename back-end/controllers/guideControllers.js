@@ -1,5 +1,7 @@
 const Guide = require("../schemas/guideSchema");
+const User = require("../schemas/usersSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
+const { MongoClient } = require("mongodb");
 async function createGuide(req, res) {
   try {
     const user = req.user;
@@ -43,7 +45,7 @@ async function updateGuide(req, res) {
       guide.set({ ...req.body, imageUrl: newImageUrl });
     } else guide.set(req.body);
     const updatedGuide = await guide.save();
-    console.log(updatedGuide);
+
     if (!updatedGuide)
       return res.status(500).json({ message: "Could not update guide" });
 
@@ -70,36 +72,58 @@ async function deleteGuide(req, res) {
 
 async function getUserGuides(req, res) {
   const userId = req.params.userId;
-
   try {
-    const userGuides = await Guide.find({ owner: userId })
-      .populate({
-        path: "owner",
-        select: "username avatarUrl",
-      })
-      .populate({
-        path: "comments",
-        populate: { path: "commenter", select: "username avatarUrl" },
-      });
+    const userGuides = await Guide.find({ owner: userId });
 
     if (!userGuides)
       return res.status(404).json({ message: "Could not find guides" });
     res.json(userGuides);
   } catch (err) {
-    res.json(err.message);
+    res.status(400).json({ message: err.message });
   }
 }
 
 async function getAllGuides(req, res) {
   try {
     const { page, perPage } = req.query;
+    // const allGuides = await Guide.aggregateMostLiked(page, perPage);
+    const client = await MongoClient.connect(process.env.MONGOURI);
+    const db = client.db();
 
-    const allGuides = await Guide.aggregateMostLiked(page, perPage);
-    if (!allGuides)
-      res
+    const cursor = db.collection("guides").find({});
+    const results = [];
+
+    const userIds = new Set();
+    for await (const result of cursor) {
+      results.push(result);
+      (result.likes ?? []).forEach((like) => userIds.add(like));
+      (result.comments ?? []).forEach((comment) =>
+        userIds.add(comment.commenter)
+      );
+    }
+
+    const users = await User.find({ _id: { $in: Array.from(userIds) } });
+
+    const userPerId = users.reduce((acc, cur) => {
+      const { email, password, bookmarks, ...current } = cur.toObject();
+      acc[cur._id] = current;
+      return acc;
+    }, {});
+    const formattedGuides = results
+      .map((result) => {
+        result.owner = userPerId[result.owner];
+        result.comments.forEach(
+          (comment) => (comment.commenter = userPerId[comment.commenter])
+        );
+        return result;
+      })
+      .sort((a, b) => b.likes.length - a.likes.length)
+      .splice((page - 1) * page, perPage);
+    if (results.length == 0)
+      return res
         .status(500)
         .json({ message: "Could not load guides, please try again later!" });
-    res.json(allGuides);
+    res.json(formattedGuides);
   } catch (err) {
     res.json(err.message);
   }
@@ -116,7 +140,6 @@ async function getGuidesByQuery(req, res) {
         { description: { $regex: query, $options: "i" } },
       ],
     })
-      .populate({ path: "owner", select: "-password -bookmarks -email" })
       .skip((page - 1) * perPage)
       .limit(perPage);
 
@@ -139,6 +162,7 @@ async function getNearbyGuides(req, res) {
       page,
       perPage
     );
+
     if (!sortedByNearGuides)
       res
         .status(500)

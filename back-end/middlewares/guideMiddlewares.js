@@ -3,18 +3,8 @@ async function getGuideById(req, res, next) {
   const { guideId } = req.params;
 
   try {
-    const guide = await Guide.findById(guideId)
-      .populate({
-        path: "owner",
-        select: "username",
-      })
-      .populate({
-        path: "comments",
-        populate: {
-          path: "commenter",
-          select: "avatarUrl",
-        },
-      });
+    const guide = await Guide.findOne({ _id: guideId });
+
     if (!guide) {
       return res.status(404).json({ error: "Guide not found" });
     }

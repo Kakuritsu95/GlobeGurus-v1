@@ -1,13 +1,13 @@
 import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 import GuideAddEditForm from "./GuideAddEditForm";
-import UserGuidesList from "./UserGuidesList";
-function UserGuidesWindow({ userGuides }) {
-  const owner = userGuides?.[0]?.owner?.username;
+import GuideList from "./GuideList";
+function UserGuidesWindow({ guides }) {
+  const owner = guides?.[0]?.owner?.username;
   return (
     <div className="w-full rounded-lg border-2 p-4">
       <div className="flex justify-between border-b border-dotted pb-2 ">
-        <h1 className="mt-2 text-xl font-bold">{owner} guides</h1>
+        <h1 className="mb-4 mt-2 text-xl font-bold">{owner} guides</h1>
         <div>
           <Modal>
             <Modal.Open opens="edit">
@@ -21,7 +21,7 @@ function UserGuidesWindow({ userGuides }) {
           </Modal>
         </div>
       </div>
-      <UserGuidesList userGuides={userGuides} />
+      <GuideList guides={guides} />
     </div>
   );
 }

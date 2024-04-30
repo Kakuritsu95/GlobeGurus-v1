@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import UserSettings from "./pages/UserSettings";
 import Explore from "./pages/Explore";
+import FeedGuides from "./features/guides/FeedGuides";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,7 +40,9 @@ function App() {
             <Route path={APP_ROUTES.SIGN_UP} element={<Signup />} />
             <Route path={APP_ROUTES.LOGIN} element={<Login />} />
             <Route path={APP_ROUTES.USER_SETTINGS} element={<UserSettings />} />
-            <Route path={APP_ROUTES.EXPLORE} element={<Explore />} />
+            <Route path={APP_ROUTES.EXPLORE} element={<Explore />}>
+              <Route path={":service"} element={<FeedGuides />} />
+            </Route>
           </Route>
         </Routes>
         <Toaster

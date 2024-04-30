@@ -65,8 +65,10 @@ export const guideService = {
     await apiCalls.getRequest(API_ROUTES.ALL_GUIDES(page)),
   getGuidesByQuery: async (query) =>
     await apiCalls.getRequest(API_ROUTES.GUIDES_BY_QUERY(query)),
-  getNearbyGuides: async ({ lat, lng }) =>
-    await apiCalls.getRequest(API_ROUTES.NEARBY_GUIDES({ lat, lng })),
+  getNearbyGuides: async ({ lat, lng, page, perPage = 5 }) =>
+    await apiCalls.getRequest(
+      API_ROUTES.NEARBY_GUIDES({ lat, lng, page, perPage }),
+    ),
   post: async ({ formData }) =>
     await apiCalls.postRequest(API_ROUTES.GUIDES, formData),
   patch: async ({ guideId, formData }) =>

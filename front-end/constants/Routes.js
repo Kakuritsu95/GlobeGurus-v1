@@ -11,8 +11,8 @@ export const API_ROUTES = {
   USER_GUIDES: `${SERVER_URI}/guides/user`,
   ALL_GUIDES: (page) => `${SERVER_URI}/guides/popular?page=${page}&perPage=5`,
   GUIDES_BY_QUERY: (query) => `${SERVER_URI}/guides/search/?query=${query}`,
-  NEARBY_GUIDES: ({ lat, lng }) =>
-    `${SERVER_URI}/guides/nearby/?lat=${lat}&lng=${lng}`,
+  NEARBY_GUIDES: ({ lat, lng, page, perPage }) =>
+    `${SERVER_URI}/guides/nearby?lat=${lat}&lng=${lng}&page=${page}&perPage=${perPage}`,
   USER_BOOKMARKS: `${SERVER_URI}/auth/bookmarks`,
   NEARBY_PLACES: `${SERVER_URI}/nearby-places`,
   ADD_PLACE: (guideId) => `${SERVER_URI}/guides/${guideId}/place`,
@@ -29,7 +29,7 @@ export const API_ROUTES = {
 //APP ROUTES
 
 export const APP_ROUTES = {
-  GUIDES_PAGE: "guides/:userId",
+  GUIDES_PAGE: "guides/user/:userId",
   GUIDE_EDIT: "guides/edit",
   GUIDE_VIEW: "guides/view",
   SIGN_UP: "signup",

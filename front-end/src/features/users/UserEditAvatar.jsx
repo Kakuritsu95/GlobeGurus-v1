@@ -5,6 +5,7 @@ import { updateAvatar } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { useState } from "react";
+
 function UserEditAvatar({ username, avatarUrl }) {
   const { base64, setBase64, handleFileInputChange } = useConvertBase64("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +16,7 @@ function UserEditAvatar({ username, avatarUrl }) {
         style={{ backgroundImage: `url(${base64 || avatarUrl})` }}
         className="h-36 w-36 rounded-lg bg-cover bg-center bg-no-repeat sm:h-52 sm:w-44"
       />
+
       <div className="my-10 space-y-5">
         <h3 className="text-xl font-semibold">{username}</h3>
         <form
@@ -52,6 +54,7 @@ function UserEditAvatar({ username, avatarUrl }) {
             onChange={handleFileInputChange}
             id="avatarImage"
             type="file"
+            className="hidden"
           />
           {base64 && (
             <button

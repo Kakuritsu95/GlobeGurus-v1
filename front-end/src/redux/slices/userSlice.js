@@ -27,6 +27,14 @@ export const userSlice = createSlice({
     updateAvatar: (state, action) => {
       state.avatar = action.payload;
     },
+    toggleLocalBookmark: (state, action) => {
+      if (state.bookmarks.includes(action.payload)) {
+        const indexOfBookmarkToRemove = state.bookmarks.findIndex(
+          (bookmark) => bookmark === action.payload,
+        );
+        state.bookmarks.splice(indexOfBookmarkToRemove, 1);
+      } else state.bookmarks.push(action.payload);
+    },
     logoutUser: () => {
       deleteCookie("authToken");
       return initialState;
@@ -36,6 +44,7 @@ export const userSlice = createSlice({
 
 export const getUserId = (store) => store.user.id;
 
-export const { initializeUser, updateAvatar, logoutUser } = userSlice.actions;
+export const { initializeUser, updateAvatar, toggleLocalBookmark, logoutUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

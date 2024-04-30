@@ -15,14 +15,28 @@ import { useState } from "react";
 import LikeButton from "./LikeButton";
 import BookmarkButton from "./BookmarkButton";
 import { useSelector } from "react-redux";
+import Avatar from "../users/Avatar";
 
-function UserGuideListItem({ guide, opensAsCommentWindow }) {
+function GuideListItem({
+  guide,
+  opensAsCommentWindow,
+  localLikesMain,
+  setLocalLikesMain,
+}) {
   const [localLikes, setLocalLikes] = useState(guide.likes);
   const userId = useSelector((store) => store.user.id);
   const isUserOwner = userId === guide.owner._id;
-
+  console.log(guide);
   return (
-    <li className="relative bg-neutral-100 p-2 sm:p-5">
+    <li className="relative rounded bg-gray-200 p-2 sm:p-5">
+      <div className="mb-2 flex items-center gap-3">
+        <Avatar avatarUrl={guide.owner.avatarUrl} />
+        <Link to={`/guides/user/${guide.owner._id}`}>
+          <h3 className="font-semibold text-gray-600 hover:underline">
+            {guide.owner.username}
+          </h3>
+        </Link>
+      </div>
       <Link to={`/${APP_ROUTES.GUIDE_VIEW}/${guide._id}`}>
         <h3 className="text-start font-semibold text-blue-500 hover:cursor-pointer hover:text-blue-700 hover:underline md:text-lg">
           {guide.title}
@@ -31,7 +45,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
       <div>
         <HorizontalInfoList>
           {`${guide.places.length} Places`}
-          {`${localLikes.length} Likes`}
+          {`${localLikesMain ? localLikesMain.length : localLikes.length} Likes`}
           {`${guide.comments.length} Comments`}
         </HorizontalInfoList>
         <HorizontalInfoList className="flex space-x-1 text-gray-700">
@@ -49,8 +63,8 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
           <div className="flex justify-between py-1.5 text-lg font-semibold text-gray-700 ">
             <LikeButton
               guideId={guide._id}
-              localLikes={localLikes}
-              setLocalLikes={setLocalLikes}
+              localLikes={localLikesMain || localLikes}
+              setLocalLikes={setLocalLikesMain || setLocalLikes}
             />
             <Modal.Open opens="comment">
               <button className="flex w-full items-center justify-center space-x-2 rounded px-5  py-1 hover:bg-gray-300 hover:text-black hover:underline">
@@ -62,7 +76,7 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
           </div>
 
           {!opensAsCommentWindow && isUserOwner && (
-            <Dropdown absolute={true} position={"top-3 right-2"}>
+            <Dropdown absolute={true} position={"top-5 right-3"}>
               <Dropdown.Toggle>
                 <RxDotsVertical size={22} />
               </Dropdown.Toggle>
@@ -86,7 +100,11 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
             <ConfirmDelete name={guide.title} guideId={guide._id} />
           </Modal.Window>
           <Modal.Window adjustPosition="-top-14" name="comment">
-            <CommentGuideWindow guide={guide}></CommentGuideWindow>
+            <CommentGuideWindow
+              localLikesMain={localLikes}
+              setLocalLikesMain={setLocalLikes}
+              guide={guide}
+            ></CommentGuideWindow>
           </Modal.Window>
         </Modal>
       </div>
@@ -94,4 +112,4 @@ function UserGuideListItem({ guide, opensAsCommentWindow }) {
   );
 }
 
-export default UserGuideListItem;
+export default GuideListItem;

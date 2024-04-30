@@ -8,7 +8,7 @@ function Logo() {
         alt="GlobalGurus Logo"
       />
       <span className="self-center whitespace-nowrap text-2xl font-semibold ">
-        Global Gurus
+        Globe Gurus
       </span>
     </Link>
   );

@@ -9,6 +9,7 @@ export default {
       boxShadow: {
         "inner-lg": "0px 0px 10px 2px rgba(0,0,0,0.06) inset",
         "inner-2xl": "-10px 44px 25px -1px rgba(0,0,0,0.27) inset",
+        "inner-border": "0px 0px 0px 1.5px rgba(0,0,0,1) inset",
       },
       keyframes: {
         like: {

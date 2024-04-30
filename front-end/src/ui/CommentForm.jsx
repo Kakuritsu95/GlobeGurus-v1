@@ -3,13 +3,14 @@ import { IoMdSend } from "react-icons/io";
 import { guideService } from "../services/services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
+import Avatar from "../features/users/Avatar";
 function CommentForm({
   guideId,
   defaultCommentValue,
   commentId,
   onSetCommentId,
 }) {
-  const { name, avatar, id } = useSelector((store) => store.user);
+  const { name, avatar: avatarUrl, id } = useSelector((store) => store.user);
   const ref = useRef();
   const queryClient = useQueryClient();
   const isEdit = defaultCommentValue;
@@ -45,7 +46,7 @@ function CommentForm({
     >
       {!isEdit && (
         <label htmlFor="comment">
-          <img src={avatar} alt="avatar" className="w-9 rounded-full" />
+          <Avatar avatarUrl={avatarUrl} />
         </label>
       )}
       <textarea

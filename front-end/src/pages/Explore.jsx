@@ -1,14 +1,11 @@
-import UserGuidesList from "../features/guides/UserGuidesList";
+import SearchBar from "../ui/SearcBar";
+import { Outlet } from "react-router-dom";
 
-import useFeedGuides from "../hooks/useFeedGuides";
 function Explore() {
-  const { feedGuides } = useFeedGuides();
-  console.log(feedGuides);
   return (
-    <div className="container mx-auto ">
-      <div className="h-full overflow-y-scroll">
-        <UserGuidesList userGuides={feedGuides} />
-      </div>
+    <div className="mx-auto flex h-full flex-col space-y-5 sm:w-2/3 xl:w-2/4">
+      <SearchBar />
+      <Outlet />
     </div>
   );
 }

@@ -11,7 +11,11 @@ function Button({ children, type, disabled, handleClick, to }) {
     danger:
       "rounded-full bg-red-600 px-3 py-2 text-center text-sm font-medium text-gray-100 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300",
     cancel:
-      "rounded-full border border-gray-200 bg-gray-200 px-3 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-300 focus:z-10 focus:outline-none focus:ring-4",
+      "rounded-full border border-gray-200 bg-blue-400 px-3 py-2 text-sm font-medium bg-gray-100 hover:bg-gray-300 focus:z-10",
+    panelEnabled:
+      "rounded-full text-white border border-gray-200 bg-blue-500 px-3 py-2 text-sm font-medium hover:bg-blue-400 focus:z-10",
+    panelDisabled:
+      "rounded-full text-gray-700 border border-gray-200 bg-gray-200 px-3 py-2 text-sm font-medium hover:bg-gray-300 focus:z-10",
   };
   {
     return to ? (

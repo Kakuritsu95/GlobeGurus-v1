@@ -6,12 +6,12 @@ import useGuide from "../../hooks/useGuide";
 
 function GuideWindow() {
   const { guide, isFetching } = useGuide();
-  if (!guide || isFetching) return null;
+  if (!guide) return null;
   return (
     <div className="relative grid h-[92.95vh] grid-cols-5 grid-rows-3">
       <GuideOverview guide={guide} />
       <PlacesList guide={guide} />
-      <Map guide={guide} />
+      {!isFetching && <Map guide={guide} />}
       <ToggleMapButton />
     </div>
   );

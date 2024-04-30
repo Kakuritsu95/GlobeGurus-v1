@@ -7,6 +7,7 @@ import { FiInfo } from "react-icons/fi";
 function ToggleMapButton() {
   const dispatch = useDispatch();
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
+
   return (
     <div className="absolute bottom-12 left-1/3 sm:left-1/2 lg:hidden">
       <Button handleClick={() => dispatch(toggleShowMap())}>

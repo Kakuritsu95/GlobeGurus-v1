@@ -9,7 +9,6 @@ function Map({ guide }) {
   const userId = useSelector(getUserId);
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
   const isEditSession = userId === guide?.owner?._id;
-  console.log(guide);
 
   return (
     <div

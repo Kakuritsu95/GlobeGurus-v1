@@ -4,8 +4,8 @@ import Modal from "../ui/Modal";
 import Tab from "../ui/Tab";
 import NearbyPlaces from "../features/places/NearbyPlaces";
 import PlaceAddEditForm from "../features/places/PlaceAddEditForm";
-function EditGuide({ isEditSession }) {
-  return isEditSession ? (
+function EditGuide() {
+  return (
     <Modal>
       <NearbyPlacesProvider>
         <GuideWindow />
@@ -21,8 +21,6 @@ function EditGuide({ isEditSession }) {
         </Modal.Window>
       </NearbyPlacesProvider>
     </Modal>
-  ) : (
-    5
   );
 }
 

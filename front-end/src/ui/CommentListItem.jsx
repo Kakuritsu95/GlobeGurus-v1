@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { RxDotsHorizontal } from "react-icons/rx";
+import Avatar from "../features/users/Avatar";
 import { guideService } from "../services/services";
 import CommentForm from "./CommentForm";
 import Dropdown from "./Dropdown";
@@ -11,10 +12,12 @@ function CommentListItem({ comment, userId, isEdit, onSetCommentId, guideId }) {
       guideService.deleteComment({ guideId, commentId }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["guides"] }),
   });
+
   const userOwnsComment = userId === comment.commenter._id;
   return (
     <li className="flex w-full items-center space-x-2 space-y-5 py-0.5">
-      <img className="h-8 w-8" src={comment.commenter.avatarUrl} alt="avatar" />
+      {/* <img className="h-8 w-8" src={comment.commenter.avatarUrl} alt="avatar" /> */}
+      <Avatar avatarUrl={comment.commenter.avatarUrl} />
       <div
         className={`${isEdit && "w-full"} rounded-lg bg-slate-300 p-2 text-start`}
       >
@@ -46,9 +49,9 @@ function CommentListItem({ comment, userId, isEdit, onSetCommentId, guideId }) {
         <div className="text-sm ">
           <Dropdown position="relative">
             <Dropdown.Toggle>
-              <button className="rounded-full p-1.5 hover:bg-zinc-200">
+              <div className="rounded-full p-1.5 hover:bg-zinc-200">
                 <RxDotsHorizontal size={17} />
-              </button>
+              </div>
             </Dropdown.Toggle>
             <Dropdown.List position="-left-20 top-8" size="small">
               <DropdownItem
