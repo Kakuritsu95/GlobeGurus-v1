@@ -10,7 +10,7 @@ async function getTerritoryCoords(req, res) {
         .status(400)
         .json({ message: "Please provide a valid territory" });
     const { lat, lng } = territory.geonames[0];
-    res.json(`${lat}, ${lng}`);
+    res.json(`${lng},${lat}`);
   } catch (err) {
     res.status(500).json({ message: "couldnt find terriroty" });
   }

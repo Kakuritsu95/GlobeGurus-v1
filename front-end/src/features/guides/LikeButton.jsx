@@ -1,31 +1,27 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { guideService } from "../../services/services";
 import GuideActionButton from "./GuideActionButton";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { toggleGuideLikes } from "../../redux/slices/userSlice";
 
-function LikeButton({ guideId, localLikes, setLocalLikes }) {
-  const userId = useSelector((store) => store.user.id);
+function LikeButton({ guideId, isGuideLikedByUser }) {
+  const dispatch = useDispatch();
+
   const {
     mutate: toggleLike,
     isPending: isSubmitting,
     isSuccess,
   } = useMutation({
     mutationFn: () => {
-      guideService.toggleLike(guideId);
-      setLocalLikes((localLikes) => {
-        if (isGuideLiked) {
-          return localLikes.filter((like) => like.id === userId);
-        } else return [...localLikes, userId];
-      });
+      return guideService.toggleLike(guideId);
     },
+    onSuccess: () => dispatch(toggleGuideLikes(guideId)),
   });
-
-  const isGuideLiked = localLikes.includes(userId);
 
   return (
     <GuideActionButton handleClick={toggleLike} isSubmitting={isSubmitting}>
-      {isGuideLiked ? (
+      {isGuideLikedByUser ? (
         <AiFillLike
           className={isSuccess && "animate-like"}
           color="blue"

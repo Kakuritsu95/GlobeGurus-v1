@@ -96,12 +96,16 @@ async function getAllGuides(req, res) {
     const userIds = new Set();
     for await (const result of cursor) {
       results.push(result);
+      userIds.add(result.owner);
       (result.likes ?? []).forEach((like) => userIds.add(like));
       (result.comments ?? []).forEach((comment) =>
         userIds.add(comment.commenter)
       );
     }
-
+    if (results.length == 0)
+      return res
+        .status(500)
+        .json({ message: "Could not load guides, please try again later!" });
     const users = await User.find({ _id: { $in: Array.from(userIds) } });
 
     const userPerId = users.reduce((acc, cur) => {
@@ -119,10 +123,7 @@ async function getAllGuides(req, res) {
       })
       .sort((a, b) => b.likes.length - a.likes.length)
       .splice((page - 1) * page, perPage);
-    if (results.length == 0)
-      return res
-        .status(500)
-        .json({ message: "Could not load guides, please try again later!" });
+
     res.json(formattedGuides);
   } catch (err) {
     res.json(err.message);

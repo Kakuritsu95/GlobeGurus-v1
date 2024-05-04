@@ -8,6 +8,7 @@ const initialState = {
   id: "",
   bookmarks: [],
   createdAt: "",
+  toggledGuideLikes: [],
 };
 
 export const userSlice = createSlice({
@@ -35,6 +36,22 @@ export const userSlice = createSlice({
         state.bookmarks.splice(indexOfBookmarkToRemove, 1);
       } else state.bookmarks.push(action.payload);
     },
+    // initializeLikes: (state, action) => {
+    //   action.payload.forEach((guide) => {
+    //     if (state.localLikes.hasOwnProperty(guide._id)) return;
+    //     if (guide.likes.includes(state.id)) state.localLikes[guide._id] = true;
+    //     else state.localLikes[guide._id] = false;
+    //   });
+    // },
+    toggleGuideLikes: (state, action) => {
+      const existingGuideLikeIndex = state.toggledGuideLikes.findIndex(
+        (id) => action.payload === id,
+      );
+
+      if (existingGuideLikeIndex === -1)
+        state.toggledGuideLikes.push(action.payload);
+      else state.toggledGuideLikes.splice(existingGuideLikeIndex, 1);
+    },
     logoutUser: () => {
       deleteCookie("authToken");
       return initialState;
@@ -44,7 +61,12 @@ export const userSlice = createSlice({
 
 export const getUserId = (store) => store.user.id;
 
-export const { initializeUser, updateAvatar, toggleLocalBookmark, logoutUser } =
-  userSlice.actions;
+export const {
+  initializeUser,
+  updateAvatar,
+  toggleLocalBookmark,
+  toggleGuideLikes,
+  logoutUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;

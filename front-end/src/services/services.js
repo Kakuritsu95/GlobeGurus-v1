@@ -49,6 +49,7 @@ export const userService = {
   login: async (data) => apiCalls.postRequest(API_ROUTES.LOGIN, data),
   verifyUser: async () => apiCalls.postRequest(API_ROUTES.VERIFY_TOKEN),
   getUserDetails: async () => apiCalls.getRequest(API_ROUTES.GET_USER_DETAILS),
+  getTopUsers: async () => apiCalls.getRequest(API_ROUTES.GET_TOP_USERS),
   toggleBookmark: async (guideId) =>
     await apiCalls.putRequest(API_ROUTES.TOGGLE_BOOKMARK(guideId)),
   getUserBookmarks: async () => apiCalls.getRequest(API_ROUTES.USER_BOOKMARKS),

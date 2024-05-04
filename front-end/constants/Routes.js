@@ -6,6 +6,7 @@ export const API_ROUTES = {
   SIGNUP: `${SERVER_URI}/auth/signup`,
   VERIFY_TOKEN: `${SERVER_URI}/auth/verify-token`,
   GET_USER_DETAILS: `${SERVER_URI}/auth/user-details`,
+  GET_TOP_USERS: `${SERVER_URI}/auth/get-top-users`,
   UPDATE_USER_DETAILS: `${SERVER_URI}/auth/update-user-details`,
   GUIDES: `${SERVER_URI}/guides`,
   USER_GUIDES: `${SERVER_URI}/guides/user`,

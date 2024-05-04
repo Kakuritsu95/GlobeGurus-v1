@@ -10,8 +10,9 @@ const {
   login,
   verifyUser,
   getUserDetails,
-  sendUserBookmarks,
+  getUserBookmarks,
   updateUserDetails,
+  getTopUsers,
 } = require("../controllers/userControllers");
 
 usersRouter.post("/signup", signup);
@@ -23,12 +24,14 @@ usersRouter.get(
   (req, res, next) => {
     verifyUser(req, res, next, true);
   },
-  sendUserBookmarks
+  getUserBookmarks
 );
+usersRouter.get("/get-top-users", getTopUsers);
 usersRouter.patch(
   "/update-user-details",
   authorizeUser,
   upload.single("avatarImage"),
   updateUserDetails
 );
+
 module.exports = usersRouter;

@@ -7,7 +7,7 @@ function useGuides() {
   const { service, userId } = useParams();
   const [queryParams] = useSearchParams();
 
-  const { data: guides } = useQuery({
+  const { data: guides, isError } = useQuery({
     queryKey: ["guides", service, userId, queryParams.toString()],
 
     queryFn: () => {
@@ -24,7 +24,7 @@ function useGuides() {
     },
   });
 
-  return { guides };
+  return { guides, isError };
 }
 
 export default useGuides;

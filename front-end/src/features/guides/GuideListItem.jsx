@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import formatDateString from "../../helpers/formatDateString";
 import HorizontalInfoList from "../../ui/HorizontalInfoList";
@@ -11,22 +12,21 @@ import ImageTitleLayout from "../../ui/ImageTitleLayout";
 import CommentGuideWindow from "./CommentGuideWindow";
 import { GoComment } from "react-icons/go";
 
-import { useState } from "react";
 import LikeButton from "./LikeButton";
 import BookmarkButton from "./BookmarkButton";
-import { useSelector } from "react-redux";
 import Avatar from "../users/Avatar";
+import checkIfOnlyExistsInOneArray from "../../helpers/checkIfExistsOnlyInOneArray";
 
-function GuideListItem({
-  guide,
-  opensAsCommentWindow,
-  localLikesMain,
-  setLocalLikesMain,
-}) {
-  const [localLikes, setLocalLikes] = useState(guide.likes);
-  const userId = useSelector((store) => store.user.id);
-  const isUserOwner = userId === guide.owner._id;
-  console.log(guide);
+function GuideListItem({ guide, opensAsCommentWindow }) {
+  const { id: userId, toggledGuideLikes } = useSelector((store) => store.user);
+  const isUserOwner = userId === guide?.owner?._id;
+  const isGuideLikedByUser = checkIfOnlyExistsInOneArray(
+    guide.likes,
+    toggledGuideLikes,
+    userId,
+    guide._id,
+  );
+  const isGuideInitiallyLiked = guide.likes.includes(userId);
   return (
     <li className="relative rounded bg-gray-200 p-2 sm:p-5">
       <div className="mb-2 flex items-center gap-3">
@@ -45,7 +45,7 @@ function GuideListItem({
       <div>
         <HorizontalInfoList>
           {`${guide.places.length} Places`}
-          {`${localLikesMain ? localLikesMain.length : localLikes.length} Likes`}
+          {`${isGuideInitiallyLiked ? guide.likes.length + isGuideLikedByUser - 1 : guide.likes.length + isGuideLikedByUser} Likes`}
           {`${guide.comments.length} Comments`}
         </HorizontalInfoList>
         <HorizontalInfoList className="flex space-x-1 text-gray-700">
@@ -63,8 +63,7 @@ function GuideListItem({
           <div className="flex justify-between py-1.5 text-lg font-semibold text-gray-700 ">
             <LikeButton
               guideId={guide._id}
-              localLikes={localLikesMain || localLikes}
-              setLocalLikes={setLocalLikesMain || setLocalLikes}
+              isGuideLikedByUser={isGuideLikedByUser}
             />
             <Modal.Open opens="comment">
               <button className="flex w-full items-center justify-center space-x-2 rounded px-5  py-1 hover:bg-gray-300 hover:text-black hover:underline">
@@ -100,11 +99,7 @@ function GuideListItem({
             <ConfirmDelete name={guide.title} guideId={guide._id} />
           </Modal.Window>
           <Modal.Window adjustPosition="-top-14" name="comment">
-            <CommentGuideWindow
-              localLikesMain={localLikes}
-              setLocalLikesMain={setLocalLikes}
-              guide={guide}
-            ></CommentGuideWindow>
+            <CommentGuideWindow guide={guide}></CommentGuideWindow>
           </Modal.Window>
         </Modal>
       </div>

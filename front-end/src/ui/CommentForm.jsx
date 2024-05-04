@@ -10,7 +10,11 @@ function CommentForm({
   commentId,
   onSetCommentId,
 }) {
-  const { name, avatar: avatarUrl, id } = useSelector((store) => store.user);
+  const {
+    username,
+    avatar: avatarUrl,
+    id,
+  } = useSelector((store) => store.user);
   const ref = useRef();
   const queryClient = useQueryClient();
   const isEdit = defaultCommentValue;
@@ -53,7 +57,7 @@ function CommentForm({
         name="comment"
         ref={ref}
         className="w-full resize-none rounded border border-gray-300 pl-3 pt-1.5 outline-none  focus:border-gray-400"
-        placeholder={isEdit ? "" : `Leave a comment as ${name}`}
+        placeholder={isEdit ? "" : `Leave a comment as ${username}`}
         defaultValue={isEdit ? defaultCommentValue : ""}
         rows={isEdit ? 3 : 4}
         autoFocus={true}

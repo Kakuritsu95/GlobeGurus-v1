@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../schemas/usersSchema");
+const Guide = require("../schemas/guideSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 const { checkEmailFormat } = require("../helpers/checkEmailFormat");
+const { Cursor } = require("mongoose");
 async function signup(req, res) {
   try {
     const user = req.body;
@@ -68,7 +70,7 @@ async function getUserDetails(req, res) {
   }
 }
 
-async function sendUserBookmarks(req, res) {
+async function getUserBookmarks(req, res) {
   try {
     const userBookmarks = await User.findById(req.userId).select(
       "-_id bookmarks"
@@ -79,6 +81,28 @@ async function sendUserBookmarks(req, res) {
     return res.json({ message: `Couldnt get user details ${err}` });
   }
 }
+
+async function getTopUsers(_, res) {
+  try {
+    const guides = await Guide.find({});
+    const topUsers = guides
+      .reduce((acc, cur) => {
+        const likePoints = cur.likes.length;
+        const owner = cur.owner;
+        const exists = acc.find((obj) => obj.owner._id === cur.owner._id);
+        if (!exists) acc.push({ owner, points: 1 + likePoints });
+        else exists.points = exists.points + 1 + likePoints;
+        return acc;
+      }, [])
+      .sort((a, b) => b.points - a.points)
+      .slice(0, 10);
+    if (!topUsers) return res.status(400).json({ message: "No users found" });
+    res.json(topUsers);
+  } catch (err) {
+    res.son({ message: err.message });
+  }
+}
+
 async function toggleBookmark(req, res) {
   try {
     const userId = req.user.id;
@@ -141,6 +165,7 @@ module.exports = {
   verifyUser,
   getUserDetails,
   toggleBookmark,
-  sendUserBookmarks,
+  getUserBookmarks,
   updateUserDetails,
+  getTopUsers,
 };
