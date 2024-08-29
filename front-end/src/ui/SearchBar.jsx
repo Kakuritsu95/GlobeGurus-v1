@@ -1,21 +1,34 @@
-import { MdOutlineLocationSearching } from "react-icons/md";
+import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import PopularNearbyPanel from "./PopularNearbyPanel";
 function SearchBar() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (query == "") return;
+    navigate(`search/?keyword=${query}&page=1`);
+  }
   return (
-    <form>
-      <div className="relative">
-        <input
-          className="w-64 rounded-full px-3 py-0.5 focus:w-96 focus:transition-all focus:duration-200"
-          type="text"
-          placeholder="Search by your destination"
-        />
-        <button>
-          <MdOutlineLocationSearching
-            type="submit"
-            className="absolute right-2 top-1.5"
+    <div className="space-y-2">
+      <form onSubmit={handleSubmit}>
+        <div className="relative mx-auto flex w-2/3">
+          <input
+            type="text"
+            className="w-full rounded-l-full bg-slate-200 px-5 py-4 outline-0 focus:shadow-inner-border  focus:shadow-blue-500 "
+            placeholder="Search guides by keyword"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
-        </button>
-      </div>
-    </form>
+
+          <button className="h-14 w-14 rounded-r-full bg-slate-600 hover:bg-slate-500 active:bg-slate-600 ">
+            <IoIosSearch className="mx-auto" color="white" size={24} />
+          </button>
+        </div>
+      </form>
+      <PopularNearbyPanel />
+    </div>
   );
 }
 

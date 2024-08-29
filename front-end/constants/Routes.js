@@ -1,5 +1,5 @@
 //API ROUTES
-const SERVER_URI = "http://localhost:7000";
+const SERVER_URI = "http://localhost:7000/api";
 
 export const API_ROUTES = {
   LOGIN: `${SERVER_URI}/auth/login`,
@@ -10,8 +10,10 @@ export const API_ROUTES = {
   UPDATE_USER_DETAILS: `${SERVER_URI}/auth/update-user-details`,
   GUIDES: `${SERVER_URI}/guides`,
   USER_GUIDES: `${SERVER_URI}/guides/user`,
-  ALL_GUIDES: (page) => `${SERVER_URI}/guides/popular?page=${page}&perPage=5`,
-  GUIDES_BY_QUERY: (query) => `${SERVER_URI}/guides/search/?query=${query}`,
+  ALL_GUIDES: (page, perPage) =>
+    `${SERVER_URI}/guides/popular?page=${page}&perPage=${perPage}`,
+  GUIDES_BY_QUERY: ({ query, page, perPage }) =>
+    `${SERVER_URI}/guides/search/?query=${query}&page=${page}&perPage=${perPage}`,
   NEARBY_GUIDES: ({ lat, lng, page, perPage }) =>
     `${SERVER_URI}/guides/nearby?lat=${lat}&lng=${lng}&page=${page}&perPage=${perPage}`,
   USER_BOOKMARKS: `${SERVER_URI}/auth/bookmarks`,
@@ -31,7 +33,7 @@ export const API_ROUTES = {
 
 export const APP_ROUTES = {
   GUIDES_PAGE: "guides/user/:userId",
-  GUIDE_EDIT: "guides/edit",
+  GUIDE_EDIT: "guides/edit/:guideId",
   GUIDE_VIEW: "guides/view",
   SIGN_UP: "signup",
   LOGIN: "login",

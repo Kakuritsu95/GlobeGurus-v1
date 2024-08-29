@@ -19,19 +19,21 @@ function DisplayAddPlaceType({ register }) {
           {placeTypes.map((tag, i) => (
             <li
               key={i}
-              className="font-gray flex  justify-between space-x-1 text-sm"
+              className="font-gray cursor-pointer rounded p-1 text-sm hover:bg-gray-300"
             >
-              <label htmlFor={tag} className="cursor-pointer">
-                {tag}
+              <label
+                htmlFor={tag}
+                className="flex w-full cursor-pointer justify-between space-x-1"
+              >
+                <span>{tag}</span>
+                <input
+                  type="checkbox"
+                  id={tag}
+                  name={tag}
+                  value={tag}
+                  {...register("types")}
+                />
               </label>
-              <input
-                type="checkbox"
-                id={tag}
-                name={tag}
-                value={tag}
-                className="cursor-pointer"
-                {...register("types")}
-              />
             </li>
           ))}
         </ul>

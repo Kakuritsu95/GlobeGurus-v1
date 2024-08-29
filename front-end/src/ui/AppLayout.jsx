@@ -23,7 +23,7 @@ function AppLayout() {
     <div className="flex h-dvh flex-col">
       <Navbar />
       {isLoading && <Spinner />}
-      <main id="main" className="relative h-full overflow-hidden">
+      <main id="main" className="relative overflow-y-hidden">
         {<Outlet />}
       </main>
     </div>

@@ -24,8 +24,9 @@ function login(req, res) {
   const userData = req.user;
 
   const accessToken = jwt.sign(
-    JSON.stringify(userData),
-    process.env.SECRET_ACCESS_TOKEN
+    { data: userData },
+    process.env.SECRET_ACCESS_TOKEN,
+    { expiresIn: "1h" }
   );
 
   res.cookie("authToken", accessToken).json(req.user);
@@ -41,7 +42,6 @@ async function verifyUser(req, res, next, useAsMiddleware = false) {
         requestToken,
         process.env.SECRET_ACCESS_TOKEN
       );
-
       if (!loggedUser) return res.json({ message: "User is not logged in" });
       if (useAsMiddleware) {
         req.userId = loggedUser.id;
@@ -60,6 +60,7 @@ async function getUserDetails(req, res) {
     const userId = req.user.id;
 
     const user = await User.findById(userId).select("-password").lean();
+
     const { _id, ...formattedUser } = user;
     formattedUser.id = _id;
     res.status(200).json(formattedUser);

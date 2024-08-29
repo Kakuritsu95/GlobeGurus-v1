@@ -77,7 +77,7 @@ async function getUserGuides(req, res) {
 
     if (!userGuides)
       return res.status(404).json({ message: "Could not find guides" });
-    res.json(userGuides);
+    res.json({ guides: userGuides });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -87,6 +87,7 @@ async function getAllGuides(req, res) {
   try {
     const { page, perPage } = req.query;
     // const allGuides = await Guide.aggregateMostLiked(page, perPage);
+
     const client = await MongoClient.connect(process.env.MONGOURI);
     const db = client.db();
 
@@ -102,11 +103,17 @@ async function getAllGuides(req, res) {
         userIds.add(comment.commenter)
       );
     }
+
     if (results.length == 0)
       return res
         .status(500)
         .json({ message: "Could not load guides, please try again later!" });
     const users = await User.find({ _id: { $in: Array.from(userIds) } });
+
+    const numberOfPages =
+      results.length % perPage > 0
+        ? Math.floor(results.length / perPage) + 1
+        : results.length / perPage;
 
     const userPerId = users.reduce((acc, cur) => {
       const { email, password, bookmarks, ...current } = cur.toObject();
@@ -122,9 +129,9 @@ async function getAllGuides(req, res) {
         return result;
       })
       .sort((a, b) => b.likes.length - a.likes.length)
-      .splice((page - 1) * page, perPage);
+      .splice((page - 1) * perPage, perPage);
 
-    res.json(formattedGuides);
+    res.json({ guides: formattedGuides, numberOfPages });
   } catch (err) {
     res.json(err.message);
   }
@@ -134,21 +141,25 @@ async function getGuidesByQuery(req, res) {
   try {
     const { query, page, perPage } = req.query;
 
-    const guides = await Guide.find({
+    const guidesQuery = await Guide.find({
       $or: [
         { territory: { $regex: query, $options: "i" } },
         { title: { $regex: query, $options: "i" } },
         { description: { $regex: query, $options: "i" } },
       ],
-    })
-      .skip((page - 1) * perPage)
-      .limit(perPage);
+    });
+    const numberOfPages =
+      guidesQuery.length % perPage > 0
+        ? Math.floor(guidesQuery.length / perPage) + 1
+        : guidesQuery.length / perPage;
+
+    const guides = guidesQuery.splice((page - 1) * perPage, perPage);
 
     if (!guides)
       res
         .status(500)
         .json({ message: "Could not load guides, please try again later!" });
-    res.json(guides);
+    res.json({ guides, numberOfPages });
   } catch (err) {
     res.json(err.message);
   }
@@ -168,7 +179,12 @@ async function getNearbyGuides(req, res) {
       res
         .status(500)
         .json({ message: "Could not load guides, please try again later!" });
-    res.json(sortedByNearGuides);
+    const numberOfGuides = await Guide.countDocuments();
+    const numberOfPages =
+      numberOfGuides % perPage > 0
+        ? Math.floor(numberOfGuides / perPage) + 1
+        : numberOfGuides / perPage;
+    res.json({ guides: sortedByNearGuides, numberOfPages });
   } catch (err) {
     res.json(err.message);
   }

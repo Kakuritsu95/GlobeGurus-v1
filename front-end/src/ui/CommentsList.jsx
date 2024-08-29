@@ -4,7 +4,7 @@ import CommentListItem from "./CommentListItem";
 
 function CommentsList({ comments, guideId }) {
   const [editCommentId, setEditCommentId] = useState("");
-  console.log(comments);
+
   function setCommentId(id) {
     setEditCommentId(id);
   }

@@ -3,7 +3,7 @@ import LoginForm from "../features/users/LoginForm";
 function Login() {
   return (
     <div className="pt-20">
-      <div className="mx-5 rounded border-2 border-zinc-800 bg-slate-800 p-12 shadow-2xl sm:mx-auto sm:w-1/2 xl:w-3/12">
+      <div className="mx-5 rounded border-2 border-zinc-800 bg-slate-800 p-12 shadow-2xl sm:mx-auto sm:w-2/3 sm:py-12 md:w-3/5 lg:w-2/5 xl:w-3/12">
         <h4 className="mb-10 text-center text-xl font-semibold text-zinc-200">
           Login
         </h4>

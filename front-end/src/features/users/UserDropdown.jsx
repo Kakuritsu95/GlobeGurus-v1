@@ -8,9 +8,10 @@ import { GiExitDoor } from "react-icons/gi";
 import DropdownItem from "../../ui/DropdownItem";
 import Dropdown from "../../ui/Dropdown";
 import Avatar from "./Avatar";
+import { useNavigate } from "react-router-dom";
 function UserDropdown({ userId, avatar: avatarUrl }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   return (
     <Dropdown>
       <Dropdown.Toggle>
@@ -38,6 +39,7 @@ function UserDropdown({ userId, avatar: avatarUrl }) {
         <DropdownItem
           handleClick={() => {
             dispatch(logoutUser());
+            navigate("/login");
           }}
           type="button"
         >

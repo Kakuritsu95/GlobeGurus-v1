@@ -12,7 +12,7 @@ function NearbyPlaceItem({ place, i }) {
       <div
         className="h-60 w-full rounded bg-cover bg-center bg-no-repeat xl:h-auto xl:w-1/2"
         style={{
-          backgroundImage: `url(${place.imageUrl || `/public/images/noimagefound.jpg`})`,
+          backgroundImage: `url(${place.imageUrl || "/public/images/noimagefound.jpg"})`,
         }}
       />
       <div className="flex-col justify-between text-start md:flex xl:w-1/2 2xl:mt-1 2xl:px-5 ">
