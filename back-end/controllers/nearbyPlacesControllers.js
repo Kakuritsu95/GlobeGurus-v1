@@ -1,12 +1,13 @@
-const EXCLUDED_NEARBY_TYPES = require("../constants");
+const { EXCLUDED_NEARBY_TYPES } = require("../constants");
 async function getNearbyPlaces(req, res) {
   const { lat, lng } = req.query;
 
   try {
-    const resp = await fetch(
+    const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=50&key=${process.env.GMAPSKEY}`
     );
-    const nearbyPlaces = await resp.json();
+    const nearbyPlaces = await response.json();
+    console.log(nearbyPlaces);
     if (nearbyPlaces?.results?.length == 0)
       return res.status(404).json({ message: "No nearby places found" });
 

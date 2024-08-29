@@ -1,8 +1,14 @@
+import { useState } from "react";
+
 import GuideList from "./GuideList";
+import GuidePagination from "./GuidePagination";
 function FeedGuides() {
+  const [maxPages, setMaxPages] = useState(0);
+
   return (
-    <div className="overflow-y-scroll rounded-lg border-2 border-gray-200">
-      <GuideList />
+    <div className="space-y-5 overflow-y-scroll rounded-lg">
+      <GuideList setMaxPages={setMaxPages} />
+      <GuidePagination maxPages={maxPages} />
     </div>
   );
 }

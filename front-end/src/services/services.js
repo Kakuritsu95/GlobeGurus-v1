@@ -62,10 +62,12 @@ export const guideService = {
     apiCalls.getRequest(`${API_ROUTES.GUIDES}/${guideId}`),
   getUserGuides: async (userId) =>
     apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
-  getPopularGuides: async (page) =>
-    await apiCalls.getRequest(API_ROUTES.ALL_GUIDES(page)),
-  getGuidesByQuery: async (query) =>
-    await apiCalls.getRequest(API_ROUTES.GUIDES_BY_QUERY(query)),
+  getPopularGuides: async ({ page, perPage = 5 }) =>
+    await apiCalls.getRequest(API_ROUTES.ALL_GUIDES(page, perPage)),
+  getGuidesByQuery: async ({ query, page, perPage = 5 }) =>
+    await apiCalls.getRequest(
+      API_ROUTES.GUIDES_BY_QUERY({ query, page, perPage }),
+    ),
   getNearbyGuides: async ({ lat, lng, page, perPage = 5 }) =>
     await apiCalls.getRequest(
       API_ROUTES.NEARBY_GUIDES({ lat, lng, page, perPage }),

@@ -8,11 +8,11 @@ function PopularNearbyPanel() {
   const { service } = useParams();
   async function navigateToNearbyCoords() {
     const { latitude, longitude } = await getUserCoordinates;
-    console.log(latitude);
+
     navigate(`nearby?lat=${latitude}&lng=${longitude}&page=1`);
   }
   async function navigateToPopular() {
-    navigate("popular");
+    navigate("popular?page=1");
   }
   return (
     <div className="mx-auto flex w-2/3 gap-2 ">

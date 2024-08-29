@@ -55,7 +55,7 @@ function GuideListItem({ guide, opensAsCommentWindow }) {
 
         <Modal>
           <div
-            className="sm:w-12/12 relative h-96 bg-cover bg-center bg-no-repeat"
+            className="sm:w-12/12 relative mt-1 h-96 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${guide.imageUrl})` }}
           >
             <ImageTitleLayout>{guide.territory}</ImageTitleLayout>

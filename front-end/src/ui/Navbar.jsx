@@ -15,7 +15,7 @@ function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-gray-200 bg-white shadow">
+    <nav className="sticky top-0 z-50 border-b bg-gray-100 ">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <Logo />
         <div className="inline-flex items-center space-x-5">
@@ -36,9 +36,9 @@ function Navbar() {
           } w-full  items-center md:flex md:w-auto`}
         >
           <div className="flex  space-x-6">
-            <ul className="mt-4 flex w-full flex-col items-center rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row  md:space-x-8 md:border-0 md:bg-white md:p-0">
+            <ul className="mt-4 flex w-full flex-col items-center rounded-lg border border-gray-100  p-4 font-medium md:mt-0 md:flex-row  md:space-x-8 md:border-0 md:p-0">
               <NavLinkItem to="/">Home</NavLinkItem>
-              <NavLinkItem to="/explore/popular">Explore</NavLinkItem>
+              <NavLinkItem to="/explore/popular?page=1">Explore</NavLinkItem>
               {!user.id && (
                 <div className="mt-6 flex w-full flex-col space-y-3 px-3 md:hidden">
                   <Button

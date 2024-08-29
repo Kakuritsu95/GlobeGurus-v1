@@ -11,12 +11,15 @@ import Login from "./pages/Login";
 import UserSettings from "./pages/UserSettings";
 import Explore from "./pages/Explore";
 import FeedGuides from "./features/guides/FeedGuides";
-
+import Homepage from "./pages/Homepage";
+import ProtectedRoute from "./helpers/ProtectedRoute";
+// import ProtectedRoute from "./helpers/ProtectedRoute";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 0,
     },
+    refetchOnWindowsFocus: false,
   },
 });
 queryClient.setQueryDefaults(["guides"], { staleTime: Infinity });
@@ -27,11 +30,15 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path="/" />
+            <Route index element={<Homepage />} />
+
             <Route
-              path={`${APP_ROUTES.GUIDE_EDIT}/:guideId`}
+              path={`${APP_ROUTES.GUIDE_EDIT}`}
               element={<EditGuide isEditSession={true} />}
             />
+            <Route path={APP_ROUTES.USER_SETTINGS} element={<ProtectedRoute />}>
+              <Route index element={<UserSettings />} />
+            </Route>
             <Route
               path={`${APP_ROUTES.GUIDE_VIEW}/:guideId`}
               element={<EditGuide isEditSession={true} />}
@@ -39,7 +46,6 @@ function App() {
             <Route path={APP_ROUTES.GUIDES_PAGE} element={<UserGuides />} />
             <Route path={APP_ROUTES.SIGN_UP} element={<Signup />} />
             <Route path={APP_ROUTES.LOGIN} element={<Login />} />
-            <Route path={APP_ROUTES.USER_SETTINGS} element={<UserSettings />} />
             <Route path={APP_ROUTES.EXPLORE} element={<Explore />}>
               <Route path={":service"} element={<FeedGuides />} />
             </Route>

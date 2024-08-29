@@ -11,10 +11,10 @@ function MapEventClick() {
     click: async (e) => {
       try {
         clickedCoords.current.coords = [e.latlng.lat, e.latlng.lng];
-        // const data = await nearbyPlacesService.get(e.latlng.lat, e.latlng.lng);
+        const data = await nearbyPlacesService.get(e.latlng.lat, e.latlng.lng);
         openModal("place tab");
 
-        const data = await fakeService(true);
+        // const data = await fakeService(true);
         updateNearbyPlaces(data);
       } catch (err) {
         updateNearbyPlaces([]);

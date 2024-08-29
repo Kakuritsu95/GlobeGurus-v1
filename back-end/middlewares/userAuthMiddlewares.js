@@ -28,7 +28,8 @@ async function authorizeUser(req, res, next) {
     const requestToken = req.cookies.authToken;
     const user = jwt.verify(requestToken, process.env.SECRET_ACCESS_TOKEN);
     if (!user) throw error;
-    req.user = user;
+
+    req.user = user.data;
     next();
   } catch (err) {
     res.status(401).json({
