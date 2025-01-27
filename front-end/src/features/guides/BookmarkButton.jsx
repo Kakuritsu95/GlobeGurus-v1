@@ -1,7 +1,7 @@
 import { userService } from "../../services/services";
 import { BsBookmarkStar } from "react-icons/bs";
 import { BsBookmarkStarFill } from "react-icons/bs";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import GuideActionButton from "./GuideActionButton";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLocalBookmark } from "../../redux/slices/userSlice";
@@ -10,11 +10,12 @@ function BookmarkButton({ guideId }) {
   const dispatch = useDispatch();
 
   const isGuideBookmarked = localBookmarks?.includes(guideId);
-
+  const queryClient = useQueryClient();
   const { mutate: toggleBookmark, isPending: isSubmitting } = useMutation({
     mutationFn: () => userService.toggleBookmark(guideId),
-    onMutate: () => {
+    onSuccess: () => {
       dispatch(toggleLocalBookmark(guideId));
+      queryClient.invalidateQueries({ queryKey: ["bookmarked"] });
     },
   });
 

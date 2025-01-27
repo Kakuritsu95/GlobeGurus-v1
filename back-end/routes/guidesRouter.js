@@ -15,6 +15,7 @@ const {
   updateGuide,
   deleteGuide,
   getAllGuides,
+  getBookmarkedGuides,
   getGuidesByQuery,
   getNearbyGuides,
   toggleLike,
@@ -32,6 +33,8 @@ const {
 const { toggleBookmark } = require("../controllers/userControllers");
 
 router.get("/popular", getAllGuides);
+
+router.get("/bookmarked", authorizeUser, getBookmarkedGuides);
 
 router.get("/nearby", getNearbyGuides);
 

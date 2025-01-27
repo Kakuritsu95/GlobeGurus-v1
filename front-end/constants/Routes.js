@@ -32,11 +32,12 @@ export const API_ROUTES = {
 //APP ROUTES
 
 export const APP_ROUTES = {
-  GUIDES_PAGE: "guides/user/:userId",
-  GUIDE_EDIT: "guides/edit/:guideId",
+  GUIDES_PAGE: "guides/user",
+  BOOKMARKED_PAGE: "guides/bookmarked",
+  GUIDE_EDIT: "guides/edit",
   GUIDE_VIEW: "guides/view",
   SIGN_UP: "signup",
   LOGIN: "login",
-  USER_SETTINGS: "profile/:userId",
+  USER_SETTINGS: "profile",
   EXPLORE: "explore",
 };

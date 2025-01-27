@@ -9,6 +9,7 @@ import DropdownItem from "../../ui/DropdownItem";
 import Dropdown from "../../ui/Dropdown";
 import Avatar from "./Avatar";
 import { useNavigate } from "react-router-dom";
+import { APP_ROUTES } from "../../../constants/Routes";
 function UserDropdown({ userId, avatar: avatarUrl }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function UserDropdown({ userId, avatar: avatarUrl }) {
           <span>My Guides</span>
           <FiMap />
         </DropdownItem>
-        <DropdownItem type="link" to={`/bookmarks/${userId}`}>
+        <DropdownItem type="link" to={APP_ROUTES.BOOKMARKED_PAGE}>
           <span>Bookmarks</span>
           <FaBookBookmark />
         </DropdownItem>

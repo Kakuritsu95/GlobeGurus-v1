@@ -60,6 +60,8 @@ export const userService = {
 export const guideService = {
   get: async (guideId) =>
     apiCalls.getRequest(`${API_ROUTES.GUIDES}/${guideId}`),
+  getBookmarkedGuides: async () =>
+    apiCalls.getRequest(`${API_ROUTES.GUIDES}/bookmarked`),
   getUserGuides: async (userId) =>
     apiCalls.getRequest(`${API_ROUTES.USER_GUIDES}/${userId}`),
   getPopularGuides: async ({ page, perPage = 5 }) =>

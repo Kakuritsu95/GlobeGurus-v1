@@ -17,13 +17,13 @@ function AppLayout() {
       dispatch(initializeUser(user));
     }
     fetchUser();
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div className="flex h-dvh flex-col">
+    <div>
       <Navbar />
       {isLoading && <Spinner />}
-      <main id="main" className="relative overflow-y-hidden">
+      <main id="main" className="relative">
         {<Outlet />}
       </main>
     </div>

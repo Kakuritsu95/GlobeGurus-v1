@@ -1,11 +1,21 @@
-import { createContext, useState, useContext, cloneElement } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  cloneElement,
+  useEffect,
+} from "react";
 import { createPortal } from "react-dom";
 import useDetectClick from "../hooks/useDetectClick";
 import { GrClose } from "react-icons/gr";
 const ModalContext = createContext();
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
-
+  useEffect(() => {
+    if (openName) document.querySelector("body").style.overflow = "hidden";
+    else document.querySelector("body").style.overflow = "auto";
+    return () => (document.querySelector("body").style.overflow = "scroll");
+  }, [openName]);
   function openModal(openName) {
     setOpenName(openName);
   }
@@ -23,10 +33,12 @@ function Modal({ children }) {
 
 function Open({ children, opens: opensWindowName }) {
   const { openModal } = useContext(ModalContext);
+
   return cloneElement(children, { onClick: () => openModal(opensWindowName) });
 }
 function Close({ children }) {
   const { closeModal } = useContext(ModalContext);
+
   return cloneElement(children, { onClick: closeModal });
 }
 function Window({ children, name, adjustPosition = "" }) {
