@@ -2,6 +2,7 @@ const Guide = require("../schemas/guideSchema");
 const User = require("../schemas/usersSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 const { MongoClient } = require("mongodb");
+const { authorizeUser } = require("../middlewares/userAuthMiddlewares");
 async function createGuide(req, res) {
   try {
     const user = req.user;
@@ -86,7 +87,6 @@ async function getUserGuides(req, res) {
 async function getAllGuides(req, res) {
   try {
     const { page, perPage } = req.query;
-    // const allGuides = await Guide.aggregateMostLiked(page, perPage);
 
     const client = await MongoClient.connect(process.env.MONGOURI);
     const db = client.db();
@@ -136,12 +136,22 @@ async function getAllGuides(req, res) {
     res.json(err.message);
   }
 }
+async function getBookmarkedGuides(req, res) {
+  const { bookmarks } = await User.findById(req.user.id).select(
+    "bookmarks -_id"
+  );
+
+  const bookmarkedGuides = await Guide.find({
+    _id: { $in: bookmarks },
+  });
+  return res.json(bookmarkedGuides);
+}
 
 async function getGuidesByQuery(req, res) {
   try {
     const { query, page, perPage } = req.query;
 
-    const guidesQuery = await Guide.find({
+    const guides = await Guide.find({
       $or: [
         { territory: { $regex: query, $options: "i" } },
         { title: { $regex: query, $options: "i" } },
@@ -149,17 +159,17 @@ async function getGuidesByQuery(req, res) {
       ],
     });
     const numberOfPages =
-      guidesQuery.length % perPage > 0
-        ? Math.floor(guidesQuery.length / perPage) + 1
-        : guidesQuery.length / perPage;
+      guides.length % perPage > 0
+        ? Math.floor(guides.length / perPage) + 1
+        : guides.length / perPage;
 
-    const guides = guidesQuery.splice((page - 1) * perPage, perPage);
+    const pagedGuides = guides.splice((page - 1) * perPage, perPage);
 
-    if (!guides)
+    if (!pagedGuides)
       res
         .status(500)
         .json({ message: "Could not load guides, please try again later!" });
-    res.json({ guides, numberOfPages });
+    res.json({ guides: pagedGuides, numberOfPages });
   } catch (err) {
     res.json(err.message);
   }
@@ -182,7 +192,7 @@ async function getNearbyGuides(req, res) {
     const numberOfGuides = await Guide.countDocuments();
     const numberOfPages =
       numberOfGuides % perPage > 0
-        ? Math.floor(numberOfGuides / perPage) + 1
+        ? Math.ceil(numberOfGuides / perPage)
         : numberOfGuides / perPage;
     res.json({ guides: sortedByNearGuides, numberOfPages });
   } catch (err) {
@@ -279,6 +289,7 @@ module.exports = {
   getUserGuides,
   deleteGuide,
   getAllGuides,
+  getBookmarkedGuides,
   getGuidesByQuery,
   getNearbyGuides,
   toggleLike,

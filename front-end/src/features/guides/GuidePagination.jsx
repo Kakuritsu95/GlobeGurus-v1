@@ -1,19 +1,17 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import useGuides from "../../hooks/useGuides";
-function GuidePagination({ siblingsCount = 2 }) {
-  const { numberOfPages } = useGuides();
+
+function GuidePagination({ numberOfPages, siblingsCount = 2 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage = searchParams.get("page");
   const lastPage = numberOfPages;
-
   const firstPage = 1;
-  const hasRightDots = lastPage - currentPage > siblingsCount;
-  const hasLeftDots = currentPage >= siblingsCount * 2;
+  const hasRightDots = lastPage - currentPage - 1 > siblingsCount;
+  const hasLeftDots = currentPage > siblingsCount * 2;
 
   function setPage(page) {
-    setSearchParams({ page });
+    setSearchParams({ ...Object.fromEntries(searchParams), page });
   }
 
   function generateRange(start) {
@@ -27,7 +25,7 @@ function GuidePagination({ siblingsCount = 2 }) {
       return [firstPage, ...generateRange(2), "...", lastPage];
     }
     if (hasLeftDots && !hasRightDots) {
-      return [firstPage, "...", ...generateRange(siblingsCount * 2)];
+      return [firstPage, "...", ...generateRange(lastPage - siblingsCount * 2)];
     }
     if (hasLeftDots && hasRightDots) {
       return [
@@ -45,21 +43,23 @@ function GuidePagination({ siblingsCount = 2 }) {
     hasRightDots,
     currentPage,
     numberOfPages,
+    generatePages,
   ]);
-  return (
-    <div className="flex justify-center gap-5 pb-5 ">
-      {numberOfPages &&
-        pages.map((pageNum) => (
+
+  if (numberOfPages)
+    return (
+      <div className="flex justify-center gap-5 pb-5 ">
+        {pages.map((pageNum) => (
           <button
-            onClick={() => typeof pageNum==="number" && setPage(pageNum)}
-            className={`rounded ${pageNum == currentPage ? "bg-gray-300" : "bg-blue-300"} px-2 py-0.5`}
+            onClick={() => typeof pageNum == "number" && setPage(pageNum)}
+            className={`rounded ${pageNum === +currentPage ? "bg-gray-300" : "bg-blue-300"} px-2 py-0.5`}
             key={pageNum}
           >
             {pageNum}
           </button>
         ))}
-    </div>
-  );
+      </div>
+    );
 }
 
 export default GuidePagination;

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useModalContext } from "../../ui/Modal";
 import { geolocationService, guideService } from "../../services/services";
 import { appendFormData } from "../../helpers/appendFormData";
-import { APP_ROUTES } from "../../../constants/ROUTES";
+import { APP_ROUTES } from "../../../constants/Routes";
 import Button from "../../ui/Button";
 import FormInputField from "../../ui/FormInputField";
 import InputErrorMessage from "../../ui/InputErrorMessage";

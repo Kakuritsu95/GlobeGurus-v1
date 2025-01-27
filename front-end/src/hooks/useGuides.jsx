@@ -7,7 +7,6 @@ import { guideService } from "../services/services";
 function useGuides(setMaxPages) {
   const { service, userId } = useParams();
   const [queryParams] = useSearchParams();
-  // setSearchParams((params) => `page=${+params.get("page") + 1}`);
 
   const { data: { guides, numberOfPages } = {}, isError } = useQuery({
     queryKey: ["guides", service, userId, queryParams.toString()],
@@ -16,6 +15,7 @@ function useGuides(setMaxPages) {
       if (service === "popular") {
         return guideService.getPopularGuides({ page: queryParams.get("page") });
       }
+
       if (service === "search")
         return guideService.getGuidesByQuery({
           query: queryParams.get("keyword"),

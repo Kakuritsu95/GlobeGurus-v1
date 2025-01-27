@@ -11,7 +11,7 @@ function SearchBar() {
     navigate(`search/?keyword=${query}&page=1`);
   }
   return (
-    <div className="space-y-2">
+    <div className="space-y-6">
       <form onSubmit={handleSubmit}>
         <div className="relative mx-auto flex w-2/3">
           <input

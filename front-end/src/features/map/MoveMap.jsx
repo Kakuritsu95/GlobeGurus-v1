@@ -9,7 +9,7 @@ function MoveMap() {
   useEffect(() => {
     if (mapCenter.length == 0) return;
     map.flyTo(mapCenter);
-  }, [mapCenter, switcher]);
+  }, [mapCenter, switcher, map]);
 }
 
 export default MoveMap;
