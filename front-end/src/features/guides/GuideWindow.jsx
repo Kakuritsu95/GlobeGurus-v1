@@ -7,6 +7,7 @@ import useGuide from "../../hooks/useGuide";
 function GuideWindow() {
   const { guide, isFetching } = useGuide();
   if (!guide) return null;
+
   return (
     <div className="relative grid h-[92.95vh] grid-cols-5 grid-rows-3">
       <GuideOverview guide={guide} />

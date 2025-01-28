@@ -9,7 +9,7 @@ function HomepageFeaturesDetails({ observedSectionIndex }) {
   }
   return (
     <section
-      className={`observable h-[91vh] pt-28 ${observedSectionIndex > 2 && "animate-fadeIn"}`}
+      className={`observable flex h-[91vh] flex-col justify-center  ${observedSectionIndex > 2 && "animate-fadeIn"}`}
     >
       <div className="mx-auto w-11/12 space-y-5 text-center sm:w-8/12 xl:w-5/12 xl:text-start">
         <h4 className="font-semibold text-blue-500">FUNCTIONALITIES</h4>

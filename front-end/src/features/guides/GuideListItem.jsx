@@ -52,29 +52,27 @@ function GuideListItem({ guide, opensAsCommentWindow }) {
           {`Created ${formatDateString(guide.createdAt)} `}
           {`Modified ${formatDateString(guide.updatedAt)}`}
         </HorizontalInfoList>
-
-        <Modal>
-          <div
-            className="sm:w-12/12 relative mt-1 h-96 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${guide.imageUrl})` }}
-          >
-            <ImageTitleLayout>{guide.territory}</ImageTitleLayout>
-          </div>
-          <div className="flex justify-between py-1.5 text-lg font-semibold text-gray-700 ">
-            <LikeButton
-              guideId={guide._id}
-              isGuideLikedByUser={isGuideLikedByUser}
-            />
-            <Modal.Open opens="comment">
-              <button className="flex w-full items-center justify-center space-x-2 rounded px-5  py-1 hover:bg-gray-300 hover:text-black hover:underline">
-                <GoComment size={22} />
-                <span className="hidden sm:inline">Comments</span>
-              </button>
-            </Modal.Open>
-            <BookmarkButton guideId={guide._id} />
-          </div>
-
-          {!opensAsCommentWindow && isUserOwner && (
+        <div
+          className="sm:w-12/12 relative mt-1 h-96 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${guide.imageUrl})` }}
+        >
+          <ImageTitleLayout>{guide.territory}</ImageTitleLayout>
+        </div>
+        {!opensAsCommentWindow && (
+          <Modal>
+            <div className="flex justify-between py-1.5 text-lg font-semibold text-gray-700 ">
+              <LikeButton
+                guideId={guide._id}
+                isGuideLikedByUser={isGuideLikedByUser}
+              />
+              <Modal.Open opens="comment">
+                <button className="flex w-full items-center justify-center space-x-2 rounded px-5  py-1 hover:bg-gray-300 hover:text-black hover:underline">
+                  <GoComment size={22} />
+                  <span className="hidden sm:inline">Comments</span>
+                </button>
+              </Modal.Open>
+              <BookmarkButton guideId={guide._id} />
+            </div>
             <Dropdown absolute={true} position={"top-5 right-3"}>
               <Dropdown.Toggle>
                 <RxDotsVertical size={22} />
@@ -94,14 +92,15 @@ function GuideListItem({ guide, opensAsCommentWindow }) {
                 </Modal.Open>
               </Dropdown.List>
             </Dropdown>
-          )}
-          <Modal.Window adjustPosition="-top-44" name="delete">
-            <ConfirmDelete name={guide.title} guideId={guide._id} />
-          </Modal.Window>
-          <Modal.Window adjustPosition="-top-14" name="comment">
-            <CommentGuideWindow guide={guide}></CommentGuideWindow>
-          </Modal.Window>
-        </Modal>
+
+            <Modal.Window adjustPosition="-top-44" name="delete">
+              <ConfirmDelete name={guide.title} guideId={guide._id} />
+            </Modal.Window>
+            <Modal.Window adjustPosition="-top-14" name="comment">
+              <CommentGuideWindow guide={guide}></CommentGuideWindow>
+            </Modal.Window>
+          </Modal>
+        )}
       </div>
     </li>
   );
