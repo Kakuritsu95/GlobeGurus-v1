@@ -28,6 +28,7 @@ const placeTypes = [
   "tourist attraction",
   "university",
   "zoo",
+  "hotel",
 ];
 
 export default placeTypes;

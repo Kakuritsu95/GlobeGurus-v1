@@ -7,7 +7,7 @@ function MoveMap() {
 
   const map = useMap();
   useEffect(() => {
-    if (mapCenter.length == 0) return;
+    if (mapCenter.length === 0) return;
     map.flyTo(mapCenter);
   }, [mapCenter, switcher, map]);
 }

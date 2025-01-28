@@ -23,7 +23,7 @@ function AppLayout() {
     <div>
       <Navbar />
       {isLoading && <Spinner />}
-      <main id="main" className="relative">
+      <main id="main" className="relativeF">
         {<Outlet />}
       </main>
     </div>

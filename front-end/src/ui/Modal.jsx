@@ -11,9 +11,11 @@ import { GrClose } from "react-icons/gr";
 const ModalContext = createContext();
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
+
   useEffect(() => {
     if (openName) document.querySelector("body").style.overflow = "hidden";
     else document.querySelector("body").style.overflow = "auto";
+    console.log(openName);
     return () => (document.querySelector("body").style.overflow = "scroll");
   }, [openName]);
   function openModal(openName) {
@@ -50,7 +52,7 @@ function Window({ children, name, adjustPosition = "" }) {
     <div className="absolute right-0 top-0 z-40 flex h-dvh w-full items-center justify-center bg-gray-800/90 text-center">
       <div
         ref={ref}
-        className={`relative ${adjustPosition} w-11/12  sm:w-auto`}
+        className={`relative ${adjustPosition} mt-44 w-11/12  sm:w-auto`}
       >
         {children}
 
