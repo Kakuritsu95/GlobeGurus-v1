@@ -4,7 +4,7 @@ function LazyImage({ imageName }) {
   return (
     <LazyLoadImage
       alt="feature image"
-      src={`public/images/${imageName}.jpg`}
+      src={`images/${imageName}.jpg`}
       effect="blur"
       style={{ height: 400, width: 700 }}
     />

@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const { API_CONSTANTS } = require("./constants");
+const path = require("path");
 require("dotenv").config(".env");
 
 const app = express();
@@ -34,6 +35,8 @@ app.use(`/${API_CONSTANTS.BASE_API_PATH}/nearby-places`, nearbyPlacesRouter);
 app.use(`/${API_CONSTANTS.BASE_API_PATH}/auth`, usersRouter);
 
 app.use(`/${API_CONSTANTS.BASE_API_PATH}/geolocation`, geolocationRouter);
+
+app.use(express.static(__dirname + "/client"));
 
 app.listen(process.env.PORT, () => {
   `server listening to port ${process.env.PORT}`;

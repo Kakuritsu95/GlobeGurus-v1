@@ -19,7 +19,7 @@ import checkIfOnlyExistsInOneArray from "../../helpers/checkIfExistsOnlyInOneArr
 
 function GuideListItem({ guide, opensAsCommentWindow }) {
   const { id: userId, toggledGuideLikes } = useSelector((store) => store.user);
-  const isUserOwner = userId === guide?.owner?._id;
+
   const isGuideLikedByUser = checkIfOnlyExistsInOneArray(
     guide.likes,
     toggledGuideLikes,
@@ -63,12 +63,18 @@ function GuideListItem({ guide, opensAsCommentWindow }) {
             <div className="flex justify-between py-1.5 text-lg font-semibold text-gray-700 ">
               <LikeButton
                 guideId={guide._id}
+                numberOfLikes={guide.likes.length}
                 isGuideLikedByUser={isGuideLikedByUser}
               />
               <Modal.Open opens="comment">
                 <button className="flex w-full items-center justify-center space-x-2 rounded px-5  py-1 hover:bg-gray-300 hover:text-black hover:underline">
                   <GoComment size={22} />
-                  <span className="hidden sm:inline">Comments</span>
+                  <span className="hidden sm:inline">
+                    Comments{" "}
+                    <span className="text-base font-thin">
+                      {guide.comments.length}
+                    </span>
+                  </span>
                 </button>
               </Modal.Open>
               <BookmarkButton guideId={guide._id} />
@@ -93,11 +99,11 @@ function GuideListItem({ guide, opensAsCommentWindow }) {
               </Dropdown.List>
             </Dropdown>
 
-            <Modal.Window adjustPosition="-top-44" name="delete">
+            <Modal.Window name="delete">
               <ConfirmDelete name={guide.title} guideId={guide._id} />
             </Modal.Window>
-            <Modal.Window adjustPosition="-top-14" name="comment">
-              <CommentGuideWindow guide={guide}></CommentGuideWindow>
+            <Modal.Window name="comment">
+              <CommentGuideWindow guide={guide} />
             </Modal.Window>
           </Modal>
         )}

@@ -1,15 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserCoordinates } from "../helpers/getUserCoordinates";
 import Button from "./Button";
+import defaultNavigatorPosition from "../../constants/defaultNavigatorPosition";
 
 function PopularNearbyPanel() {
   const navigate = useNavigate();
 
   const { service } = useParams();
   async function navigateToNearbyCoords() {
-    const { latitude, longitude } = await getUserCoordinates;
-
-    navigate(`nearby?lat=${latitude}&lng=${longitude}&page=1`);
+    try {
+      const { latitude, longitude } = await getUserCoordinates();
+      navigate(`nearby?lat=${latitude}&lng=${longitude}&page=1`);
+    } catch (err) {
+      navigate(
+        `nearby?lat=${defaultNavigatorPosition.lattitude}&lng=${defaultNavigatorPosition.longitude}&page=1`,
+      );
+    }
   }
   async function navigateToPopular() {
     navigate("popular?page=1");

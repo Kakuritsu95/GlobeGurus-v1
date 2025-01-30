@@ -15,7 +15,7 @@ function Modal({ children }) {
   useEffect(() => {
     if (openName) document.querySelector("body").style.overflow = "hidden";
     else document.querySelector("body").style.overflow = "auto";
-    console.log(openName);
+
     return () => (document.querySelector("body").style.overflow = "scroll");
   }, [openName]);
   function openModal(openName) {
@@ -43,17 +43,14 @@ function Close({ children }) {
 
   return cloneElement(children, { onClick: closeModal });
 }
-function Window({ children, name, adjustPosition = "" }) {
+function Window({ children, name }) {
   const { openName, closeModal } = useContext(ModalContext);
 
   const ref = useDetectClick(closeModal);
   if (openName !== name) return null;
   return createPortal(
-    <div className="absolute right-0 top-0 z-40 flex h-dvh w-full items-center justify-center bg-gray-800/90 text-center">
-      <div
-        ref={ref}
-        className={`relative ${adjustPosition} mt-44 w-11/12  sm:w-auto`}
-      >
+    <div className="fixed right-0 top-0 z-40 flex h-dvh w-full items-center justify-center bg-gray-800/90 text-center">
+      <div ref={ref} className={`relative w-11/12  sm:w-auto`}>
         {children}
 
         <button

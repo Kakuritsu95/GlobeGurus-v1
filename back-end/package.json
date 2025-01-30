@@ -1,12 +1,16 @@
 {
-  "name": "back-end",
+  "name": "GlobeGurus",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "nodemon server.js"
-  },
+    "nodemon": "nodemon server.js",
+    "install-server": "npm install",
+    "start-server": "node server.js",
+    "install-react": "cd ../front-end && npm install",
+    "build-react": "npm run build"
+      },
   "keywords": [],
   "author": "",
   "license": "ISC",

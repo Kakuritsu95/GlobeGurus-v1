@@ -9,7 +9,7 @@ function EditGuide() {
     <Modal>
       <NearbyPlacesProvider>
         <GuideWindow />
-        <Modal.Window adjustPosition="-top-12" name="place tab">
+        <Modal.Window name="place tab">
           <Tab>
             <Tab.Layout>
               <Tab.Content>

@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { userService } from "../services/services";
 import { useDispatch } from "react-redux";
 import { initializeUser } from "../redux/slices/userSlice";
@@ -23,7 +22,7 @@ function AppLayout() {
     <div>
       <Navbar />
       {isLoading && <Spinner />}
-      <main id="main" className="relativeF">
+      <main id="main" className="relative">
         {<Outlet />}
       </main>
     </div>

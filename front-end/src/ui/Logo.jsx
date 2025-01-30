@@ -8,7 +8,7 @@ function Logo() {
         <span>Gl</span>
         <FaGlobeAsia className="mx-[0.5px] text-blue-500" size={21} />
         <span>be</span>
-        <img src="/public/images/logo.png" className="mx-1 h-14" alt="Logo" />
+        <img src="images/logo.png" className="mx-1 h-14" alt="Logo" />
         <span>Gurus</span>
       </div>
     </Link>

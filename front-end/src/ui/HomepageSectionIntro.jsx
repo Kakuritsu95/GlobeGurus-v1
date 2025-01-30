@@ -29,7 +29,7 @@ function HomepageSectionIntro({ onScrollToNextSection }) {
       <div className="relative w-full md:w-10/12 xl:w-1/2">
         <div
           className="mx-auto h-[500px] w-11/12 bg-cover bg-center bg-no-repeat xl:w-full"
-          style={{ backgroundImage: `url("public/images/LPImageIntro.jpg")` }}
+          style={{ backgroundImage: `url("images/LPImageIntro.jpg")` }}
         />
       </div>
     </section>

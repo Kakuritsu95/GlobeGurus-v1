@@ -36,9 +36,7 @@ function GuideOverview({ guide }) {
             </div>
             <div className="relative max-w-72 sm:w-full lg:max-w-full xl:order-2">
               <img src={imageUrl} className="rounded-l" alt="title" />
-              <ImageTitleLayout className="absolute right-0 top-0 h-full w-full shadow-inner-2xl">
-                {territory}
-              </ImageTitleLayout>
+              <ImageTitleLayout>{territory}</ImageTitleLayout>
             </div>
           </div>
           <div className="mt-2 text-center sm:text-start">
@@ -75,7 +73,7 @@ function GuideOverview({ guide }) {
                 </Modal.Open>
               </Dropdown.List>
             </Dropdown>
-            <Modal.Window adjustPosition="-top-12" name="edit">
+            <Modal.Window name="edit">
               <GuideAddEditForm
                 guideToEdit={{
                   title,
@@ -86,7 +84,7 @@ function GuideOverview({ guide }) {
                 }}
               />
             </Modal.Window>
-            <Modal.Window adjustPosition="-top-36" name="delete">
+            <Modal.Window name="delete">
               <ConfirmDelete name={title} guideId={guide._id} />
             </Modal.Window>
           </Modal>

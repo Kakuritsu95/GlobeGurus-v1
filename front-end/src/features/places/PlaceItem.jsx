@@ -84,10 +84,10 @@ function PlaceItem({ place, index, isEditSession }) {
               </Modal.Open>
             </Dropdown.List>
           </Dropdown>
-          <Modal.Window adjustPosition="-top-12" name="edit">
+          <Modal.Window name="edit">
             <PlaceAddEditForm placeToEdit={place} />
           </Modal.Window>
-          <Modal.Window adjustPosition="-top-44" name="delete">
+          <Modal.Window name="delete">
             <ConfirmDelete
               placeId={place._id}
               guideId={guideId}
