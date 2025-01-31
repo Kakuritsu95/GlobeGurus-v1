@@ -3,13 +3,15 @@ import { getUserId } from "../../redux/slices/userSlice";
 import PlaceItem from "./PlaceItem";
 import EmptyItemsMessage from "../../ui/EmptyItemsMessage";
 
-function PlacesList({ guide }) {
+function PlacesList({ guide, showMapOverview }) {
   const places = guide?.places || [];
   const userId = useSelector(getUserId);
   const isEditSession = userId === guide?.owner?._id;
 
   return (
-    <div className="col-span-full row-span-full row-start-2 overflow-auto p-1 shadow-inner-lg sm:mt-0 xl:col-span-3 xl:row-start-1 xl:p-3 2xl:col-span-2">
+    <div
+      className={`col-span-full row-span-full ${showMapOverview ? "row-start-2" : "row-start-1"} overflow-auto p-1 shadow-inner-lg sm:mt-0 lg:row-start-2 xl:col-span-3 xl:row-start-1 xl:p-3 2xl:col-span-2`}
+    >
       {places.length === 0 ? (
         <EmptyItemsMessage>
           {isEditSession

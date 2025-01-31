@@ -3,7 +3,7 @@ const User = require("../schemas/usersSchema");
 const Guide = require("../schemas/guideSchema");
 const { uploadImage, deleteImage } = require("../helpers/handleImageBuckets");
 const { checkEmailFormat } = require("../helpers/checkEmailFormat");
-const { Cursor } = require("mongoose");
+
 async function signup(req, res) {
   try {
     const user = req.body;

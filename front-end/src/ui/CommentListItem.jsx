@@ -16,7 +16,6 @@ function CommentListItem({ comment, userId, isEdit, onSetCommentId, guideId }) {
   const userOwnsComment = userId === comment.commenter._id;
   return (
     <li className="flex w-full items-center space-x-2 space-y-5 py-0.5">
-      {/* <img className="h-8 w-8" src={comment.commenter.avatarUrl} alt="avatar" /> */}
       <Avatar avatarUrl={comment.commenter.avatarUrl} />
       <div
         className={`${isEdit && "w-full"} rounded-lg bg-slate-300 p-2 text-start`}

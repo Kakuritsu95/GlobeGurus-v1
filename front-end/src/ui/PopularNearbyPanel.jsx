@@ -21,7 +21,7 @@ function PopularNearbyPanel() {
     navigate("popular?page=1");
   }
   return (
-    <div className="mx-auto flex w-2/3 gap-2 ">
+    <div className="mx-auto flex gap-2 ">
       <Button
         type={service === "popular" ? "panelEnabled" : "panelDisabled"}
         handleClick={navigateToPopular}

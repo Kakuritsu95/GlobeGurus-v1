@@ -7,7 +7,7 @@ import MoveMap from "./MoveMap";
 import { useEffect } from "react";
 import { setMapCenter } from "../../redux/slices/mapSlice";
 
-function Map({ guide }) {
+function Map({ guide, showMapOverview }) {
   const userId = useSelector(getUserId);
   const dispatch = useDispatch();
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
@@ -16,9 +16,10 @@ function Map({ guide }) {
   useEffect(() => {
     dispatch(setMapCenter([latitude, longitude]));
   }, [dispatch, longitude, latitude]);
+
   return (
     <div
-      className={`${showMapOnSmallScreens ? "translate-y-0 scale-100 opacity-100" : "-translate-y-full scale-0 opacity-0"} z-10 col-span-5 row-span-1 grid  transition-all duration-500 lg:col-span-3 lg:translate-y-0 lg:scale-100 lg:opacity-100 xl:col-span-2 xl:row-span-full`}
+      className={`${showMapOnSmallScreens && showMapOverview ? "translate-y-0 scale-100 opacity-100" : "-translate-y-full scale-0 opacity-0"} z-10 col-span-5 row-span-1 grid  transition-all duration-500 lg:col-span-3 lg:translate-y-0 lg:scale-100 lg:opacity-100 xl:col-span-2 xl:row-span-full`}
     >
       <MapContainer
         center={[latitude, longitude]}

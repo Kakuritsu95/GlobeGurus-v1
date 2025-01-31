@@ -1,8 +1,8 @@
 import axios from "axios";
 import store from "../redux/store/store";
 import { setLoading, setIdle } from "../redux/slices/loadingSlice";
-import { API_ROUTES } from "../../constants/Routes";
-
+import { API_ROUTES, SERVER_URI } from "../../constants/Routes";
+axios.defaults.baseURL = SERVER_URI;
 axios.interceptors.request.use(
   function (config) {
     if (

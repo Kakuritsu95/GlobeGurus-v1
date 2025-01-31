@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserId } from "../redux/slices/userSlice";
+import { APP_ROUTES } from "../../constants/Routes";
 
 function ConfirmDelete({ name, placeId, guideId }) {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ function ConfirmDelete({ name, placeId, guideId }) {
       ? () => queryClient.invalidateQueries({ queryKey: ["guide"] })
       : () => {
           queryClient.invalidateQueries({ queryKey: ["guides"] });
-          navigate(`/guides/${userId}`);
+          navigate(`/${APP_ROUTES.GUIDES_PAGE}/${userId}`);
         },
   });
 
@@ -30,14 +31,14 @@ function ConfirmDelete({ name, placeId, guideId }) {
       </p>
       <div className="flex items-center justify-center space-x-4">
         <Modal.Close>
-          <div>
-            <Button disabled={isDeleting} type="cancel">
-              No, cancel
-            </Button>
-          </div>
+          <Button disabled={isDeleting} type="cancel">
+            No, cancel
+          </Button>
         </Modal.Close>
         <Button
-          handleClick={() => deleteHandler({ guideId, placeId })}
+          handleClick={() => {
+            deleteHandler({ guideId, placeId });
+          }}
           disabled={isDeleting}
           type="danger"
         >

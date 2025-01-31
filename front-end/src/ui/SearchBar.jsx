@@ -11,9 +11,9 @@ function SearchBar() {
     navigate(`search/?keyword=${query}&page=1`);
   }
   return (
-    <div className="space-y-6">
+    <div className="mx-3 space-y-6  lg:mx-auto lg:w-2/3">
       <form onSubmit={handleSubmit}>
-        <div className="relative mx-auto flex w-2/3">
+        <div className="relative mx-auto flex ">
           <input
             type="text"
             className="w-full rounded-l-full bg-slate-200 px-5 py-4 outline-0 focus:shadow-inner-border  focus:shadow-blue-500 "

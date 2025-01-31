@@ -11,16 +11,16 @@ import { RxDotsVertical } from "react-icons/rx";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import ImageTitleLayout from "../../ui/ImageTitleLayout";
-function GuideOverview({ guide }) {
+function GuideOverview({ guide, showMapOverview }) {
   const userId = useSelector(getUserId);
   const isEditSession = userId === guide?.owner?._id;
   const { showMapOnSmallScreens } = useSelector((store) => store.map);
   const { title, description, territory, imageUrl, _id: guideId } = guide;
 
-  if (guide.title)
+  if (guide)
     return (
       <div
-        className={`col-span-full ${showMapOnSmallScreens ? "hidden" : "grid"} relative overflow-y-scroll lg:col-span-2 lg:grid xl:col-span-1 xl:row-span-full xl:row-start-1 xl:overflow-y-hidden`}
+        className={`col-span-full  text-center sm:text-start ${!showMapOnSmallScreens && showMapOverview ? "grid" : "hidden"} relative overflow-y-scroll lg:col-span-2 lg:grid xl:col-span-1 xl:row-span-full xl:row-start-1 xl:overflow-y-hidden`}
       >
         <div className="relative flex flex-col px-5 py-3 text-sm sm:mt-3 sm:h-full sm:space-y-5 sm:py-5 md:text-base lg:px-7 xl:py-1">
           <div className="mx-auto gap-5 sm:mx-0 sm:flex sm:items-center xl:flex-col xl:items-start">
@@ -34,7 +34,7 @@ function GuideOverview({ guide }) {
                 <span className="font-thin">{`Locations: ${guide.places.length}`}</span>
               </div>
             </div>
-            <div className="relative max-w-72 sm:w-full lg:max-w-full xl:order-2">
+            <div className="relative mx-auto max-w-72 sm:mx-0 sm:w-full lg:max-w-full xl:order-2">
               <img src={imageUrl} className="rounded-l" alt="title" />
               <ImageTitleLayout>{territory}</ImageTitleLayout>
             </div>
